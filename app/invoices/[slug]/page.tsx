@@ -1,122 +1,52 @@
-'use client'
-import { useEffect, useState } from 'react'
-import { useParams, useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { ArrowLeft } from 'lucide-react'
-import { AdminNav } from '../../components/AdminNav'
-
-type Invoice = {
-  _id: string
-  name: string
-  price: number
-  slug: string
-  businessAddress?: {
-    houseNumber: string
-    roadName: string
-    city: string
-    country: string
-    postCode: string
-  }
-  businessContactInformation?: {
-    firstName: string
-    lastName: string
-    address: {
-      houseNumber: string
-      roadName: string
-      city: string
-      country: string
-      postCode: string
-    }
-    phone: string
-    email: string
-  }
-  clientInformation?: {
-    firstName: string
-    lastName: string
-    address: {
-      houseNumber: string
-      roadName: string
-      city: string
-      country: string
-      postCode: string
-    }
-    phone: string
-    email: string
-  }
-  jobAddress?: {
-    houseNumber: string
-    roadName: string
-    city: string
-    country: string
-    postCode: string
-  }
-  invoiceDate?: Date | string
-  jobStartDate?: Date | string
-  jobFinishDate?: Date | string
-  jobItems?: Array<{
-    description: string
-    quantity: number
-    rate: number
-    total: number
-  }>
-  items?: Array<{
-    description: string
-    quantity: number
-    unitPrice: number
-    total: number
-  }>
-  address?: {
-    street?: string
-    city?: string
-    state?: string
-    zipCode?: string
-    country?: string
-  }
-  createdAt?: Date
-  updatedAt?: Date
-}
+'use client';
+import { useEffect, useState } from 'react';
+import { useParams } from 'next/navigation';
+import Link from 'next/link';
+import { ArrowLeft } from 'lucide-react';
+import { AdminNav } from '../../components/AdminNav';
+import type { Invoice } from '@/types/invoice';
+import { getInvoiceTotal } from '@/types/invoice';
 
 export default function InvoiceDetailPage() {
-  const params = useParams()
-  const router = useRouter()
-  const slug = params?.slug as string
-  const [invoice, setInvoice] = useState<Invoice | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const params = useParams();
+  const slug = params?.slug as string;
+  const [invoice, setInvoice] = useState<Invoice | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchInvoice = async () => {
-      if (!slug) return
+      if (!slug) return;
 
-      setLoading(true)
-      setError(null)
+      setLoading(true);
+      setError(null);
       try {
-        const response = await fetch(`/api/invoices/${slug}`)
+        const response = await fetch(`/api/invoices/${slug}`);
         if (response.ok) {
-          const data = await response.json()
-          setInvoice(data)
+          const data = await response.json();
+          setInvoice(data);
         } else if (response.status === 404) {
-          setError('Invoice not found')
+          setError('Invoice not found');
         } else {
-          setError('Failed to load invoice')
+          setError('Failed to load invoice');
         }
       } catch (err) {
-        console.error('Error fetching invoice:', err)
-        setError('Failed to load invoice')
+        console.error('Error fetching invoice:', err);
+        setError('Failed to load invoice');
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
+    };
 
-    fetchInvoice()
-  }, [slug])
+    fetchInvoice();
+  }, [slug]);
 
   if (loading) {
     return (
       <div className='min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white flex items-center justify-center'>
         <p>Loading invoice...</p>
       </div>
-    )
+    );
   }
 
   if (error || !invoice) {
@@ -127,14 +57,10 @@ export default function InvoiceDetailPage() {
           ← Back to Admin
         </Link>
       </div>
-    )
+    );
   }
 
-  const totalItems = invoice.jobItems
-    ? invoice.jobItems.reduce((sum, item) => sum + item.total, 0)
-    : invoice.items
-      ? invoice.items.reduce((sum, item) => sum + item.total, 0)
-      : invoice.price
+  const totalItems = getInvoiceTotal(invoice);
 
   return (
     <div className='min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white'>
@@ -155,22 +81,26 @@ export default function InvoiceDetailPage() {
               <p className='text-zinc-400'>Invoice #{invoice.slug}</p>
               {invoice.invoiceDate && (
                 <p className='text-zinc-500 text-sm mt-2'>
-                  Invoice Date: {new Date(invoice.invoiceDate).toLocaleDateString()}
+                  Invoice Date:{' '}
+                  {new Date(invoice.invoiceDate).toLocaleDateString()}
                 </p>
               )}
-                {invoice.createdAt && (
+              {invoice.createdAt && (
                 <p className='text-zinc-500 text-sm mt-2'>
                   Created: {new Date(invoice.createdAt).toLocaleDateString()}
                 </p>
               )}
-            </div >
+            </div>
 
-            <div className="  lg:flex gap-2 min-h-[320px] lg:min-h-[240px] xl:min-h-[280px] w-full">
-            <div className="flex-1 flex flex-col">
-              {/* Business Information */}
-              {(invoice.businessAddress || invoice.businessContactInformation) && (
+            <div className='  lg:flex gap-2 min-h-[320px] lg:min-h-[240px] xl:min-h-[280px] w-full'>
+              <div className='flex-1 flex flex-col'>
+                {/* Business Information */}
+                {(invoice.businessAddress ||
+                  invoice.businessContactInformation) && (
                   <div className='mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
-                    <h2 className='text-xl font-semibold mb-3'>Business Information</h2>
+                    <h2 className='text-xl font-semibold mb-3'>
+                      Business Information
+                    </h2>
                     {invoice.businessContactInformation && (
                       <div className='text-zinc-300 space-y-2 mb-4'>
                         <p>
@@ -204,12 +134,14 @@ export default function InvoiceDetailPage() {
                     )}
                   </div>
                 )}
-                </div>
-                <div className="flex-1 flex flex-col">
+              </div>
+              <div className='flex-1 flex flex-col'>
                 {/* Client Information */}
                 {invoice.clientInformation && (
                   <div className=' mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
-                    <h2 className='text-xl font-semibold mb-3'>Client Information</h2>
+                    <h2 className='text-xl font-semibold mb-3'>
+                      Client Information
+                    </h2>
                     <div className='text-zinc-300 space-y-2 mb-4'>
                       <p>
                         <span className='font-semibold'>Name:</span>{' '}
@@ -239,55 +171,51 @@ export default function InvoiceDetailPage() {
                     </div>
                   </div>
                 )}
-                </div>
+              </div>
             </div>
 
-
-
-
-            
             <div className=' lg:flex gap-2 min-h-[120px] lg:min-h-[140px]  w-full'>
-            {/* Job Address */}
-            <div className="flex-1 flex flex-col">
-            {invoice.jobAddress && (
-              <div className='h-[150px]mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
-                <h2 className='text-xl font-semibold mb-3'>Job Address</h2>
-                <div className='text-zinc-300 space-y-1'>
-                  <p>
-                    {invoice.jobAddress.houseNumber}{' '}
-                    {invoice.jobAddress.roadName}
-                  </p>
-                  <p>
-                    {invoice.jobAddress.city}, {invoice.jobAddress.postCode}
-                  </p>
-                  <p>{invoice.jobAddress.country}</p>
-                </div>
+              {/* Job Address */}
+              <div className='flex-1 flex flex-col'>
+                {invoice.jobAddress && (
+                  <div className='h-[150px]mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
+                    <h2 className='text-xl font-semibold mb-3'>Job Address</h2>
+                    <div className='text-zinc-300 space-y-1'>
+                      <p>
+                        {invoice.jobAddress.houseNumber}{' '}
+                        {invoice.jobAddress.roadName}
+                      </p>
+                      <p>
+                        {invoice.jobAddress.city}, {invoice.jobAddress.postCode}
+                      </p>
+                      <p>{invoice.jobAddress.country}</p>
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-            </div>
 
-            <div className="flex-1 flex flex-col">
-            {/* Job Dates */}
-            {(invoice.jobStartDate || invoice.jobFinishDate) && (
-              <div className='h-[142px] mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
-                <h2 className='text-xl font-semibold mb-3'>Job Schedule</h2>
-                <div className='text-zinc-300 space-y-2'>
-                  {invoice.jobStartDate && (
-                    <p>
-                      <span className='font-semibold'>Start Date:</span>{' '}
-                      {new Date(invoice.jobStartDate).toLocaleDateString()}
-                    </p>
-                  )}
-                  {invoice.jobFinishDate && (
-                    <p>
-                      <span className='font-semibold'>Finish Date:</span>{' '}
-                      {new Date(invoice.jobFinishDate).toLocaleDateString()}
-                    </p>
-                  )}
-                </div>
+              <div className='flex-1 flex flex-col'>
+                {/* Job Dates */}
+                {(invoice.jobStartDate || invoice.jobFinishDate) && (
+                  <div className='h-[142px] mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
+                    <h2 className='text-xl font-semibold mb-3'>Job Schedule</h2>
+                    <div className='text-zinc-300 space-y-2'>
+                      {invoice.jobStartDate && (
+                        <p>
+                          <span className='font-semibold'>Start Date:</span>{' '}
+                          {new Date(invoice.jobStartDate).toLocaleDateString()}
+                        </p>
+                      )}
+                      {invoice.jobFinishDate && (
+                        <p>
+                          <span className='font-semibold'>Finish Date:</span>{' '}
+                          {new Date(invoice.jobFinishDate).toLocaleDateString()}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                )}
               </div>
-            )}
-            </div>
             </div>
             {/* Job Items (new structure) */}
             {invoice.jobItems && invoice.jobItems.length > 0 ? (
@@ -300,9 +228,7 @@ export default function InvoiceDetailPage() {
                         <th className='text-left p-3 text-zinc-300'>
                           Description
                         </th>
-                        <th className='text-right p-3 text-zinc-300'>
-                          Qty
-                        </th>
+                        <th className='text-right p-3 text-zinc-300'>Qty</th>
                         <th className='text-right p-3 text-zinc-300'>Rate</th>
                         <th className='text-right p-3 text-zinc-300'>Total</th>
                       </tr>
@@ -377,7 +303,7 @@ export default function InvoiceDetailPage() {
                           colSpan={3}
                           className='p-3 text-right font-semibold'
                         >
- Total:
+                          Total:
                         </td>
                         <td className='p-3 text-right font-bold text-lg'>
                           £{totalItems.toFixed(2)}
@@ -413,13 +339,9 @@ export default function InvoiceDetailPage() {
                 </div>
               </div>
             )}
-
-
-
-
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }

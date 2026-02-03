@@ -1,48 +1,15 @@
 'use client';
-import { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 import { AdminNav } from '../../components/AdminNav';
-import type { Invoice } from '@/types/invoice';
 import { getInvoiceTotal } from '@/types/invoice';
-
-type InvoiceState =
-  | { status: 'loading' }
-  | { status: 'success'; data: Invoice }
-  | { status: 'error'; error: String };
+import { useInvoice } from './useInvoice';
 
 export default function InvoiceDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const [invoiceState, setInvoiceState] = useState<InvoiceState>({
-    status: 'loading',
-  });
-
-  useEffect(() => {
-    const fetchInvoice = async () => {
-      if (!slug) return;
-
-      const fetchInvoice = async () => {
-        setInvoiceState({ status: 'loading' });
-      };
-      try {
-        const response = await fetch(`/api/invoices/${slug}`);
-        if (response.ok) {
-          const data = await response.json();
-          setInvoiceState({ status: 'success', data });
-        } else if (response.status === 404) {
-          setInvoiceState({ status: 'error', error: 'Invoice not found' });
-        } else {
-          setInvoiceState({ status: 'error', error: 'Failed to load invoice' });
-        }
-      } catch (err) {
-        setInvoiceState({ status: 'error', error: 'Failed to load invoice' });
-      }
-    };
-
-    fetchInvoice();
-  }, [slug]);
+  const invoiceState = useInvoice(slug);
 
   if (invoiceState.status === 'loading') {
     return (

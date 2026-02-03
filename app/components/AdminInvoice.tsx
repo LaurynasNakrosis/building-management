@@ -1,27 +1,27 @@
-import Link from 'next/link'
-import React from 'react'
+import Link from 'next/link';
+import React from 'react';
 
 type Invoice = {
-  _id: string
-  name: string
-  price: number
-  slug: string
+  _id: string;
+  name: string;
+  price: number;
+  slug: string;
   items?: Array<{
-    description: string
-    quantity: number
-    unitPrice: number
-    total: number
-  }>
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    total: number;
+  }>;
   address?: {
-    street?: string
-    city?: string
-    state?: string
-    zipCode?: string
-    country?: string
-  }
-  createdAt?: Date
-  updatedAt?: Date
-}
+    street?: string;
+    city?: string;
+    state?: string;
+    zipCode?: string;
+    country?: string;
+  };
+  createdAt?: Date;
+  updatedAt?: Date;
+};
 
 export default function AdminInvoice({ invoices }: { invoices: Invoice[] }) {
   if (invoices.length === 0) {
@@ -29,7 +29,7 @@ export default function AdminInvoice({ invoices }: { invoices: Invoice[] }) {
       <div className='text-center py-8'>
         <p className='text-zinc-400'>No invoices to display</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -103,5 +103,5 @@ export default function AdminInvoice({ invoices }: { invoices: Invoice[] }) {
         </div>
       ))}
     </div>
-  )
+  );
 }

@@ -7,41 +7,44 @@ import { AdminNav } from '../../components/AdminNav';
 import type { Invoice } from '@/types/invoice';
 import { getInvoiceTotal } from '@/types/invoice';
 
+type InvoiceState =
+  | { status: 'loading' }
+  | { status: 'success'; data: Invoice }
+  | { status: 'error'; error: String };
+
 export default function InvoiceDetailPage() {
   const params = useParams();
   const slug = params?.slug as string;
-  const [invoice, setInvoice] = useState<Invoice | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [invoiceState, setInvoiceState] = useState<InvoiceState>({
+    status: 'loading',
+  });
 
   useEffect(() => {
     const fetchInvoice = async () => {
       if (!slug) return;
 
-      setLoading(true);
-      setError(null);
+      const fetchInvoice = async () => {
+        setInvoiceState({ status: 'loading' });
+      };
       try {
         const response = await fetch(`/api/invoices/${slug}`);
         if (response.ok) {
           const data = await response.json();
-          setInvoice(data);
+          setInvoiceState({ status: 'success', data });
         } else if (response.status === 404) {
-          setError('Invoice not found');
+          setInvoiceState({ status: 'error', error: 'Invoice not found' });
         } else {
-          setError('Failed to load invoice');
+          setInvoiceState({ status: 'error', error: 'Failed to load invoice' });
         }
       } catch (err) {
-        console.error('Error fetching invoice:', err);
-        setError('Failed to load invoice');
-      } finally {
-        setLoading(false);
+        setInvoiceState({ status: 'error', error: 'Failed to load invoice' });
       }
     };
 
     fetchInvoice();
   }, [slug]);
 
-  if (loading) {
+  if (invoiceState.status === 'loading') {
     return (
       <div className='min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white flex items-center justify-center'>
         <p>Loading invoice...</p>
@@ -49,10 +52,10 @@ export default function InvoiceDetailPage() {
     );
   }
 
-  if (error || !invoice) {
+  if (invoiceState.status === 'error') {
     return (
       <div className='min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white flex items-center justify-center flex-col gap-4'>
-        <p className='text-red-400'>{error || 'Invoice not found'}</p>
+        <p className='text-red-400'>{invoiceState.error}</p>
         <Link href='/admin' className='text-blue-400 hover:text-blue-300'>
           ← Back to Admin
         </Link>
@@ -60,6 +63,7 @@ export default function InvoiceDetailPage() {
     );
   }
 
+  const invoice = invoiceState.data;
   const totalItems = getInvoiceTotal(invoice);
 
   return (
@@ -178,7 +182,7 @@ export default function InvoiceDetailPage() {
               {/* Job Address */}
               <div className='flex-1 flex flex-col'>
                 {invoice.jobAddress && (
-                  <div className='h-[150px]mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
+                  <div className='h-[150px] mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
                     <h2 className='text-xl font-semibold mb-3'>Job Address</h2>
                     <div className='text-zinc-300 space-y-1'>
                       <p>

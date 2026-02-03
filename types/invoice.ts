@@ -71,9 +71,6 @@ export type Invoice = {
   updatedAt?: Date;
 };
 
-/**
- * Total from jobItems, or items, or fallback to invoice.price
- */
 export function getInvoiceTotal(invoice: Invoice): number {
   if (invoice.jobItems && invoice.jobItems.length > 0) {
     return invoice.jobItems.reduce((sum, item) => sum + item.total, 0);

@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { AdminNav } from '../../components/AdminNav';
 import { getInvoiceTotal } from '@/types/invoice';
 import { useInvoice } from './useInvoice';
+import { formatDate } from '@/lib/utils';
 
 export default function InvoiceDetailPage() {
   const params = useParams();
@@ -52,13 +53,12 @@ export default function InvoiceDetailPage() {
               <p className='text-zinc-400'>Invoice #{invoice.slug}</p>
               {invoice.invoiceDate && (
                 <p className='text-zinc-500 text-sm mt-2'>
-                  Invoice Date:{' '}
-                  {new Date(invoice.invoiceDate).toLocaleDateString()}
+                  Invoice Date: {formatDate(invoice.invoiceDate)}
                 </p>
               )}
               {invoice.createdAt && (
                 <p className='text-zinc-500 text-sm mt-2'>
-                  Created: {new Date(invoice.createdAt).toLocaleDateString()}
+                  Created: {formatDate(invoice.createdAt)}
                 </p>
               )}
             </div>
@@ -174,13 +174,13 @@ export default function InvoiceDetailPage() {
                       {invoice.jobStartDate && (
                         <p>
                           <span className='font-semibold'>Start Date:</span>{' '}
-                          {new Date(invoice.jobStartDate).toLocaleDateString()}
+                          {formatDate(invoice.jobStartDate)}
                         </p>
                       )}
                       {invoice.jobFinishDate && (
                         <p>
                           <span className='font-semibold'>Finish Date:</span>{' '}
-                          {new Date(invoice.jobFinishDate).toLocaleDateString()}
+                          {formatDate(invoice.jobFinishDate)}
                         </p>
                       )}
                     </div>

@@ -92,23 +92,22 @@ export default function InvoiceDetailPage() {
                     )}
                     {invoice.businessAddress && (
                       <div className='text-zinc-300'>
-                        <p className='font-semibold mb-1'>Business Address:</p>
-                        <p>
-                          {invoice.businessAddress.houseNumber}{' '}
-                          {invoice.businessAddress.roadName}
-                        </p>
-                        <p>
-                          {invoice.businessAddress.city},{' '}
-                          {invoice.businessAddress.postCode}
-                        </p>
-                        <p>{invoice.businessAddress.country}</p>
+                        <AddressBlock
+                          title='Business Address:'
+                          roadName={invoice.businessAddress.roadName}
+                          houseNumber={invoice.businessAddress.houseNumber}
+                          city={invoice.businessAddress.city}
+                          postCode={invoice.businessAddress.postCode}
+                          country={invoice.businessAddress.country}
+                          className=''
+                        />
                       </div>
                     )}
                   </div>
                 )}
               </div>
+              {/* Client Information */}
               <div className='flex-1 flex flex-col'>
-                {/* Client Information */}
                 {invoice.clientInformation && (
                   <div className=' mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
                     <h2 className='text-xl font-semibold mb-3'>
@@ -129,8 +128,8 @@ export default function InvoiceDetailPage() {
                         {invoice.clientInformation.phone}
                       </p>
                       <div className='mt-3'>
-                        <p className='font-semibold mb-1'>Address:</p>
                         <AddressBlock
+                          title='Client Address'
                           houseNumber={
                             invoice.clientInformation.address.houseNumber
                           }
@@ -152,16 +151,17 @@ export default function InvoiceDetailPage() {
               <div className='flex-1 flex flex-col'>
                 {invoice.jobAddress && (
                   <div className='h-[150px] mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
-                    <h2 className='text-xl font-semibold mb-3'>Job Address</h2>
+                    <h2 className='text-xl font-semibold mb-3'></h2>
                     <div className='text-zinc-300 space-y-1'>
-                      <p>
-                        {invoice.jobAddress.houseNumber}{' '}
-                        {invoice.jobAddress.roadName}
-                      </p>
-                      <p>
-                        {invoice.jobAddress.city}, {invoice.jobAddress.postCode}
-                      </p>
-                      <p>{invoice.jobAddress.country}</p>
+                      <AddressBlock
+                        title='Site Address:'
+                        houseNumber={invoice.jobAddress.houseNumber}
+                        roadName={invoice.jobAddress.roadName}
+                        city={invoice.jobAddress.city}
+                        postCode={invoice.jobAddress.postCode}
+                        country={invoice.jobAddress.country}
+                        className=''
+                      />
                     </div>
                   </div>
                 )}

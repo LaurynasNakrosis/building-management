@@ -1,6 +1,7 @@
 'use client';
 
 type AddressBlockProps = {
+  title: string;
   houseNumber: string;
   roadName: string;
   city: string;
@@ -10,6 +11,7 @@ type AddressBlockProps = {
 };
 
 export function AddressBlock({
+  title,
   houseNumber,
   roadName,
   city,
@@ -19,6 +21,7 @@ export function AddressBlock({
 }: AddressBlockProps) {
   return (
     <div className={`text-zinc-300 space-y-1 ${className ?? ''}`}>
+      <h1 className='font-semibold mb-1'>{title}</h1>
       <ul>
         <li>
           {houseNumber} {roadName}

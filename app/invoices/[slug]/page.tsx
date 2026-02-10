@@ -49,7 +49,7 @@ export default function InvoiceDetailPage() {
         </Link>
 
         <div className='max-w-4xl mx-auto '>
-          <div className='bg-zinc-800 border border-zinc-700 rounded-lg p-8  mt-8 text-center  bg-zinc-800/50 backdrop-blur-sm  text-sm  shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] transition-all duration-200 '>
+          <div className='bg-zinc-800 border border-zinc-700 rounded-lg p-8  mt-10 text-center  bg-zinc-800/50 backdrop-blur-sm  text-sm  shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] transition-all duration-200 '>
             <div className='mb-8'>
               <h1 className='text-4xl font-bold mb-2'>{invoice.name}</h1>
               <p className='text-zinc-400'>Invoice #{invoice.slug}</p>
@@ -65,12 +65,12 @@ export default function InvoiceDetailPage() {
               )}
             </div>
 
+            {/* Business Information */}
             <div className='  lg:flex gap-2 min-h-[320px] lg:min-h-[240px] xl:min-h-[280px] w-full'>
               <div className='flex-1 flex flex-col'>
-                {/* Business Information */}
                 {(invoice.businessAddress ||
                   invoice.businessContactInformation) && (
-                  <div className='mb-8 p-4 bg-zinc-800 rounded border border-zinc-700 text-left'>
+                  <div className='mb-2 p-4 bg-zinc-800 rounded border border-zinc-700 text-left'>
                     {invoice.businessContactInformation && (
                       <div className='text-zinc-300 space-y-2 mb-2'>
                         <ContactInfo
@@ -131,8 +131,8 @@ export default function InvoiceDetailPage() {
               </div>
             </div>
 
+            {/* Site Address */}
             <div className=' lg:flex gap-2 min-h-[120px] lg:min-h-[140px]  w-full'>
-              {/* Job Address */}
               <div className='flex-1 flex flex-col'>
                 {invoice.jobAddress && (
                   <div className='h-[150px] mb-2 p-4 bg-zinc-800 rounded border border-zinc-700 text-left'>

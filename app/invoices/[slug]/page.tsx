@@ -6,6 +6,7 @@ import { AdminNav } from '../../components/AdminNav';
 import { getInvoiceTotal } from '@/types/invoice';
 import { useInvoice } from './useInvoice';
 import { formatCurrencyGBP, formatDate } from '@/lib/utils';
+import { AddressBlock } from '@/app/components/AddressBlock';
 
 export default function InvoiceDetailPage() {
   const params = useParams();
@@ -129,15 +130,16 @@ export default function InvoiceDetailPage() {
                       </p>
                       <div className='mt-3'>
                         <p className='font-semibold mb-1'>Address:</p>
-                        <p>
-                          {invoice.clientInformation.address.houseNumber}{' '}
-                          {invoice.clientInformation.address.roadName}
-                        </p>
-                        <p>
-                          {invoice.clientInformation.address.city},{' '}
-                          {invoice.clientInformation.address.postCode}
-                        </p>
-                        <p>{invoice.clientInformation.address.country}</p>
+                        <AddressBlock
+                          houseNumber={
+                            invoice.clientInformation.address.houseNumber
+                          }
+                          roadName={invoice.clientInformation.address.roadName}
+                          city={invoice.clientInformation.address.city}
+                          postCode={invoice.clientInformation.address.postCode}
+                          country={invoice.clientInformation.address.country}
+                          className=''
+                        />
                       </div>
                     </div>
                   </div>

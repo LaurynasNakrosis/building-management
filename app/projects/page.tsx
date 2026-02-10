@@ -3,6 +3,7 @@ import React from 'react';
 import { allProjects, type Project } from '@/data/projects';
 import { Navigation } from '../components/nav';
 import { Card } from '../components/card';
+import { formatDate } from '@/lib/utils';
 
 export const revalidate = 60;
 
@@ -44,9 +45,7 @@ function FeaturedProjectCard({ project }: { project: Project }) {
           <div className='text-xs text-zinc-100 pt-4'>
             {project.date ? (
               <time dateTime={new Date(project.date).toISOString()}>
-                {Intl.DateTimeFormat(undefined, {
-                  dateStyle: 'medium',
-                }).format(new Date(project.date))}
+                {formatDate(project.date)}
               </time>
             ) : (
               <span>SOON</span>
@@ -88,9 +87,7 @@ function TopProjectsRow({ top2, top3 }: { top2: Project; top3: Project }) {
               <div className='text-xs text-zinc-100 pt-4'>
                 {project.date ? (
                   <time dateTime={new Date(project.date).toISOString()}>
-                    {Intl.DateTimeFormat(undefined, {
-                      dateStyle: 'medium',
-                    }).format(new Date(project.date))}
+                    {formatDate(project.date)}
                   </time>
                 ) : (
                   <span>SOON</span>
@@ -123,9 +120,7 @@ function ProjectCard({ project }: { project: Project }) {
       <div className='text-xs text-zinc-100'>
         {project.date ? (
           <time dateTime={new Date(project.date).toISOString()}>
-            {Intl.DateTimeFormat(undefined, {
-              dateStyle: 'medium',
-            }).format(new Date(project.date))}
+            {formatDate(project.date)}
           </time>
         ) : (
           <span>SOON</span>

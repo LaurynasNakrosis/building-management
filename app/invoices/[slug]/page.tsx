@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { AdminNav } from '../../components/AdminNav';
 import { getInvoiceTotal } from '@/types/invoice';
 import { useInvoice } from './useInvoice';
-import { formatDate } from '@/lib/utils';
+import { formatCurrencyGBP, formatDate } from '@/lib/utils';
 
 export default function InvoiceDetailPage() {
   const params = useParams();
@@ -210,10 +210,10 @@ export default function InvoiceDetailPage() {
                           <td className='p-3'>{item.description}</td>
                           <td className='p-3 text-right'>{item.quantity}</td>
                           <td className='p-3 text-right'>
-                            £{item.rate.toFixed(2)}
+                            £{formatCurrencyGBP(item.rate)}
                           </td>
                           <td className='p-3 text-right'>
-                            £{item.total.toFixed(2)}
+                            £{formatCurrencyGBP(item.total)}
                           </td>
                         </tr>
                       ))}
@@ -227,7 +227,7 @@ export default function InvoiceDetailPage() {
                           Total:
                         </td>
                         <td className='p-3 text-right font-bold text-lg'>
-                          £{totalItems.toFixed(2)}
+                          £{formatCurrencyGBP(totalItems)}
                         </td>
                       </tr>
                     </tfoot>
@@ -260,10 +260,10 @@ export default function InvoiceDetailPage() {
                           <td className='p-3'>{item.description}</td>
                           <td className='p-3 text-right'>{item.quantity}</td>
                           <td className='p-3 text-right'>
-                            £{item.unitPrice.toFixed(2)}
+                            £{formatCurrencyGBP(item.unitPrice)}
                           </td>
                           <td className='p-3 text-right'>
-                            £{item.total.toFixed(2)}
+                            £{formatCurrencyGBP(item.total)}
                           </td>
                         </tr>
                       ))}
@@ -277,7 +277,7 @@ export default function InvoiceDetailPage() {
                           Total:
                         </td>
                         <td className='p-3 text-right font-bold text-lg'>
-                          £{totalItems.toFixed(2)}
+                          £{formatCurrencyGBP(totalItems)}
                         </td>
                       </tr>
                     </tfoot>
@@ -287,7 +287,7 @@ export default function InvoiceDetailPage() {
             ) : (
               <div className='mb-8 p-4 bg-zinc-900 rounded border border-zinc-700'>
                 <p className='text-zinc-300 text-lg font-semibold'>
-                  Total: £{invoice.price.toFixed(2)}
+                  Total: £{formatCurrencyGBP(invoice.price)}
                 </p>
               </div>
             )}

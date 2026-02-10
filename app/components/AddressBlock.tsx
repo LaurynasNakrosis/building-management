@@ -21,7 +21,7 @@ export function AddressBlock({
 }: AddressBlockProps) {
   return (
     <div className={`text-zinc-300 space-y-1 ${className ?? ''}`}>
-      <h1 className='font-semibold mb-1'>{title}</h1>
+      <h1 className='text-xl font-semibold'>{title}</h1>
       <ul>
         <li>
           {houseNumber} {roadName}

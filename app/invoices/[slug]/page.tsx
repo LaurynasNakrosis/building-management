@@ -7,6 +7,7 @@ import { getInvoiceTotal } from '@/types/invoice';
 import { useInvoice } from './useInvoice';
 import { formatCurrencyGBP, formatDate } from '@/lib/utils';
 import { AddressBlock } from '@/app/components/AddressBlock';
+import ContactInfo from '@/app/components/ContactInfo';
 
 export default function InvoiceDetailPage() {
   const params = useParams();
@@ -69,29 +70,22 @@ export default function InvoiceDetailPage() {
                 {/* Business Information */}
                 {(invoice.businessAddress ||
                   invoice.businessContactInformation) && (
-                  <div className='mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
-                    <h2 className='text-xl font-semibold mb-3'>
-                      Business Information
-                    </h2>
+                  <div className='mb-8 p-4 bg-zinc-800 rounded border border-zinc-700 text-left'>
                     {invoice.businessContactInformation && (
-                      <div className='text-zinc-300 space-y-2 mb-4'>
-                        <p>
-                          <span className='font-semibold'>Contact:</span>{' '}
-                          {invoice.businessContactInformation.firstName}{' '}
-                          {invoice.businessContactInformation.lastName}
-                        </p>
-                        <p>
-                          <span className='font-semibold'>Email:</span>{' '}
-                          {invoice.businessContactInformation.email}
-                        </p>
-                        <p>
-                          <span className='font-semibold'>Phone:</span>{' '}
-                          {invoice.businessContactInformation.phone}
-                        </p>
+                      <div className='text-zinc-300 space-y-2 mb-2'>
+                        <ContactInfo
+                          title='Business Information'
+                          firstName={
+                            invoice.businessContactInformation.firstName
+                          }
+                          lastName={invoice.businessContactInformation.lastName}
+                          email={invoice.businessContactInformation.email}
+                          phone={invoice.businessContactInformation.phone}
+                        />
                       </div>
                     )}
                     {invoice.businessAddress && (
-                      <div className='text-zinc-300'>
+                      <div>
                         <AddressBlock
                           title='Business Address:'
                           roadName={invoice.businessAddress.roadName}
@@ -109,25 +103,16 @@ export default function InvoiceDetailPage() {
               {/* Client Information */}
               <div className='flex-1 flex flex-col'>
                 {invoice.clientInformation && (
-                  <div className=' mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
-                    <h2 className='text-xl font-semibold mb-3'>
-                      Client Information
-                    </h2>
-                    <div className='text-zinc-300 space-y-2 mb-4'>
-                      <p>
-                        <span className='font-semibold'>Name:</span>{' '}
-                        {invoice.clientInformation.firstName}{' '}
-                        {invoice.clientInformation.lastName}
-                      </p>
-                      <p>
-                        <span className='font-semibold'>Email:</span>{' '}
-                        {invoice.clientInformation.email}
-                      </p>
-                      <p>
-                        <span className='font-semibold'>Phone:</span>{' '}
-                        {invoice.clientInformation.phone}
-                      </p>
-                      <div className='mt-3'>
+                  <div className=' mb-8 p-4 bg-zinc-800 rounded border border-zinc-700 text-left'>
+                    <div className='text-zinc-300 space-y-2 '>
+                      <ContactInfo
+                        title='Client Information'
+                        firstName={invoice.clientInformation.firstName}
+                        lastName={invoice.clientInformation.lastName}
+                        email={invoice.clientInformation.email}
+                        phone={invoice.clientInformation.phone}
+                      />
+                      <div>
                         <AddressBlock
                           title='Client Address'
                           houseNumber={
@@ -150,8 +135,7 @@ export default function InvoiceDetailPage() {
               {/* Job Address */}
               <div className='flex-1 flex flex-col'>
                 {invoice.jobAddress && (
-                  <div className='h-[150px] mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
-                    <h2 className='text-xl font-semibold mb-3'></h2>
+                  <div className='h-[150px] mb-2 p-4 bg-zinc-800 rounded border border-zinc-700 text-left'>
                     <div className='text-zinc-300 space-y-1'>
                       <AddressBlock
                         title='Site Address:'
@@ -170,7 +154,7 @@ export default function InvoiceDetailPage() {
               <div className='flex-1 flex flex-col'>
                 {/* Job Dates */}
                 {(invoice.jobStartDate || invoice.jobFinishDate) && (
-                  <div className='h-[142px] mb-8 p-4 bg-zinc-900 rounded border border-zinc-700 text-left'>
+                  <div className='h-[150px] mb-8 md:mb-0 p-4 bg-zinc-800 rounded border border-zinc-700 text-left'>
                     <h2 className='text-xl font-semibold mb-3'>Job Schedule</h2>
                     <div className='text-zinc-300 space-y-2'>
                       {invoice.jobStartDate && (
@@ -190,7 +174,7 @@ export default function InvoiceDetailPage() {
                 )}
               </div>
             </div>
-            {/* Job Items (new structure) */}
+            {/* Job Items */}
             {invoice.jobItems && invoice.jobItems.length > 0 ? (
               <div className='mb-8'>
                 <h2 className='text-xl font-semibold mb-4'>Job Items</h2>

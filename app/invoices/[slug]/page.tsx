@@ -196,10 +196,10 @@ export default function InvoiceDetailPage() {
                           <td className='p-3'>{item.description}</td>
                           <td className='p-3 text-right'>{item.quantity}</td>
                           <td className='p-3 text-right'>
-                            £{formatCurrencyGBP(item.rate)}
+                            {formatCurrencyGBP(item.rate)}
                           </td>
                           <td className='p-3 text-right'>
-                            £{formatCurrencyGBP(item.total)}
+                            {formatCurrencyGBP(item.total)}
                           </td>
                         </tr>
                       ))}
@@ -213,7 +213,7 @@ export default function InvoiceDetailPage() {
                           Total:
                         </td>
                         <td className='p-3 text-right font-bold text-lg'>
-                          £{formatCurrencyGBP(totalItems)}
+                          {formatCurrencyGBP(totalItems)}
                         </td>
                       </tr>
                     </tfoot>

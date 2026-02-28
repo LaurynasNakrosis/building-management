@@ -4,9 +4,20 @@ import { AdminNav } from '@/app/components/AdminNav';
 import Link from 'next/link';
 import { useAdminAuth } from '../../useAdminAuth';
 import Input from '@/app/components/formComponents/Input';
+import { useState } from 'react';
 
 export default function CreateInvoicePage() {
   const { auth } = useAdminAuth();
+  type InvoiceFormValues = {
+    itemDescription: string;
+    itemQuantity: string;
+    itemRate: string;
+  };
+  const [formValues, setFormValues] = useState<InvoiceFormValues>({
+    itemDescription: '',
+    itemQuantity: '',
+    itemRate: '',
+  });
 
   if (auth.status === 'loading') {
     return (
@@ -21,7 +32,7 @@ export default function CreateInvoicePage() {
   }
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white'>
+    <div className='min-h-screen pb-20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white'>
       <AdminNav />
       <div className=' pl-6 pt-24 md:pl-24'>
         <Link
@@ -31,11 +42,11 @@ export default function CreateInvoicePage() {
           ← Back to Admin
         </Link>
       </div>
-      <div className=' max-w-8xl mx-auto text-center'>
+      <div className=' max-w-7xl mx-auto text-center'>
         <h1 className='text-2xl font-bold mb-6'>Create Invoice</h1>
         <form action=''>
-          <div className='m-6 md:flex border'>
-            <div className='h-fit py-4  m-1 flex flex-col justify-center items-center border gap-4'>
+          <div className='mb-10 lg:flex lg:justify-around  '>
+            <div className='h-fit py-4  m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
               <h2>Clients Information:</h2>
               <Input
                 id='clientsName'
@@ -88,54 +99,94 @@ export default function CreateInvoicePage() {
                 type='clientsCountry'
               />
             </div>
-            <div className='h-fit py-4 m-1 flex flex-col justify-center items-center border gap-4'>
-              <h2>Site Address</h2>
-              <Input
-                id='siteHouseNumber'
-                label='Site House Number'
-                name='siteHouseNumber'
-                type='siteHouseNumber'
-              />
-              <Input
-                id='siteRoadName'
-                label='Site Road Name '
-                name='siteRoadName'
-                type='siteRoadName'
-              />
-              <Input
-                id='siteCity'
-                label='Site City'
-                name='siteCity'
-                type='siteCity'
-              />
-              <Input
-                id='sitePostcode'
-                label='Site Postcode'
-                name='sitePostcode'
-                type='sitePostcode'
-              />
-              <Input
-                id='siteCountry'
-                label='Site Country'
-                name='siteCountry'
-                type='siteCountry'
-              />
-            </div>
-            <div className='h-fit py-4 m-1 flex flex-col justify-center items-center border gap-4'>
-              <h2>Job Dates</h2>
-              <Input
-                id='jobStartDate'
-                label='Job Start Date'
-                name='jobStartDate'
-                type='date'
-              />
+            <div className='flex flex-col'>
+              <div className='h-fit py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
+                <h2>Site Address</h2>
+                <Input
+                  id='siteHouseNumber'
+                  label='Site House Number'
+                  name='siteHouseNumber'
+                  type='siteHouseNumber'
+                />
+                <Input
+                  id='siteRoadName'
+                  label='Site Road Name '
+                  name='siteRoadName'
+                  type='siteRoadName'
+                />
+                <Input
+                  id='siteCity'
+                  label='Site City'
+                  name='siteCity'
+                  type='siteCity'
+                />
+                <Input
+                  id='sitePostcode'
+                  label='Site Postcode'
+                  name='sitePostcode'
+                  type='sitePostcode'
+                />
+                <Input
+                  id='siteCountry'
+                  label='Site Country'
+                  name='siteCountry'
+                  type='siteCountry'
+                />
+              </div>
+              <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
+                <h2>Job Dates</h2>
+                <Input
+                  id='jobStartDate'
+                  label='Job Start Date'
+                  name='jobStartDate'
+                  type='date'
+                />
 
+                <Input
+                  id='jobFinishDate'
+                  label='Job Finish Date'
+                  name='jobFinishDate'
+                  type='date'
+                />
+              </div>
+            </div>
+          </div>
+          <div className='mb-10 lg:flex lg:justify-around  '>
+            <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
               <Input
-                id='jobFinishDate'
-                label='Job Finish Date'
-                name='jobFinishDate'
-                type='date'
+                id='itemDescription'
+                label='Job description'
+                name='itemDescription'
+                type='text'
               />
+              <Input
+                id='itemQuantity'
+                label='Quantity'
+                name='itemQuantity'
+                type='number'
+              />
+              <Input
+                id='itemRate'
+                label='Rate (£)'
+                name='itemRate'
+                type='number'
+              />
+              <div className='flex flex-col'>
+                <span className='text-sm text-zinc-400 uppercase font-bold'>
+                  Total
+                </span>
+                <div className='p-2 rounded border border-zinc-600 bg-zinc-800 text-white'>
+                  £
+                  {(
+                    (parseFloat(formValues.itemQuantity) || 0) *
+                    (parseFloat(formValues.itemRate) || 0)
+                  ).toFixed(2)}
+                </div>
+              </div>
+            </div>
+
+            <div className='w-[420px] lg:w-[385px] py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
+              Log added items here ...
             </div>
           </div>
         </form>

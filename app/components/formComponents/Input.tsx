@@ -1,6 +1,6 @@
 import React from 'react';
 
-type Props = {
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   name: string;
   id: string;
@@ -17,9 +17,9 @@ export default function Input({ label, id, ...props }: Props) {
         {label}
       </label>
       <input
-        className=' block w-[25rem] max-w-[22rem] p-2 text-base rounded border border-[#758a8a] bg-[#869999] text-[#142020]'
         id={id}
         {...props}
+        className=' block w-[25rem] max-w-[22rem] p-2 text-base rounded border border-[#758a8a] bg-[#869999] text-[#142020]'
       />
     </div>
   );

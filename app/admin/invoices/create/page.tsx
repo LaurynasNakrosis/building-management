@@ -55,6 +55,7 @@ export default function CreateInvoicePage() {
     itemQuantity: '',
     itemRate: '',
   });
+
   if (auth.status === 'loading') {
     return (
       <div className='min-h-screen flex items-center justify-center bg-zinc-900 text-white'>
@@ -69,6 +70,10 @@ export default function CreateInvoicePage() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     console.log('Submitted');
+    console.log(formValues);
+  }
+  function handleInputChange(field: keyof InvoiceFormValues, value: string) {
+    setFormValues((prev) => ({ ...prev, [field]: value }));
   }
 
   return (
@@ -93,18 +98,30 @@ export default function CreateInvoicePage() {
                 label='Clients Name'
                 name='clientsName'
                 type='clientsName'
+                value={formValues.clientsName}
+                onChange={(e) =>
+                  handleInputChange('clientsName', e.target.value)
+                }
               />
               <Input
                 id='clientsEmail'
                 label='Clients Email'
                 name='clientsEmail'
                 type='clientsEmail'
+                value={formValues.clientsEmail}
+                onChange={(e) =>
+                  handleInputChange('clientsEmail', e.target.value)
+                }
               />
               <Input
                 id='clientsPhone'
                 label='Clients Phone'
                 name='clientsPhone'
                 type='clientsPhone'
+                value={formValues.clientsPhone}
+                onChange={(e) =>
+                  handleInputChange('clientsPhone', e.target.value)
+                }
               />
 
               <h2>Clients Address:</h2>
@@ -113,30 +130,50 @@ export default function CreateInvoicePage() {
                 label='Clients House Number'
                 name='clientsHouseNumber'
                 type='clientsHouseNumber'
+                value={formValues.clientsHouseNumber}
+                onChange={(e) =>
+                  handleInputChange('clientsHouseNumber', e.target.value)
+                }
               />
               <Input
                 id='clientsRoadName'
                 label='Clients Road Name '
                 name='clientsRoadName'
                 type='clientsRoadName'
+                value={formValues.clientsRoadName}
+                onChange={(e) =>
+                  handleInputChange('clientsRoadName', e.target.value)
+                }
               />
               <Input
                 id='lientsCity'
                 label='Clients City'
                 name='clientsCity'
                 type='clientsCity'
+                value={formValues.clientsCity}
+                onChange={(e) =>
+                  handleInputChange('clientsCity', e.target.value)
+                }
               />
               <Input
                 id='clientsPostcode'
                 label='Clients Postcode'
                 name='clientsPostcode'
                 type='clientsPostcode'
+                value={formValues.clientsPostcode}
+                onChange={(e) =>
+                  handleInputChange('clientsPostcode', e.target.value)
+                }
               />
               <Input
                 id='clientsCountry'
                 label='Clients Country'
                 name='clientsCountry'
                 type='clientsCountry'
+                value={formValues.clientsCountry}
+                onChange={(e) =>
+                  handleInputChange('clientsCountry', e.target.value)
+                }
               />
             </div>
             <div className='flex flex-col'>
@@ -147,30 +184,50 @@ export default function CreateInvoicePage() {
                   label='Site House Number'
                   name='siteHouseNumber'
                   type='siteHouseNumber'
+                  value={formValues.siteHouseNumber}
+                  onChange={(e) =>
+                    handleInputChange('siteHouseNumber', e.target.value)
+                  }
                 />
                 <Input
                   id='siteRoadName'
                   label='Site Road Name '
                   name='siteRoadName'
                   type='siteRoadName'
+                  value={formValues.siteRoadName}
+                  onChange={(e) =>
+                    handleInputChange('siteRoadName', e.target.value)
+                  }
                 />
                 <Input
                   id='siteCity'
                   label='Site City'
                   name='siteCity'
                   type='siteCity'
+                  value={formValues.siteCity}
+                  onChange={(e) =>
+                    handleInputChange('siteCity', e.target.value)
+                  }
                 />
                 <Input
                   id='sitePostcode'
                   label='Site Postcode'
                   name='sitePostcode'
                   type='sitePostcode'
+                  value={formValues.sitePostcode}
+                  onChange={(e) =>
+                    handleInputChange('sitePostcode', e.target.value)
+                  }
                 />
                 <Input
                   id='siteCountry'
                   label='Site Country'
                   name='siteCountry'
                   type='siteCountry'
+                  value={formValues.siteCountry}
+                  onChange={(e) =>
+                    handleInputChange('siteCountry', e.target.value)
+                  }
                 />
               </div>
               <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
@@ -180,6 +237,10 @@ export default function CreateInvoicePage() {
                   label='Job Start Date'
                   name='jobStartDate'
                   type='date'
+                  value={formValues.jobStartDate}
+                  onChange={(e) =>
+                    handleInputChange('jobStartDate', e.target.value)
+                  }
                 />
 
                 <Input
@@ -187,6 +248,10 @@ export default function CreateInvoicePage() {
                   label='Job Finish Date'
                   name='jobFinishDate'
                   type='date'
+                  value={formValues.jobFinishDate}
+                  onChange={(e) =>
+                    handleInputChange('jobFinishDate', e.target.value)
+                  }
                 />
               </div>
             </div>
@@ -198,18 +263,28 @@ export default function CreateInvoicePage() {
                 label='Job description'
                 name='itemDescription'
                 type='text'
+                value={formValues.itemDescription}
+                onChange={(e) =>
+                  handleInputChange('itemDescription', e.target.value)
+                }
               />
               <Input
                 id='itemQuantity'
                 label='Quantity'
                 name='itemQuantity'
                 type='number'
+                value={formValues.itemQuantity}
+                onChange={(e) =>
+                  handleInputChange('itemQuantity', e.target.value)
+                }
               />
               <Input
                 id='itemRate'
                 label='Rate (£)'
                 name='itemRate'
                 type='number'
+                value={formValues.itemRate}
+                onChange={(e) => handleInputChange('itemRate', e.target.value)}
               />
               <div className='flex flex-col'>
                 <span className='text-sm text-zinc-400 uppercase font-bold'>

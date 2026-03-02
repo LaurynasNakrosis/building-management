@@ -8,17 +8,53 @@ import { useState } from 'react';
 
 export default function CreateInvoicePage() {
   const { auth } = useAdminAuth();
+
   type InvoiceFormValues = {
+    clientsName: string;
+    clientsEmail: string;
+    clientsPhone: string;
+    clientsHouseNumber: string;
+    clientsRoadName: string;
+    clientsCity: string;
+    clientsPostcode: string;
+    clientsCountry: string;
+
+    siteHouseNumber: string;
+    siteRoadName: string;
+    siteCity: string;
+    sitePostcode: string;
+    siteCountry: string;
+
+    jobStartDate: string;
+    jobFinishDate: string;
+
     itemDescription: string;
     itemQuantity: string;
     itemRate: string;
   };
   const [formValues, setFormValues] = useState<InvoiceFormValues>({
+    clientsName: '',
+    clientsEmail: '',
+    clientsPhone: '',
+    clientsHouseNumber: '',
+    clientsRoadName: '',
+    clientsCity: '',
+    clientsPostcode: '',
+    clientsCountry: '',
+
+    siteHouseNumber: '',
+    siteRoadName: '',
+    siteCity: '',
+    sitePostcode: '',
+    siteCountry: '',
+
+    jobStartDate: '',
+    jobFinishDate: '',
+
     itemDescription: '',
     itemQuantity: '',
     itemRate: '',
   });
-
   if (auth.status === 'loading') {
     return (
       <div className='min-h-screen flex items-center justify-center bg-zinc-900 text-white'>
@@ -29,6 +65,10 @@ export default function CreateInvoicePage() {
 
   if (auth.status === 'unauthenticated') {
     return null;
+  }
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log('Submitted');
   }
 
   return (
@@ -44,8 +84,8 @@ export default function CreateInvoicePage() {
       </div>
       <div className=' max-w-7xl mx-auto text-center'>
         <h1 className='text-2xl font-bold mb-6'>Create Invoice</h1>
-        <form action=''>
-          <div className='mb-10 lg:flex lg:justify-around  '>
+        <form onSubmit={handleSubmit}>
+          <div className='mb-10 px-4 lg:flex lg:justify-around  '>
             <div className='h-fit py-4  m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
               <h2>Clients Information:</h2>
               <Input
@@ -151,7 +191,7 @@ export default function CreateInvoicePage() {
               </div>
             </div>
           </div>
-          <div className='mb-10 lg:flex lg:justify-around  '>
+          <div className='mb-10 px-4 lg:flex lg:justify-around  '>
             <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
               <Input
                 id='itemDescription'
@@ -184,11 +224,14 @@ export default function CreateInvoicePage() {
                 </div>
               </div>
             </div>
-
-            <div className='w-[420px] lg:w-[385px] py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
-              Log added items here ...
-            </div>
           </div>
+          <div className=' w-[420px] lg:w-[385px] py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
+            Log added items here ...
+          </div>
+          <p>
+            <button>Reset</button>
+            <button>Create</button>
+          </p>
         </form>
       </div>
     </div>

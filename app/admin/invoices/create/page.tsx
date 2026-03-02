@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useAdminAuth } from '../../useAdminAuth';
 import Input from '@/app/components/formComponents/Input';
 import { useState } from 'react';
+import { toSlug } from '@/lib/utils';
 
 export default function CreateInvoicePage() {
   const { auth } = useAdminAuth();
@@ -69,8 +70,79 @@ export default function CreateInvoicePage() {
   }
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log('Submitted');
-    console.log(formValues);
+    const quantity = parseFloat(formValues.itemQuantity) || 0;
+    const rate = parseFloat(formValues.itemRate) || 0;
+    const total = quantity * rate;
+
+    const jobItems = [
+      {
+        description: formValues.itemDescription,
+        quantity,
+        rate,
+        total,
+      },
+    ];
+
+    const price = total;
+
+    const payload = {
+      name: formValues.clientsName || 'Untitled Invoice',
+      slug: formValues.clientsName
+        ? toSlug(formValues.clientsName)
+        : `invoice-${Date.now()}`,
+      price,
+
+      businessAddress: {
+        houseNumber: '',
+        roadName: '',
+        city: '',
+        country: '',
+        postCode: '',
+      },
+      businessContactInformation: {
+        firstName: '',
+        lastName: '',
+        phone: '',
+        email: '',
+        address: {
+          houseNumber: '',
+          roadName: '',
+          city: '',
+          country: '',
+          postCode: '',
+        },
+      },
+      clientInformation: {
+        firstName: formValues.clientsName,
+        lastName: '',
+        phone: formValues.clientsPhone,
+        email: formValues.clientsEmail,
+        address: {
+          houseNumber: formValues.clientsHouseNumber,
+          roadName: formValues.clientsRoadName,
+          city: formValues.clientsCity,
+          country: formValues.clientsCountry,
+          postCode: formValues.clientsPostcode,
+        },
+      },
+      jobAddress: {
+        houseNumber: formValues.siteHouseNumber,
+        roadName: formValues.siteRoadName,
+        city: formValues.siteCity,
+        country: formValues.siteCountry,
+        postCode: formValues.sitePostcode,
+      },
+
+      jobStartDate: formValues.jobStartDate
+        ? new Date(formValues.jobStartDate)
+        : new Date(),
+      jobFinishDate: formValues.jobFinishDate
+        ? new Date(formValues.jobFinishDate)
+        : new Date(),
+
+      jobItems,
+    };
+    console.log('Invoice payload:', payload);
   }
   function handleInputChange(field: keyof InvoiceFormValues, value: string) {
     setFormValues((prev) => ({ ...prev, [field]: value }));

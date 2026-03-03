@@ -56,6 +56,13 @@ export default function CreateInvoicePage() {
     itemQuantity: '',
     itemRate: '',
   });
+  type JobItem = {
+    description: string;
+    quantity: number;
+    rate: number;
+    total: number;
+  };
+  const [jobItems, setJobItems] = useState<JobItem[]>([]);
 
   if (auth.status === 'loading') {
     return (

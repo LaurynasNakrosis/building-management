@@ -28,7 +28,6 @@ export default function CreateInvoicePage() {
 
     jobStartDate: string;
     jobFinishDate: string;
-
     itemDescription: string;
     itemQuantity: string;
     itemRate: string;
@@ -51,7 +50,6 @@ export default function CreateInvoicePage() {
 
     jobStartDate: '',
     jobFinishDate: '',
-
     itemDescription: '',
     itemQuantity: '',
     itemRate: '',
@@ -64,6 +62,25 @@ export default function CreateInvoicePage() {
   };
   const [jobItems, setJobItems] = useState<JobItem[]>([]);
 
+  function handleAddJobItem() {
+    const quantity = parseFloat(formValues.itemQuantity) || 0;
+    const rate = parseFloat(formValues.itemRate) || 0;
+
+    if (!formValues.itemDescription.trim() || quantity <= 0 || rate < 0) {
+      return;
+    }
+
+    const total = quantity * rate;
+
+    const newItem: JobItem = {
+      description: formValues.itemDescription,
+      quantity,
+      rate,
+      total,
+    };
+
+    setJobItems((prev) => [...prev, newItem]);
+  }
   if (auth.status === 'loading') {
     return (
       <div className='min-h-screen flex items-center justify-center bg-zinc-900 text-white'>
@@ -377,6 +394,14 @@ export default function CreateInvoicePage() {
                   ).toFixed(2)}
                 </div>
               </div>
+
+              <button
+                type='button'
+                className='mt-2 px-4 py-2 border border-lime-400 rounded text-lime-300'
+                onClick={handleAddJobItem}
+              >
+                + Add job
+              </button>
             </div>
           </div>
           <div className=' w-[420px] lg:w-[385px] py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>

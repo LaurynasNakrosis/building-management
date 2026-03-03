@@ -354,6 +354,7 @@ export default function CreateInvoicePage() {
           </div>
           <div className='mb-10 px-4 lg:flex lg:justify-around  '>
             <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
+              <h2>Jobs or Tasks</h2>
               <Input
                 id='itemDescription'
                 label='Job description'
@@ -405,11 +406,31 @@ export default function CreateInvoicePage() {
             </div>
           </div>
           <div className=' w-[420px] lg:w-[385px] py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
-            Log added items here ...
+            <h2 className='font-semibold'>Logged job items</h2>
+
+            {jobItems.length === 0 ? (
+              <p className='text-zinc-400 text-sm'>No jobs added yet.</p>
+            ) : (
+              <ul className='w-full text-left text-sm space-y-2 px-4'>
+                {jobItems.map((item, index) => (
+                  <li key={index} className='border-b border-zinc-700 pb-2'>
+                    <div className='font-medium'>{item.description}</div>
+                    <div className='text-zinc-400'>
+                      {item.quantity} × £{item.rate.toFixed(2)} = £
+                      {item.total.toFixed(2)}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <p>
-            <button>Reset</button>
-            <button>Create</button>
+            <button className='mt-2 px-4 py-2 border border-lime-400 rounded text-lime-300'>
+              Reset Form
+            </button>
+            <button className='mt-2 px-4 py-2 border border-lime-400 rounded text-lime-300'>
+              Create Invoice
+            </button>
           </p>
         </form>
       </div>

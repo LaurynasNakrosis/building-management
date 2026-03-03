@@ -183,98 +183,99 @@ export default function CreateInvoicePage() {
           ← Back to Admin
         </Link>
       </div>
-      <div className=' max-w-7xl mx-auto text-center'>
-        <h1 className='text-2xl font-bold mb-6'>Create Invoice</h1>
-        <form onSubmit={handleSubmit}>
-          <div className='mb-10 px-4 lg:flex lg:justify-around  '>
-            <div className='h-fit py-4  m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
-              <h2>Clients Information:</h2>
-              <Input
-                id='clientsName'
-                label='Clients Name'
-                name='clientsName'
-                type='clientsName'
-                value={formValues.clientsName}
-                onChange={(e) =>
-                  handleInputChange('clientsName', e.target.value)
-                }
-              />
-              <Input
-                id='clientsEmail'
-                label='Clients Email'
-                name='clientsEmail'
-                type='clientsEmail'
-                value={formValues.clientsEmail}
-                onChange={(e) =>
-                  handleInputChange('clientsEmail', e.target.value)
-                }
-              />
-              <Input
-                id='clientsPhone'
-                label='Clients Phone'
-                name='clientsPhone'
-                type='clientsPhone'
-                value={formValues.clientsPhone}
-                onChange={(e) =>
-                  handleInputChange('clientsPhone', e.target.value)
-                }
-              />
+      <div className=' max-w-5xl mx-auto lg:px-8'>
+        <h1 className='text-2xl font-bold mb-8 text-center'>Create Invoice</h1>
+        <form onSubmit={handleSubmit} className='space-y-8'>
+          <section className='rounded-xl border border-lime400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4 '>
+            <h2 className='text-lg font-semibold text-lime-300'>
+              Clients Information:
+            </h2>
+            <Input
+              id='clientsName'
+              label='Clients Name'
+              name='clientsName'
+              type='clientsName'
+              value={formValues.clientsName}
+              onChange={(e) => handleInputChange('clientsName', e.target.value)}
+            />
+            <Input
+              id='clientsEmail'
+              label='Clients Email'
+              name='clientsEmail'
+              type='clientsEmail'
+              value={formValues.clientsEmail}
+              onChange={(e) =>
+                handleInputChange('clientsEmail', e.target.value)
+              }
+            />
+            <Input
+              id='clientsPhone'
+              label='Clients Phone'
+              name='clientsPhone'
+              type='clientsPhone'
+              value={formValues.clientsPhone}
+              onChange={(e) =>
+                handleInputChange('clientsPhone', e.target.value)
+              }
+            />
 
-              <h2>Clients Address:</h2>
-              <Input
-                id='clientsHouseNumber'
-                label='Clients House Number'
-                name='clientsHouseNumber'
-                type='clientsHouseNumber'
-                value={formValues.clientsHouseNumber}
-                onChange={(e) =>
-                  handleInputChange('clientsHouseNumber', e.target.value)
-                }
-              />
-              <Input
-                id='clientsRoadName'
-                label='Clients Road Name '
-                name='clientsRoadName'
-                type='clientsRoadName'
-                value={formValues.clientsRoadName}
-                onChange={(e) =>
-                  handleInputChange('clientsRoadName', e.target.value)
-                }
-              />
-              <Input
-                id='lientsCity'
-                label='Clients City'
-                name='clientsCity'
-                type='clientsCity'
-                value={formValues.clientsCity}
-                onChange={(e) =>
-                  handleInputChange('clientsCity', e.target.value)
-                }
-              />
-              <Input
-                id='clientsPostcode'
-                label='Clients Postcode'
-                name='clientsPostcode'
-                type='clientsPostcode'
-                value={formValues.clientsPostcode}
-                onChange={(e) =>
-                  handleInputChange('clientsPostcode', e.target.value)
-                }
-              />
-              <Input
-                id='clientsCountry'
-                label='Clients Country'
-                name='clientsCountry'
-                type='clientsCountry'
-                value={formValues.clientsCountry}
-                onChange={(e) =>
-                  handleInputChange('clientsCountry', e.target.value)
-                }
-              />
-            </div>
+            <h2 className='text-lg font-semibold text-lime-300'>
+              Clients Address:
+            </h2>
+            <Input
+              id='clientsHouseNumber'
+              label='Clients House Number'
+              name='clientsHouseNumber'
+              type='clientsHouseNumber'
+              value={formValues.clientsHouseNumber}
+              onChange={(e) =>
+                handleInputChange('clientsHouseNumber', e.target.value)
+              }
+            />
+            <Input
+              id='clientsRoadName'
+              label='Clients Road Name '
+              name='clientsRoadName'
+              type='clientsRoadName'
+              value={formValues.clientsRoadName}
+              onChange={(e) =>
+                handleInputChange('clientsRoadName', e.target.value)
+              }
+            />
+            <Input
+              id='lientsCity'
+              label='Clients City'
+              name='clientsCity'
+              type='clientsCity'
+              value={formValues.clientsCity}
+              onChange={(e) => handleInputChange('clientsCity', e.target.value)}
+            />
+            <Input
+              id='clientsPostcode'
+              label='Clients Postcode'
+              name='clientsPostcode'
+              type='clientsPostcode'
+              value={formValues.clientsPostcode}
+              onChange={(e) =>
+                handleInputChange('clientsPostcode', e.target.value)
+              }
+            />
+            <Input
+              id='clientsCountry'
+              label='Clients Country'
+              name='clientsCountry'
+              type='clientsCountry'
+              value={formValues.clientsCountry}
+              onChange={(e) =>
+                handleInputChange('clientsCountry', e.target.value)
+              }
+            />
+
             <div className='flex flex-col'>
               <div className='h-fit py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
-                <h2>Site Address</h2>
+                <h2 className='text-lg font-semibold text-lime-300'>
+                  Site Address
+                </h2>
                 <Input
                   id='siteHouseNumber'
                   label='Site House Number'
@@ -327,7 +328,9 @@ export default function CreateInvoicePage() {
                 />
               </div>
               <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
-                <h2>Job Dates</h2>
+                <h2 className='text-lg font-semibold text-lime-300'>
+                  Job Dates
+                </h2>
                 <Input
                   id='jobStartDate'
                   label='Job Start Date'
@@ -351,10 +354,12 @@ export default function CreateInvoicePage() {
                 />
               </div>
             </div>
-          </div>
+          </section>
           <div className='mb-10 px-4 lg:flex lg:justify-around  '>
             <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
-              <h2>Jobs or Tasks</h2>
+              <h2 className='text-lg font-semibold text-lime-300'>
+                Jobs or Tasks
+              </h2>
               <Input
                 id='itemDescription'
                 label='Job description'
@@ -406,7 +411,9 @@ export default function CreateInvoicePage() {
             </div>
           </div>
           <div className=' w-[420px] lg:w-[385px] py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
-            <h2 className='font-semibold'>Logged job items</h2>
+            <h2 className='text-lg font-semibold text-lime-300'>
+              Logged job items
+            </h2>
 
             {jobItems.length === 0 ? (
               <p className='text-zinc-400 text-sm'>No jobs added yet.</p>

@@ -426,10 +426,10 @@ export default function CreateInvoicePage() {
           </div>
           <p>
             <button className='mt-2 px-4 py-2 border border-lime-400 rounded text-lime-300'>
-              Reset Form
+              Reset
             </button>
             <button className='mt-2 px-4 py-2 border border-lime-400 rounded text-lime-300'>
-              Create Invoice
+              Create
             </button>
           </p>
         </form>

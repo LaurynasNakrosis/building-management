@@ -9,17 +9,17 @@ type Props = React.InputHTMLAttributes<HTMLInputElement> & {
 
 export default function Input({ label, id, ...props }: Props) {
   return (
-    <div className='mx-4 flex flex-col items-start text-white'>
+    <div className='w-full flex flex-col gap-1 text-white'>
       <label
         htmlFor={id}
-        className='block text-[0.8rem] mb-0.5 text-[#9bafaf] uppercase font-bold'
+        className='block text-[0.75rem] mb-0.5 text-[#9bafaf] uppercase font-semibold tracking-wide'
       >
         {label}
       </label>
       <input
         id={id}
         {...props}
-        className=' block w-[25rem] max-w-[22rem] p-2 text-base rounded border border-[#758a8a] bg-[#869999] text-[#142020]'
+        className='block w-full rounded-md border border-[#758a8a] bg-[#869999] px-3 py-2 text-sm text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow'
       />
     </div>
   );

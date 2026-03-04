@@ -10,6 +10,7 @@
     "fmt": "pnpm rome check . --apply-unsafe && pnpm rome format . --write"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "@next/env": "^16.0.7",
     "@next/mdx": "^13.5.4",
     "@upstash/redis": "^1.23.3",

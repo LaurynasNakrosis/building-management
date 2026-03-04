@@ -1,5 +1,7 @@
 'use client';
 
+import { TrashIcon } from '@heroicons/react/24/outline';
+
 import { AdminNav } from '@/app/components/AdminNav';
 import Link from 'next/link';
 import { useAdminAuth } from '../../useAdminAuth';
@@ -92,16 +94,8 @@ export default function CreateInvoicePage() {
       itemRate: '',
     }));
   }
-  if (auth.status === 'loading') {
-    return (
-      <div className='min-h-screen flex items-center justify-center bg-zinc-900 text-white'>
-        <p>Checking admin access...</p>
-      </div>
-    );
-  }
-
-  if (auth.status === 'unauthenticated') {
-    return null;
+  function handleRemoveJobItem(indexToRemove: number) {
+    setJobItems((prev) => prev.filter((_, index) => index !== indexToRemove));
   }
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -181,6 +175,17 @@ export default function CreateInvoicePage() {
   }
   function handleInputChange(field: keyof InvoiceFormValues, value: string) {
     setFormValues((prev) => ({ ...prev, [field]: value }));
+  }
+  if (auth.status === 'loading') {
+    return (
+      <div className='min-h-screen flex items-center justify-center bg-zinc-900 text-white'>
+        <p>Checking admin access...</p>
+      </div>
+    );
+  }
+
+  if (auth.status === 'unauthenticated') {
+    return null;
   }
 
   return (
@@ -453,7 +458,7 @@ export default function CreateInvoicePage() {
                   {jobItems.map((item, index) => (
                     <li
                       key={index}
-                      className='border-b border-zinc-700 pb-2 last:border-b-0 last:pb-0'
+                      className='flex items-start justify-between border-b border-zinc-700 pb-2 last:border-b-0 last:pb-0'
                     >
                       <div className='font-medium text-zinc-200/80'>
                         {item.description}
@@ -461,6 +466,15 @@ export default function CreateInvoicePage() {
                       <div className='text-zinc-400'>
                         {item.quantity} × £{item.rate.toFixed(2)} = £
                         {item.total.toFixed(2)}
+                      </div>
+                      <div>
+                        <button
+                          type='button'
+                          onClick={() => handleRemoveJobItem(index)}
+                          className='ml-3 text-xs text-red-400 hover:text-red-300'
+                        >
+                          <TrashIcon className='h-6 w-6' />
+                        </button>
                       </div>
                     </li>
                   ))}

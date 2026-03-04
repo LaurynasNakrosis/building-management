@@ -372,21 +372,23 @@ export default function CreateInvoicePage() {
             </div>
           </section>
 
-          <div className='mb-10 px-4 lg:flex lg:justify-around  '>
-            <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
-              <h2 className='text-lg font-semibold text-lime-300'>
-                Jobs or Tasks
-              </h2>
-              <Input
-                id='itemDescription'
-                label='Job description'
-                name='itemDescription'
-                type='text'
-                value={formValues.itemDescription}
-                onChange={(e) =>
-                  handleInputChange('itemDescription', e.target.value)
-                }
-              />
+          <section className='rounded-xl border border-lime-400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4'>
+            <h2 className='text-lg font-semibold text-lime-300'>
+              Jobs or Tasks
+            </h2>
+            <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+              <div className='md:col-span-3'>
+                <Input
+                  id='itemDescription'
+                  label='Job description'
+                  name='itemDescription'
+                  type='text'
+                  value={formValues.itemDescription}
+                  onChange={(e) =>
+                    handleInputChange('itemDescription', e.target.value)
+                  }
+                />
+              </div>
               <Input
                 id='itemQuantity'
                 label='Quantity'
@@ -405,11 +407,11 @@ export default function CreateInvoicePage() {
                 value={formValues.itemRate}
                 onChange={(e) => handleInputChange('itemRate', e.target.value)}
               />
-              <div className='flex flex-col'>
-                <span className='text-sm text-zinc-400 uppercase font-bold'>
+              <div className='flex flex-col justify-end gap-1'>
+                <span className='text-xs text-zinc-400 uppercase font-bold'>
                   Total
                 </span>
-                <div className='p-2 rounded border border-zinc-600 bg-zinc-800 text-white'>
+                <div className='px-3 p-2 rounded-md border border-zinc-600 bg-zinc-800 text-white text-xs'>
                   £
                   {(
                     (parseFloat(formValues.itemQuantity) || 0) *
@@ -417,7 +419,8 @@ export default function CreateInvoicePage() {
                   ).toFixed(2)}
                 </div>
               </div>
-
+            </div>
+            <div className='flex justify-end'>
               <button
                 type='button'
                 className='mt-2 px-4 py-2 border border-lime-400 rounded text-lime-300'
@@ -426,7 +429,8 @@ export default function CreateInvoicePage() {
                 + Add job
               </button>
             </div>
-          </div>
+          </section>
+
           <div className=' w-[420px] lg:w-[385px] py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
             <h2 className='text-lg font-semibold text-lime-300'>
               Logged job items

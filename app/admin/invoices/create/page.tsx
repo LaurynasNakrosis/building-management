@@ -186,7 +186,7 @@ export default function CreateInvoicePage() {
       <div className=' max-w-5xl mx-auto lg:px-8'>
         <h1 className='text-2xl font-bold mb-8 text-center'>Create Invoice</h1>
         <form onSubmit={handleSubmit} className='space-y-8'>
-          <section className='rounded-xl border border-lime400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4 '>
+          <section className='rounded-xl border border-lime-400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4 '>
             <h2 className='text-lg font-semibold text-lime-300'>
               Client Information
             </h2>
@@ -281,85 +281,96 @@ export default function CreateInvoicePage() {
             </div>
           </section>
 
-          <div className='flex flex-col'>
-            <div className='h-fit py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
-              <h2 className='text-lg font-semibold text-lime-300'>
-                Site Address
-              </h2>
-              <Input
-                id='siteHouseNumber'
-                label='Site House Number'
-                name='siteHouseNumber'
-                type='siteHouseNumber'
-                value={formValues.siteHouseNumber}
-                onChange={(e) =>
-                  handleInputChange('siteHouseNumber', e.target.value)
-                }
-              />
-              <Input
-                id='siteRoadName'
-                label='Site Road Name '
-                name='siteRoadName'
-                type='siteRoadName'
-                value={formValues.siteRoadName}
-                onChange={(e) =>
-                  handleInputChange('siteRoadName', e.target.value)
-                }
-              />
-              <Input
-                id='siteCity'
-                label='Site City'
-                name='siteCity'
-                type='siteCity'
-                value={formValues.siteCity}
-                onChange={(e) => handleInputChange('siteCity', e.target.value)}
-              />
-              <Input
-                id='sitePostcode'
-                label='Site Postcode'
-                name='sitePostcode'
-                type='sitePostcode'
-                value={formValues.sitePostcode}
-                onChange={(e) =>
-                  handleInputChange('sitePostcode', e.target.value)
-                }
-              />
-              <Input
-                id='siteCountry'
-                label='Site Country'
-                name='siteCountry'
-                type='siteCountry'
-                value={formValues.siteCountry}
-                onChange={(e) =>
-                  handleInputChange('siteCountry', e.target.value)
-                }
-              />
-            </div>
-            <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
-              <h2 className='text-lg font-semibold text-lime-300'>Job Dates</h2>
-              <Input
-                id='jobStartDate'
-                label='Job Start Date'
-                name='jobStartDate'
-                type='date'
-                value={formValues.jobStartDate}
-                onChange={(e) =>
-                  handleInputChange('jobStartDate', e.target.value)
-                }
-              />
+          <section className='rounded-xl border border-lime-400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4'>
+            <div className='grid lg:grid-cols-2 gap-6'>
+              <div className='space-y-4'>
+                <h2 className='text-lg font-semibold text-lime-300'>
+                  Site Address
+                </h2>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+                  <Input
+                    id='siteHouseNumber'
+                    label='Site House Number'
+                    name='siteHouseNumber'
+                    type='siteHouseNumber'
+                    value={formValues.siteHouseNumber}
+                    onChange={(e) =>
+                      handleInputChange('siteHouseNumber', e.target.value)
+                    }
+                  />
+                  <Input
+                    id='siteRoadName'
+                    label='Site Road Name '
+                    name='siteRoadName'
+                    type='siteRoadName'
+                    value={formValues.siteRoadName}
+                    onChange={(e) =>
+                      handleInputChange('siteRoadName', e.target.value)
+                    }
+                  />
+                  <Input
+                    id='siteCity'
+                    label='Site City'
+                    name='siteCity'
+                    type='siteCity'
+                    value={formValues.siteCity}
+                    onChange={(e) =>
+                      handleInputChange('siteCity', e.target.value)
+                    }
+                  />
+                  <Input
+                    id='sitePostcode'
+                    label='Site Postcode'
+                    name='sitePostcode'
+                    type='sitePostcode'
+                    value={formValues.sitePostcode}
+                    onChange={(e) =>
+                      handleInputChange('sitePostcode', e.target.value)
+                    }
+                  />
+                  <Input
+                    id='siteCountry'
+                    label='Site Country'
+                    name='siteCountry'
+                    type='siteCountry'
+                    value={formValues.siteCountry}
+                    onChange={(e) =>
+                      handleInputChange('siteCountry', e.target.value)
+                    }
+                  />
+                </div>
+              </div>
 
-              <Input
-                id='jobFinishDate'
-                label='Job Finish Date'
-                name='jobFinishDate'
-                type='date'
-                value={formValues.jobFinishDate}
-                onChange={(e) =>
-                  handleInputChange('jobFinishDate', e.target.value)
-                }
-              />
+              <div className='space-y-4'>
+                <h2 className='text-lg font-semibold text-lime-300'>
+                  Job Dates
+                </h2>
+                <div className='grid grid-cols-1 gap-4'>
+                  <Input
+                    id='jobStartDate'
+                    label='Job Start Date'
+                    name='jobStartDate'
+                    type='date'
+                    value={formValues.jobStartDate}
+                    onChange={(e) =>
+                      handleInputChange('jobStartDate', e.target.value)
+                    }
+                  />
+
+                  <Input
+                    id='jobFinishDate'
+                    label='Job Finish Date'
+                    name='jobFinishDate'
+                    type='date'
+                    value={formValues.jobFinishDate}
+                    onChange={(e) =>
+                      handleInputChange('jobFinishDate', e.target.value)
+                    }
+                  />
+                </div>
+              </div>
             </div>
-          </div>
+          </section>
 
           <div className='mb-10 px-4 lg:flex lg:justify-around  '>
             <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>

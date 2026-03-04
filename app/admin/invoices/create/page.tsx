@@ -32,7 +32,7 @@ export default function CreateInvoicePage() {
     itemQuantity: string;
     itemRate: string;
   };
-  const [formValues, setFormValues] = useState<InvoiceFormValues>({
+  const initialFormValues: InvoiceFormValues = {
     clientsName: '',
     clientsEmail: '',
     clientsPhone: '',
@@ -53,7 +53,9 @@ export default function CreateInvoicePage() {
     itemDescription: '',
     itemQuantity: '',
     itemRate: '',
-  });
+  };
+  const [formValues, setFormValues] =
+    useState<InvoiceFormValues>(initialFormValues);
   type JobItem = {
     description: string;
     quantity: number;
@@ -61,7 +63,10 @@ export default function CreateInvoicePage() {
     total: number;
   };
   const [jobItems, setJobItems] = useState<JobItem[]>([]);
-
+  function handleReset() {
+    setFormValues(initialFormValues);
+    setJobItems([]);
+  }
   function handleAddJobItem() {
     const quantity = parseFloat(formValues.itemQuantity) || 0;
     const rate = parseFloat(formValues.itemRate) || 0;
@@ -468,8 +473,9 @@ export default function CreateInvoicePage() {
           </section>
           <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>
             <button
-              type='button'
+              type='reset'
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-zinc-600 text-sm sm:text-[0.9rem] text-zinc-200 hover:bg-zinc-800 transition-colors'
+              onClick={handleReset}
             >
               Reset Form
             </button>

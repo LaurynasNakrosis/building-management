@@ -173,7 +173,7 @@ export default function CreateInvoicePage() {
   }
 
   return (
-    <div className='min-h-screen pb-20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white'>
+    <div className='px-4 lg:px-0 min-h-screen pb-20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white'>
       <AdminNav />
       <div className=' pl-6 pt-24 md:pl-24'>
         <Link
@@ -420,10 +420,10 @@ export default function CreateInvoicePage() {
                 </div>
               </div>
             </div>
-            <div className='flex justify-end'>
+            <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>
               <button
                 type='button'
-                className='mt-2 px-4 py-2 border border-lime-400 rounded text-lime-300'
+                className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 text-sm sm:text-[0.9rem] font-medium text-lime-300 hover:bg-lime-400/10 transition-colors'
                 onClick={handleAddJobItem}
               >
                 + Add job
@@ -431,17 +431,18 @@ export default function CreateInvoicePage() {
             </div>
           </section>
 
-          <div className=' w-[420px] lg:w-[385px] py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
-            <h2 className='text-lg font-semibold text-lime-300'>
-              Logged job items
-            </h2>
+          <section className='rounded-xl border border-lime-400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4'>
+            <h2 className='font-semibold text-lime-300'>Logged job items</h2>
 
             {jobItems.length === 0 ? (
               <p className='text-zinc-400 text-sm'>No jobs added yet.</p>
             ) : (
-              <ul className='w-full text-left text-sm space-y-2 px-4'>
+              <ul className='w-full text-left text-sm space-y-2'>
                 {jobItems.map((item, index) => (
-                  <li key={index} className='border-b border-zinc-700 pb-2'>
+                  <li
+                    key={index}
+                    className='border-b border-zinc-700 pb-2 last:border-b-0 last:pb-0'
+                  >
                     <div className='font-medium'>{item.description}</div>
                     <div className='text-zinc-400'>
                       {item.quantity} × £{item.rate.toFixed(2)} = £
@@ -451,15 +452,21 @@ export default function CreateInvoicePage() {
                 ))}
               </ul>
             )}
-          </div>
-          <p>
-            <button className='mt-2 px-4 py-2 border border-lime-400 rounded text-lime-300'>
+          </section>
+          <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>
+            <button
+              type='button'
+              className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-zinc-600 text-sm sm:text-[0.9rem] text-zinc-200 hover:bg-zinc-800 transition-colors'
+            >
               Reset
             </button>
-            <button className='mt-2 px-4 py-2 border border-lime-400 rounded text-lime-300'>
+            <button
+              type='submit'
+              className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 bg-lime-400 text-sm sm:text-[0.9rem] font-semibold text-zinc-900 hover:bg-lime-300 hover:border-lime-300 transition-colors'
+            >
               Create
             </button>
-          </p>
+          </div>
         </form>
       </div>
     </div>

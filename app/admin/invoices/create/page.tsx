@@ -443,7 +443,9 @@ export default function CreateInvoicePage() {
                     key={index}
                     className='border-b border-zinc-700 pb-2 last:border-b-0 last:pb-0'
                   >
-                    <div className='font-medium'>{item.description}</div>
+                    <div className='font-medium text-zinc-200/80'>
+                      {item.description}
+                    </div>
                     <div className='text-zinc-400'>
                       {item.quantity} × £{item.rate.toFixed(2)} = £
                       {item.total.toFixed(2)}
@@ -458,13 +460,13 @@ export default function CreateInvoicePage() {
               type='button'
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-zinc-600 text-sm sm:text-[0.9rem] text-zinc-200 hover:bg-zinc-800 transition-colors'
             >
-              Reset
+              Reset Form
             </button>
             <button
               type='submit'
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 bg-lime-400 text-sm sm:text-[0.9rem] font-semibold text-zinc-900 hover:bg-lime-300 hover:border-lime-300 transition-colors'
             >
-              Create
+              Create Invoice
             </button>
           </div>
         </form>

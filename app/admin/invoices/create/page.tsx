@@ -188,173 +188,179 @@ export default function CreateInvoicePage() {
         <form onSubmit={handleSubmit} className='space-y-8'>
           <section className='rounded-xl border border-lime400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4 '>
             <h2 className='text-lg font-semibold text-lime-300'>
-              Clients Information:
+              Client Information
             </h2>
-            <Input
-              id='clientsName'
-              label='Clients Name'
-              name='clientsName'
-              type='clientsName'
-              value={formValues.clientsName}
-              onChange={(e) => handleInputChange('clientsName', e.target.value)}
-            />
-            <Input
-              id='clientsEmail'
-              label='Clients Email'
-              name='clientsEmail'
-              type='clientsEmail'
-              value={formValues.clientsEmail}
-              onChange={(e) =>
-                handleInputChange('clientsEmail', e.target.value)
-              }
-            />
-            <Input
-              id='clientsPhone'
-              label='Clients Phone'
-              name='clientsPhone'
-              type='clientsPhone'
-              value={formValues.clientsPhone}
-              onChange={(e) =>
-                handleInputChange('clientsPhone', e.target.value)
-              }
-            />
-
-            <h2 className='text-lg font-semibold text-lime-300'>
-              Clients Address:
-            </h2>
-            <Input
-              id='clientsHouseNumber'
-              label='Clients House Number'
-              name='clientsHouseNumber'
-              type='clientsHouseNumber'
-              value={formValues.clientsHouseNumber}
-              onChange={(e) =>
-                handleInputChange('clientsHouseNumber', e.target.value)
-              }
-            />
-            <Input
-              id='clientsRoadName'
-              label='Clients Road Name '
-              name='clientsRoadName'
-              type='clientsRoadName'
-              value={formValues.clientsRoadName}
-              onChange={(e) =>
-                handleInputChange('clientsRoadName', e.target.value)
-              }
-            />
-            <Input
-              id='lientsCity'
-              label='Clients City'
-              name='clientsCity'
-              type='clientsCity'
-              value={formValues.clientsCity}
-              onChange={(e) => handleInputChange('clientsCity', e.target.value)}
-            />
-            <Input
-              id='clientsPostcode'
-              label='Clients Postcode'
-              name='clientsPostcode'
-              type='clientsPostcode'
-              value={formValues.clientsPostcode}
-              onChange={(e) =>
-                handleInputChange('clientsPostcode', e.target.value)
-              }
-            />
-            <Input
-              id='clientsCountry'
-              label='Clients Country'
-              name='clientsCountry'
-              type='clientsCountry'
-              value={formValues.clientsCountry}
-              onChange={(e) =>
-                handleInputChange('clientsCountry', e.target.value)
-              }
-            />
-
-            <div className='flex flex-col'>
-              <div className='h-fit py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
-                <h2 className='text-lg font-semibold text-lime-300'>
-                  Site Address
-                </h2>
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+              <Input
+                id='clientsName'
+                label='Clients Name'
+                name='clientsName'
+                type='clientsName'
+                value={formValues.clientsName}
+                onChange={(e) =>
+                  handleInputChange('clientsName', e.target.value)
+                }
+              />
+              <Input
+                id='clientsEmail'
+                label='Clients Email'
+                name='clientsEmail'
+                type='clientsEmail'
+                value={formValues.clientsEmail}
+                onChange={(e) =>
+                  handleInputChange('clientsEmail', e.target.value)
+                }
+              />
+              <Input
+                id='clientsPhone'
+                label='Clients Phone'
+                name='clientsPhone'
+                type='clientsPhone'
+                value={formValues.clientsPhone}
+                onChange={(e) =>
+                  handleInputChange('clientsPhone', e.target.value)
+                }
+              />
+            </div>
+            <div className='pt-2 border-t border-zinc-700/60 mt-2 space-y-4'>
+              <h3 className='text-sm font-semibold text-lime-300'>
+                Client Address
+              </h3>
+              <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                 <Input
-                  id='siteHouseNumber'
-                  label='Site House Number'
-                  name='siteHouseNumber'
-                  type='siteHouseNumber'
-                  value={formValues.siteHouseNumber}
+                  id='clientsHouseNumber'
+                  label='Clients House Number'
+                  name='clientsHouseNumber'
+                  type='clientsHouseNumber'
+                  value={formValues.clientsHouseNumber}
                   onChange={(e) =>
-                    handleInputChange('siteHouseNumber', e.target.value)
+                    handleInputChange('clientsHouseNumber', e.target.value)
                   }
                 />
                 <Input
-                  id='siteRoadName'
-                  label='Site Road Name '
-                  name='siteRoadName'
-                  type='siteRoadName'
-                  value={formValues.siteRoadName}
+                  id='clientsRoadName'
+                  label='Clients Road Name '
+                  name='clientsRoadName'
+                  type='clientsRoadName'
+                  value={formValues.clientsRoadName}
                   onChange={(e) =>
-                    handleInputChange('siteRoadName', e.target.value)
+                    handleInputChange('clientsRoadName', e.target.value)
                   }
                 />
                 <Input
-                  id='siteCity'
-                  label='Site City'
-                  name='siteCity'
-                  type='siteCity'
-                  value={formValues.siteCity}
+                  id='lientsCity'
+                  label='Clients City'
+                  name='clientsCity'
+                  type='clientsCity'
+                  value={formValues.clientsCity}
                   onChange={(e) =>
-                    handleInputChange('siteCity', e.target.value)
+                    handleInputChange('clientsCity', e.target.value)
                   }
                 />
                 <Input
-                  id='sitePostcode'
-                  label='Site Postcode'
-                  name='sitePostcode'
-                  type='sitePostcode'
-                  value={formValues.sitePostcode}
+                  id='clientsPostcode'
+                  label='Clients Postcode'
+                  name='clientsPostcode'
+                  type='clientsPostcode'
+                  value={formValues.clientsPostcode}
                   onChange={(e) =>
-                    handleInputChange('sitePostcode', e.target.value)
+                    handleInputChange('clientsPostcode', e.target.value)
                   }
                 />
                 <Input
-                  id='siteCountry'
-                  label='Site Country'
-                  name='siteCountry'
-                  type='siteCountry'
-                  value={formValues.siteCountry}
+                  id='clientsCountry'
+                  label='Clients Country'
+                  name='clientsCountry'
+                  type='clientsCountry'
+                  value={formValues.clientsCountry}
                   onChange={(e) =>
-                    handleInputChange('siteCountry', e.target.value)
-                  }
-                />
-              </div>
-              <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
-                <h2 className='text-lg font-semibold text-lime-300'>
-                  Job Dates
-                </h2>
-                <Input
-                  id='jobStartDate'
-                  label='Job Start Date'
-                  name='jobStartDate'
-                  type='date'
-                  value={formValues.jobStartDate}
-                  onChange={(e) =>
-                    handleInputChange('jobStartDate', e.target.value)
-                  }
-                />
-
-                <Input
-                  id='jobFinishDate'
-                  label='Job Finish Date'
-                  name='jobFinishDate'
-                  type='date'
-                  value={formValues.jobFinishDate}
-                  onChange={(e) =>
-                    handleInputChange('jobFinishDate', e.target.value)
+                    handleInputChange('clientsCountry', e.target.value)
                   }
                 />
               </div>
             </div>
           </section>
+
+          <div className='flex flex-col'>
+            <div className='h-fit py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
+              <h2 className='text-lg font-semibold text-lime-300'>
+                Site Address
+              </h2>
+              <Input
+                id='siteHouseNumber'
+                label='Site House Number'
+                name='siteHouseNumber'
+                type='siteHouseNumber'
+                value={formValues.siteHouseNumber}
+                onChange={(e) =>
+                  handleInputChange('siteHouseNumber', e.target.value)
+                }
+              />
+              <Input
+                id='siteRoadName'
+                label='Site Road Name '
+                name='siteRoadName'
+                type='siteRoadName'
+                value={formValues.siteRoadName}
+                onChange={(e) =>
+                  handleInputChange('siteRoadName', e.target.value)
+                }
+              />
+              <Input
+                id='siteCity'
+                label='Site City'
+                name='siteCity'
+                type='siteCity'
+                value={formValues.siteCity}
+                onChange={(e) => handleInputChange('siteCity', e.target.value)}
+              />
+              <Input
+                id='sitePostcode'
+                label='Site Postcode'
+                name='sitePostcode'
+                type='sitePostcode'
+                value={formValues.sitePostcode}
+                onChange={(e) =>
+                  handleInputChange('sitePostcode', e.target.value)
+                }
+              />
+              <Input
+                id='siteCountry'
+                label='Site Country'
+                name='siteCountry'
+                type='siteCountry'
+                value={formValues.siteCountry}
+                onChange={(e) =>
+                  handleInputChange('siteCountry', e.target.value)
+                }
+              />
+            </div>
+            <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg gap-4'>
+              <h2 className='text-lg font-semibold text-lime-300'>Job Dates</h2>
+              <Input
+                id='jobStartDate'
+                label='Job Start Date'
+                name='jobStartDate'
+                type='date'
+                value={formValues.jobStartDate}
+                onChange={(e) =>
+                  handleInputChange('jobStartDate', e.target.value)
+                }
+              />
+
+              <Input
+                id='jobFinishDate'
+                label='Job Finish Date'
+                name='jobFinishDate'
+                type='date'
+                value={formValues.jobFinishDate}
+                onChange={(e) =>
+                  handleInputChange('jobFinishDate', e.target.value)
+                }
+              />
+            </div>
+          </div>
+
           <div className='mb-10 px-4 lg:flex lg:justify-around  '>
             <div className=' py-4 m-1 flex flex-col justify-center items-center border border-lime-400 rounded-lg  gap-4'>
               <h2 className='text-lg font-semibold text-lime-300'>

@@ -63,7 +63,7 @@ export default function CreateInvoicePage() {
     total: number;
   };
   const [jobItems, setJobItems] = useState<JobItem[]>([]);
-  function handleReset() {
+  function handleResetForm() {
     setFormValues(initialFormValues);
     setJobItems([]);
   }
@@ -85,6 +85,12 @@ export default function CreateInvoicePage() {
     };
 
     setJobItems((prev) => [...prev, newItem]);
+    setFormValues((prev) => ({
+      ...prev,
+      itemDescription: '',
+      itemQuantity: '',
+      itemRate: '',
+    }));
   }
   if (auth.status === 'loading') {
     return (
@@ -475,7 +481,7 @@ export default function CreateInvoicePage() {
             <button
               type='reset'
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-zinc-600 text-sm sm:text-[0.9rem] text-zinc-200 hover:bg-zinc-800 transition-colors'
-              onClick={handleReset}
+              onClick={handleResetForm}
             >
               Reset Form
             </button>

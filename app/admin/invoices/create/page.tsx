@@ -437,22 +437,33 @@ export default function CreateInvoicePage() {
             {jobItems.length === 0 ? (
               <p className='text-zinc-400 text-sm'>No jobs added yet.</p>
             ) : (
-              <ul className='w-full text-left text-sm space-y-2'>
-                {jobItems.map((item, index) => (
-                  <li
-                    key={index}
-                    className='border-b border-zinc-700 pb-2 last:border-b-0 last:pb-0'
-                  >
-                    <div className='font-medium text-zinc-200/80'>
-                      {item.description}
-                    </div>
-                    <div className='text-zinc-400'>
-                      {item.quantity} × £{item.rate.toFixed(2)} = £
-                      {item.total.toFixed(2)}
-                    </div>
-                  </li>
-                ))}
-              </ul>
+              <>
+                <ul className='w-full text-left text-sm space-y-2'>
+                  {jobItems.map((item, index) => (
+                    <li
+                      key={index}
+                      className='border-b border-zinc-700 pb-2 last:border-b-0 last:pb-0'
+                    >
+                      <div className='font-medium text-zinc-200/80'>
+                        {item.description}
+                      </div>
+                      <div className='text-zinc-400'>
+                        {item.quantity} × £{item.rate.toFixed(2)} = £
+                        {item.total.toFixed(2)}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+                <div className='mt-4 flex justify-between items-center border-t border-zinc-700 pt-3 text-sm'>
+                  <span className='text-zinc-400 font-medium'>Items total</span>
+                  <span className='font-semibold text-lime-300'>
+                    £
+                    {jobItems
+                      .reduce((sum, item) => sum + item.total, 0)
+                      .toFixed(2)}
+                  </span>
+                </div>
+              </>
             )}
           </section>
           <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>

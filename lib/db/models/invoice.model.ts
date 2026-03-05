@@ -1,24 +1,24 @@
-import { IInvoiceInput } from '@/types'
-import { Document, Model, model, models, Schema, Types } from 'mongoose'
+import { IInvoiceInput } from '@/types';
+import { Document, Model, model, models, Schema, Types } from 'mongoose';
 
 export interface IInvoice extends Document, IInvoiceInput {
-  _id: Types.ObjectId
-  createdAt: Date
-  updatedAt: Date
+  _id: Types.ObjectId;
+  createdAt: Date;
+  updatedAt: Date;
   // Legacy fields (kept for backward compatibility)
   items?: Array<{
-    description: string
-    quantity: number
-    unitPrice: number
-    total: number
-  }>
+    description: string;
+    quantity: number;
+    unitPrice: number;
+    total: number;
+  }>;
   address?: {
-    street?: string
-    city?: string
-    state?: string
-    zipCode?: string
-    country?: string
-  }
+    street?: string;
+    city?: string;
+    state?: string;
+    zipCode?: string;
+    country?: string;
+  };
 }
 
 const invoiceSchema = new Schema<IInvoice>(
@@ -36,31 +36,7 @@ const invoiceSchema = new Schema<IInvoice>(
       required: true,
       unique: true,
     },
-    
-    // Business Address
-    businessAddress: {
-      houseNumber: {
-        type: String,
-        required: true,
-      },
-      roadName: {
-        type: String,
-        required: true,
-      },
-      city: {
-        type: String,
-        required: true,
-      },
-      country: {
-        type: String,
-        required: true,
-      },
-      postCode: {
-        type: String,
-        required: true,
-      },
-    },
-    
+
     // Business Contact Information
     businessContactInformation: {
       firstName: {
@@ -102,7 +78,7 @@ const invoiceSchema = new Schema<IInvoice>(
         required: true,
       },
     },
-    
+
     // Client Information
     clientInformation: {
       firstName: {
@@ -144,7 +120,7 @@ const invoiceSchema = new Schema<IInvoice>(
         required: true,
       },
     },
-    
+
     // Job Address
     jobAddress: {
       houseNumber: {
@@ -168,7 +144,7 @@ const invoiceSchema = new Schema<IInvoice>(
         required: true,
       },
     },
-    
+
     // Dates
     invoiceDate: {
       type: Date,
@@ -182,7 +158,7 @@ const invoiceSchema = new Schema<IInvoice>(
       type: Date,
       required: true,
     },
-    
+
     // Job Items (array of items with description, quantity, rate, total)
     jobItems: [
       {
@@ -204,7 +180,7 @@ const invoiceSchema = new Schema<IInvoice>(
         },
       },
     ],
-    
+
     // Legacy fields (kept for backward compatibility)
     items: [
       {
@@ -249,11 +225,11 @@ const invoiceSchema = new Schema<IInvoice>(
       },
     },
   },
-  { timestamps: true }
-)
+  { timestamps: true },
+);
 
 const Invoice =
   (models.Invoice as Model<IInvoice>) ||
-  model<IInvoice>('Invoice', invoiceSchema)
+  model<IInvoice>('Invoice', invoiceSchema);
 
-export default Invoice
+export default Invoice;

@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { toSlug } from '@/lib/utils';
 import Modal from '@/app/components/UI/Modal';
 import ConfirmModal from '@/app/components/UI/ConfirmModal';
+import { createInvoice } from '@/lib/actions/invoice.actions';
 
 export default function CreateInvoicePage() {
   const { auth } = useAdminAuth();
@@ -182,22 +183,13 @@ export default function CreateInvoicePage() {
     });
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    const quantity = parseFloat(formValues.itemQuantity) || 0;
-    const rate = parseFloat(formValues.itemRate) || 0;
-    const total = quantity * rate;
+    if (jobItems.length === 0) {
+      return;
+    }
 
-    const jobItems = [
-      {
-        description: formValues.itemDescription,
-        quantity,
-        rate,
-        total,
-      },
-    ];
-
-    const price = total;
+    const price = jobItems.reduce((sum, item) => sum + item.total, 0);
 
     const payload = {
       name: formValues.clientsName || 'Untitled Invoice',
@@ -206,26 +198,10 @@ export default function CreateInvoicePage() {
         : `invoice-${Date.now()}`,
       price,
 
-      businessAddress: {
-        houseNumber: '',
-        roadName: '',
-        city: '',
-        country: '',
-        postCode: '',
-      },
-      businessContactInformation: {
-        firstName: '',
-        lastName: '',
-        phone: '',
-        email: '',
-        address: {
-          houseNumber: '',
-          roadName: '',
-          city: '',
-          country: '',
-          postCode: '',
-        },
-      },
+      invoiceDate: new Date(),
+
+      businessContactInformation: undefined as never,
+
       clientInformation: {
         firstName: formValues.clientsName,
         lastName: formValues.clientsSurname,
@@ -256,6 +232,15 @@ export default function CreateInvoicePage() {
 
       jobItems,
     };
+    try {
+      await createInvoice(payload);
+      // toast
+    } catch (err) {
+      console.error(err);
+      //set error state for UI
+    }
+    const { businessContactInformation: _, ...payloadWithoutBusiness } =
+      payload;
     console.log('Invoice payload:', payload);
   }
 

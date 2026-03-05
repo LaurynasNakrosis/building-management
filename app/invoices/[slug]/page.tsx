@@ -68,7 +68,7 @@ export default function InvoiceDetailPage() {
             {/* Business Information */}
             <div className='  lg:flex gap-2 min-h-[320px] lg:min-h-[240px] xl:min-h-[280px] w-full'>
               <div className='flex-1 flex flex-col'>
-                {(invoice.businessAddress ||
+                {(invoice.businessContactInformation ||
                   invoice.businessContactInformation) && (
                   <div className='mb-2 p-4 bg-zinc-800 rounded border border-zinc-700 text-left'>
                     {invoice.businessContactInformation && (
@@ -84,15 +84,24 @@ export default function InvoiceDetailPage() {
                         />
                       </div>
                     )}
-                    {invoice.businessAddress && (
+                    {invoice.businessContactInformation?.address && (
                       <div>
                         <AddressBlock
                           title='Business Address:'
-                          roadName={invoice.businessAddress.roadName}
-                          houseNumber={invoice.businessAddress.houseNumber}
-                          city={invoice.businessAddress.city}
-                          postCode={invoice.businessAddress.postCode}
-                          country={invoice.businessAddress.country}
+                          houseNumber={
+                            invoice.businessContactInformation.address
+                              .houseNumber
+                          }
+                          roadName={
+                            invoice.businessContactInformation.address.roadName
+                          }
+                          city={invoice.businessContactInformation.address.city}
+                          postCode={
+                            invoice.businessContactInformation.address.postCode
+                          }
+                          country={
+                            invoice.businessContactInformation.address.country
+                          }
                           className=''
                         />
                       </div>

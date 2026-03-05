@@ -8,7 +8,8 @@ import { useAdminAuth } from '../../useAdminAuth';
 import Input from '@/app/components/formComponents/Input';
 import { useState } from 'react';
 import { toSlug } from '@/lib/utils';
-import Modal from '@/app/components/Modal';
+import Modal from '@/app/components/UI/Modal';
+import ConfirmModal from '@/app/components/UI/ConfirmModal';
 
 export default function CreateInvoicePage() {
   const { auth } = useAdminAuth();
@@ -553,32 +554,21 @@ export default function CreateInvoicePage() {
           </div>
         </form>
       </div>
-      <Modal
+      <ConfirmModal
         open={isResetConfirmOpen}
-        className='rounded-xl bg-zinc-900 text-white p-6 max-w-sm w-full border border-lime-400'
-      >
-        <h2 className='text-lg font-semibold mb-2'>Reset form?</h2>
-        <p className='text-sm text-zinc-300 mb-4'>
-          This will clear all fields and logged job items. Are you sure you want
-          to reset?
-        </p>
-        <div className='flex flex-col sm:flex-row gap-3 justify-end'>
-          <button
-            type='button'
-            onClick={closeResetConfirm}
-            className='w-full sm:w-auto px-4 py-2 rounded-md border border-zinc-600 text-sm text-zinc-200 hover:bg-zinc-800'
-          >
-            Cancel
-          </button>
-          <button
-            type='button'
-            onClick={handleConfirmReset}
-            className='w-full sm:w-auto px-4 py-2 rounded-md border border-red-500 bg-red-500 text-sm font-semibold text-white hover:bg-red-400 hover:border-red-400'
-          >
-            Yes, reset
-          </button>
-        </div>
-      </Modal>
+        title='Reset form?'
+        description={
+          <>
+            This will clear all fields and logged job items.
+            <br />
+            Are you sure you want to reset?
+          </>
+        }
+        confirmLabel='Yes, reset'
+        cancelLabel='Cancel'
+        onConfirm={handleConfirmReset}
+        onCancel={closeResetConfirm}
+      />
     </div>
   );
 }

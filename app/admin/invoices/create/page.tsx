@@ -16,6 +16,7 @@ export default function CreateInvoicePage() {
 
   type InvoiceFormValues = {
     clientsName: string;
+    clientsSurname: string;
     clientsEmail: string;
     clientsPhone: string;
     clientsHouseNumber: string;
@@ -39,6 +40,7 @@ export default function CreateInvoicePage() {
 
   const initialFormValues: InvoiceFormValues = {
     clientsName: '',
+    clientsSurname: '',
     clientsEmail: '',
     clientsPhone: '',
     clientsHouseNumber: '',
@@ -226,7 +228,7 @@ export default function CreateInvoicePage() {
       },
       clientInformation: {
         firstName: formValues.clientsName,
-        lastName: '',
+        lastName: formValues.clientsSurname,
         phone: formValues.clientsPhone,
         email: formValues.clientsEmail,
         address: {
@@ -300,6 +302,16 @@ export default function CreateInvoicePage() {
                 value={formValues.clientsName}
                 onChange={(e) =>
                   handleInputChange('clientsName', e.target.value)
+                }
+              />
+              <Input
+                id='clientsSurname'
+                label='Clients Surname'
+                name='clientsSurname'
+                type='clientsSurname'
+                value={formValues.clientsSurname}
+                onChange={(e) =>
+                  handleInputChange('clientsSurname', e.target.value)
                 }
               />
               <Input

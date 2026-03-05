@@ -34,6 +34,7 @@ export default function CreateInvoicePage() {
     itemQuantity: string;
     itemRate: string;
   };
+
   const initialFormValues: InvoiceFormValues = {
     clientsName: '',
     clientsEmail: '',
@@ -56,29 +57,47 @@ export default function CreateInvoicePage() {
     itemQuantity: '',
     itemRate: '',
   };
+
   const [formValues, setFormValues] =
     useState<InvoiceFormValues>(initialFormValues);
+  const [jobItems, setJobItems] = useState<JobItem[]>([]);
+  const [jobFieldError, setJobFieldError] = useState<string | null>(null);
+
+  const isJobInvalid =
+    !formValues.itemDescription.trim() ||
+    !formValues.itemQuantity ||
+    !formValues.itemRate;
+
   type JobItem = {
     description: string;
     quantity: number;
     rate: number;
     total: number;
   };
-  const [jobItems, setJobItems] = useState<JobItem[]>([]);
+
   function handleResetForm() {
     setFormValues(initialFormValues);
     setJobItems([]);
   }
+
   function handleAddJobItem() {
     const quantity = parseFloat(formValues.itemQuantity) || 0;
     const rate = parseFloat(formValues.itemRate) || 0;
 
-    if (!formValues.itemDescription.trim() || quantity <= 0 || rate < 0) {
+    if (!formValues.itemDescription.trim()) {
+      setJobFieldError('Please enter a job description.');
+    }
+    if (quantity <= 0) {
+      setJobFieldError('Quantity must be greater than zero.');
       return;
     }
+    if (rate < 0) {
+      setJobFieldError('Rate can not be negative');
+      return;
+    }
+    setJobFieldError(null);
 
     const total = quantity * rate;
-
     const newItem: JobItem = {
       description: formValues.itemDescription,
       quantity,
@@ -94,9 +113,11 @@ export default function CreateInvoicePage() {
       itemRate: '',
     }));
   }
+
   function handleRemoveJobItem(indexToRemove: number) {
     setJobItems((prev) => prev.filter((_, index) => index !== indexToRemove));
   }
+
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const quantity = parseFloat(formValues.itemQuantity) || 0;
@@ -173,9 +194,11 @@ export default function CreateInvoicePage() {
     };
     console.log('Invoice payload:', payload);
   }
+
   function handleInputChange(field: keyof InvoiceFormValues, value: string) {
     setFormValues((prev) => ({ ...prev, [field]: value }));
   }
+
   if (auth.status === 'loading') {
     return (
       <div className='min-h-screen flex items-center justify-center bg-zinc-900 text-white'>
@@ -436,11 +459,16 @@ export default function CreateInvoicePage() {
                 </div>
               </div>
             </div>
+            {jobFieldError && (
+              <p className='text-sm text-red-400 mt-1'>{jobFieldError}</p>
+            )}
             <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>
               <button
                 type='button'
-                className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 text-sm sm:text-[0.9rem] font-medium text-lime-300 hover:bg-lime-400/10 transition-colors'
+                className={`'w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 text-sm sm:text-[0.9rem] font-medium text-lime-300 hover:bg-lime-400/10 transition-colors'
+                  ${isJobInvalid ? 'opacity-50 cursor-not-allowed' : ''}`}
                 onClick={handleAddJobItem}
+                disabled={isJobInvalid}
               >
                 + Add job
               </button>
@@ -467,6 +495,7 @@ export default function CreateInvoicePage() {
                         {item.quantity} × £{item.rate.toFixed(2)} = £
                         {item.total.toFixed(2)}
                       </div>
+
                       <div>
                         <button
                           type='button'

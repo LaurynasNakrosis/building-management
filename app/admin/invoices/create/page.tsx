@@ -70,19 +70,24 @@ export default function CreateInvoicePage() {
     !formValues.itemQuantity ||
     !formValues.itemRate;
 
-  const [isResetConfirmOpen, setIsResetConfirmOpen] = useState(false);
+  type ConfirmConfig = {
+    title: string;
+    description: React.ReactNode;
+    confirmLabel?: string;
+    cancelLabel?: string;
+    onConfirm: () => void;
+  };
 
-  function openResetConfirm() {
-    setIsResetConfirmOpen(true);
+  const [confirmConfig, setConfirmConfig] = useState<ConfirmConfig | null>(
+    null,
+  );
+
+  function openConfirm(config: ConfirmConfig) {
+    setConfirmConfig(config);
   }
 
-  function closeResetConfirm() {
-    setIsResetConfirmOpen(false);
-  }
-
-  function handleConfirmReset() {
-    handleResetForm(); // your existing reset logic
-    setIsResetConfirmOpen(false);
+  function closeConfirm() {
+    setConfirmConfig(null);
   }
 
   type JobItem = {
@@ -95,6 +100,24 @@ export default function CreateInvoicePage() {
   function handleResetForm() {
     setFormValues(initialFormValues);
     setJobItems([]);
+  }
+  function handleResetClick() {
+    openConfirm({
+      title: 'Reset form?',
+      description: (
+        <>
+          This will clear all fields and logged job items.
+          <br />
+          Are you sure you want to reset?
+        </>
+      ),
+      confirmLabel: 'Yes, reset',
+      cancelLabel: 'Cancel',
+      onConfirm: () => {
+        handleResetForm();
+        closeConfirm();
+      },
+    });
   }
 
   function handleAddJobItem() {
@@ -131,8 +154,30 @@ export default function CreateInvoicePage() {
     }));
   }
 
-  function handleRemoveJobItem(indexToRemove: number) {
-    setJobItems((prev) => prev.filter((_, index) => index !== indexToRemove));
+  function handleDeleteJobClick(index: number) {
+    const item = jobItems[index];
+    if (!item) return;
+
+    openConfirm({
+      title: 'Remove job item?',
+      description: (
+        <>
+          This will delete:
+          <br />
+          <span className='font-medium text-zinc-200'>{item.description}</span>
+          <br />
+          <span className='text-zinc-400 text-sm'>
+            {item.quantity} × £{item.rate.toFixed(2)} = £{item.total.toFixed(2)}
+          </span>
+        </>
+      ),
+      confirmLabel: 'Yes, remove',
+      cancelLabel: 'Cancel',
+      onConfirm: () => {
+        setJobItems((prev) => prev.filter((_, i) => i !== index));
+        closeConfirm();
+      },
+    });
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -516,7 +561,7 @@ export default function CreateInvoicePage() {
                       <div>
                         <button
                           type='button'
-                          onClick={() => handleRemoveJobItem(index)}
+                          onClick={() => handleDeleteJobClick(index)}
                           className='ml-3 text-xs text-red-400 hover:text-red-300'
                         >
                           <TrashIcon className='h-6 w-6' />
@@ -541,7 +586,7 @@ export default function CreateInvoicePage() {
             <button
               type='reset'
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-zinc-600 text-sm sm:text-[0.9rem] text-zinc-200 hover:bg-zinc-800 transition-colors'
-              onClick={openResetConfirm}
+              onClick={handleResetClick}
             >
               Reset Form
             </button>
@@ -554,21 +599,18 @@ export default function CreateInvoicePage() {
           </div>
         </form>
       </div>
-      <ConfirmModal
-        open={isResetConfirmOpen}
-        title='Reset form?'
-        description={
-          <>
-            This will clear all fields and logged job items.
-            <br />
-            Are you sure you want to reset?
-          </>
-        }
-        confirmLabel='Yes, reset'
-        cancelLabel='Cancel'
-        onConfirm={handleConfirmReset}
-        onCancel={closeResetConfirm}
-      />
+
+      {confirmConfig && (
+        <ConfirmModal
+          open={true}
+          title={confirmConfig.title}
+          description={confirmConfig.description}
+          confirmLabel={confirmConfig.confirmLabel}
+          cancelLabel={confirmConfig.cancelLabel}
+          onConfirm={confirmConfig.onConfirm}
+          onCancel={closeConfirm}
+        />
+      )}
     </div>
   );
 }

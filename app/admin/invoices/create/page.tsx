@@ -63,16 +63,6 @@ export default function CreateInvoicePage() {
     itemRate: '',
   };
 
-  const [formValues, setFormValues] =
-    useState<InvoiceFormValues>(initialFormValues);
-  const [jobItems, setJobItems] = useState<JobItem[]>([]);
-  const [jobFieldError, setJobFieldError] = useState<string | null>(null);
-
-  const isJobInvalid =
-    !formValues.itemDescription.trim() ||
-    !formValues.itemQuantity ||
-    !formValues.itemRate;
-
   type ConfirmConfig = {
     title: string;
     description: React.ReactNode;
@@ -81,9 +71,32 @@ export default function CreateInvoicePage() {
     onConfirm: () => void;
   };
 
+  type JobItem = {
+    description: string;
+    quantity: number;
+    rate: number;
+    total: number;
+  };
+
+  type ToastType = 'success' | 'error';
+  type ToastState = {
+    message: string;
+    type: ToastType;
+  } | null;
+
+  const [formValues, setFormValues] =
+    useState<InvoiceFormValues>(initialFormValues);
+  const [jobItems, setJobItems] = useState<JobItem[]>([]);
+  const [jobFieldError, setJobFieldError] = useState<string | null>(null);
   const [confirmConfig, setConfirmConfig] = useState<ConfirmConfig | null>(
     null,
   );
+  const [toast, setToast] = useState<ToastState>(null);
+
+  const isJobInvalid =
+    !formValues.itemDescription.trim() ||
+    !formValues.itemQuantity ||
+    !formValues.itemRate;
 
   function openConfirm(config: ConfirmConfig) {
     setConfirmConfig(config);
@@ -93,17 +106,11 @@ export default function CreateInvoicePage() {
     setConfirmConfig(null);
   }
 
-  type JobItem = {
-    description: string;
-    quantity: number;
-    rate: number;
-    total: number;
-  };
-
   function handleResetForm() {
     setFormValues(initialFormValues);
     setJobItems([]);
   }
+
   function handleResetClick() {
     openConfirm({
       title: 'Reset form?',
@@ -234,18 +241,25 @@ export default function CreateInvoicePage() {
     };
     try {
       await createInvoice(payload);
-      // toast
+      showToast('Invoice created successfully.', 'success');
+      handleResetForm();
     } catch (err) {
       console.error(err);
-      //set error state for UI
+      showToast('Failed to create invoice. Please try again.', 'error');
     }
     const { businessContactInformation: _, ...payloadWithoutBusiness } =
       payload;
+
     console.log('Invoice payload:', payload);
   }
 
   function handleInputChange(field: keyof InvoiceFormValues, value: string) {
     setFormValues((prev) => ({ ...prev, [field]: value }));
+  }
+
+  function showToast(message: string, type: ToastType) {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 10000);
   }
 
   if (auth.status === 'loading') {
@@ -551,8 +565,8 @@ export default function CreateInvoicePage() {
                         {item.description}
                       </div>
                       <div className='text-zinc-400'>
-                        {item.quantity} × £{item.rate.toFixed(2)} = £
-                        {item.total.toFixed(2)}
+                        <span className='text-lime-400'>{item.quantity}</span> ×
+                        £{item.rate.toFixed(2)} = £{item.total.toFixed(2)}
                       </div>
 
                       <div>
@@ -607,6 +621,29 @@ export default function CreateInvoicePage() {
           onConfirm={confirmConfig.onConfirm}
           onCancel={closeConfirm}
         />
+      )}
+
+      {toast && (
+        <div
+          className='
+            fixed z-50
+            inset-x-0 top-4 px-4 flex justify-center
+            sm:inset-x-auto sm:top-auto sm:bottom-4 sm:right-4 sm:justify-end
+          '
+        >
+          <div
+            className={`max-w-sm w-full rounded-lg px-4 py-3 shadow-lg border
+              backdrop-blur-lg bg-zinc-900/70
+              flex items-center gap-3 text-sm
+              ${
+                toast.type === 'success'
+                  ? 'border-emerald-400 text-emerald-100'
+                  : 'border-red-400 text-red-100'
+              }`}
+          >
+            <div className='flex-1'>{toast.message}</div>
+          </div>
+        </div>
       )}
     </div>
   );

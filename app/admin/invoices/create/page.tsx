@@ -11,6 +11,8 @@ import { toSlug } from '@/lib/utils';
 import Modal from '@/app/components/UI/Modal';
 import ConfirmModal from '@/app/components/UI/ConfirmModal';
 import { createInvoice } from '@/lib/actions/invoice.actions';
+import Toast from '@/app/components/UI/Toast';
+import { success } from 'zod';
 
 export default function CreateInvoicePage() {
   const { auth } = useAdminAuth();
@@ -77,8 +79,8 @@ export default function CreateInvoicePage() {
     rate: number;
     total: number;
   };
-
   type ToastType = 'success' | 'error';
+
   type ToastState = {
     message: string;
     type: ToastType;
@@ -162,6 +164,7 @@ export default function CreateInvoicePage() {
       itemQuantity: '',
       itemRate: '',
     }));
+    showToast('Job item added successfully.', 'success');
   }
 
   function handleDeleteJobClick(index: number) {
@@ -186,6 +189,7 @@ export default function CreateInvoicePage() {
       onConfirm: () => {
         setJobItems((prev) => prev.filter((_, i) => i !== index));
         closeConfirm();
+        showToast('Job item removed.', 'success');
       },
     });
   }
@@ -259,7 +263,6 @@ export default function CreateInvoicePage() {
 
   function showToast(message: string, type: ToastType) {
     setToast({ message, type });
-    setTimeout(() => setToast(null), 10000);
   }
 
   if (auth.status === 'loading') {
@@ -622,36 +625,14 @@ export default function CreateInvoicePage() {
           onCancel={closeConfirm}
         />
       )}
-
       {toast && (
-        <div
-          className='
-            fixed z-50
-            inset-x-0 top-4 px-4 flex justify-center
-            sm:inset-x-auto sm:top-auto sm:bottom-4 sm:right-4 sm:justify-end
-          '
-        >
-          <div
-            className={`max-w-sm w-full rounded-lg px-4 py-3 shadow-lg border
-              backdrop-blur-lg bg-zinc-900/70
-              flex items-center gap-3 text-sm
-              ${
-                toast.type === 'success'
-                  ? 'border-emerald-400 text-emerald-100'
-                  : 'border-red-400 text-red-100'
-              }`}
-          >
-            <div className='flex-1'>{toast.message}</div>
-            <button
-              type='button'
-              onClick={() => setToast(null)}
-              className='text-xs px-2 py-1 rounded hover:bg-zinc-800/80'
-              aria-label='Dismiss notification'
-            >
-              ×
-            </button>
-          </div>
-        </div>
+        <Toast
+          open={true}
+          message={toast.message}
+          type={toast.type}
+          durationMs={2000}
+          onClose={() => setToast(null)}
+        />
       )}
     </div>
   );

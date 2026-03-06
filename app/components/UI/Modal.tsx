@@ -18,6 +18,7 @@ export default function Modal({ children, open, className = '' }: ModalProps) {
 
   const modalRoot = document.getElementById('modal');
   if (!modalRoot) return null;
+
   return createPortal(
     <dialog ref={dialog} className={`${className}`}>
       {children}

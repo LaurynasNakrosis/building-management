@@ -642,6 +642,14 @@ export default function CreateInvoicePage() {
               }`}
           >
             <div className='flex-1'>{toast.message}</div>
+            <button
+              type='button'
+              onClick={() => setToast(null)}
+              className='text-xs px-2 py-1 rounded hover:bg-zinc-800/80'
+              aria-label='Dismiss notification'
+            >
+              ×
+            </button>
           </div>
         </div>
       )}

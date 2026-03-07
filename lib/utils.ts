@@ -43,5 +43,5 @@ export function formatDate(value?: Date | string) {
 }
 
 export function formatCurrencyGBP(amount: number) {
-  return `£${amount.toFixed(2)}`;
+  return `£${amount.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }

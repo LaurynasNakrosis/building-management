@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useAdminAuth } from '../../useAdminAuth';
 import Input from '@/app/components/formComponents/Input';
 import { useState } from 'react';
-import { generateInvoiceSlug } from '@/lib/utils';
+import { formatCurrencyGBP, generateInvoiceSlug } from '@/lib/utils';
 import Modal from '@/app/components/UI/Modal';
 import ConfirmModal from '@/app/components/UI/ConfirmModal';
 import { createInvoice } from '@/lib/actions/invoice.actions';
@@ -236,7 +236,8 @@ export default function CreateInvoicePage() {
           <span className='font-medium text-zinc-200'>{item.description}</span>
           <br />
           <span className='text-zinc-400 text-sm'>
-            {item.quantity} × £{item.rate.toFixed(2)} = £{item.total.toFixed(2)}
+            {item.quantity} × {formatCurrencyGBP(item.rate)} =
+            {formatCurrencyGBP(item.total)}
           </span>
         </>
       ),
@@ -601,11 +602,10 @@ export default function CreateInvoicePage() {
                   Total
                 </span>
                 <div className='px-3 p-2 rounded-md border border-zinc-600 bg-zinc-800 text-white text-xs'>
-                  £
-                  {(
+                  {formatCurrencyGBP(
                     (parseFloat(formValues.itemQuantity) || 0) *
-                    (parseFloat(formValues.itemRate) || 0)
-                  ).toFixed(2)}
+                      (parseFloat(formValues.itemRate) || 0),
+                  )}
                 </div>
               </div>
             </div>
@@ -641,9 +641,12 @@ export default function CreateInvoicePage() {
                       <div className='font-medium text-zinc-200/80'>
                         {item.description}
                       </div>
-                      <div className='text-zinc-400'>
-                        <span className='text-lime-400'>{item.quantity}</span> ×
-                        £{item.rate.toFixed(2)} = £{item.total.toFixed(2)}
+                      <div className='text-zinc-400 flex flex-wrap items-center gap-x-2'>
+                        <span className='text-lime-400'>{item.quantity}</span>
+                        <span>×</span>
+                        <span>{formatCurrencyGBP(item.rate)}</span>
+                        <span>=</span>
+                        <span>{formatCurrencyGBP(item.total)}</span>
                       </div>
 
                       <div>
@@ -661,10 +664,9 @@ export default function CreateInvoicePage() {
                 <div className='mt-4 flex justify-between items-center border-t border-zinc-700 pt-3 text-sm'>
                   <span className='text-zinc-400 font-medium'>Items total</span>
                   <span className='font-semibold text-lime-300'>
-                    £
-                    {jobItems
-                      .reduce((sum, item) => sum + item.total, 0)
-                      .toFixed(2)}
+                    {formatCurrencyGBP(
+                      jobItems.reduce((sum, item) => sum + item.total, 0),
+                    )}
                   </span>
                 </div>
               </>

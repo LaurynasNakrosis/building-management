@@ -52,7 +52,7 @@ export default function InvoiceDetailPage() {
           <div className='bg-zinc-800 border border-zinc-700 rounded-lg p-8  mt-10 text-center  bg-zinc-800/50 backdrop-blur-sm  text-sm  shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] transition-all duration-200 '>
             <div className='mb-8'>
               <h1 className='text-4xl font-bold mb-2'>{invoice.name}</h1>
-              <p className='text-zinc-400'>Invoice #{invoice.slug}</p>
+              <p className='text-zinc-400'>Invoice Number #{invoice.slug}</p>
               {invoice.invoiceDate && (
                 <p className='text-zinc-500 text-sm mt-2'>
                   Invoice Date: {formatDate(invoice.invoiceDate)}

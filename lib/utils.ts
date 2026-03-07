@@ -16,6 +16,26 @@ export const toSlug = (text: string): string =>
     .replace(/\s+/g, '-')
     .replace(/^-+|-+$/g, '');
 
+export function generateInvoiceSlug(): string {
+  const digits = '0123456789';
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const randomDigit = () => digits[Math.floor(Math.random() * 10)];
+  const randomLetter = () => letters[Math.floor(Math.random() * 26)];
+  return (
+    'MB' +
+    randomDigit() +
+    randomDigit() +
+    randomDigit() +
+    randomDigit() +
+    randomLetter() +
+    randomLetter()
+  );
+}
+
+export function formatInvoiceSlug(slug: string): string {
+  return slug.replace(/([A-Za-z]+)(\d+)([A-Za-z]+)/, '$1 $2 $3');
+}
+
 export function formatDate(value?: Date | string) {
   if (!value) return '';
   const date = typeof value === 'string' ? new Date(value) : value;

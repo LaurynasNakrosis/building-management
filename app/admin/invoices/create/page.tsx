@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useAdminAuth } from '../../useAdminAuth';
 import Input from '@/app/components/formComponents/Input';
 import { useState } from 'react';
-import { toSlug } from '@/lib/utils';
+import { generateInvoiceSlug } from '@/lib/utils';
 import Modal from '@/app/components/UI/Modal';
 import ConfirmModal from '@/app/components/UI/ConfirmModal';
 import { createInvoice } from '@/lib/actions/invoice.actions';
@@ -280,9 +280,7 @@ export default function CreateInvoicePage() {
 
     const payload = {
       name: formValues.clientsName || 'Untitled Invoice',
-      slug: formValues.clientsName
-        ? toSlug(formValues.clientsName)
-        : `invoice-${Date.now()}`,
+      slug: generateInvoiceSlug(),
       price,
 
       invoiceDate: new Date(),
@@ -376,7 +374,7 @@ export default function CreateInvoicePage() {
                 id='clientsName'
                 label='Clients Name'
                 name='clientsName'
-                type='clientsName'
+                type='text'
                 value={formValues.clientsName}
                 onChange={(e) =>
                   handleInputChange('clientsName', e.target.value)
@@ -386,7 +384,7 @@ export default function CreateInvoicePage() {
                 id='clientsSurname'
                 label='Clients Surname'
                 name='clientsSurname'
-                type='clientsSurname'
+                type='text'
                 value={formValues.clientsSurname}
                 onChange={(e) =>
                   handleInputChange('clientsSurname', e.target.value)
@@ -396,7 +394,7 @@ export default function CreateInvoicePage() {
                 id='clientsEmail'
                 label='Clients Email'
                 name='clientsEmail'
-                type='clientsEmail'
+                type='text'
                 value={formValues.clientsEmail}
                 onChange={(e) =>
                   handleInputChange('clientsEmail', e.target.value)
@@ -406,7 +404,7 @@ export default function CreateInvoicePage() {
                 id='clientsPhone'
                 label='Clients Phone'
                 name='clientsPhone'
-                type='clientsPhone'
+                type='tel'
                 value={formValues.clientsPhone}
                 onChange={(e) =>
                   handleInputChange('clientsPhone', e.target.value)
@@ -422,7 +420,7 @@ export default function CreateInvoicePage() {
                   id='clientsHouseNumber'
                   label='Clients House Number'
                   name='clientsHouseNumber'
-                  type='clientsHouseNumber'
+                  type='text'
                   value={formValues.clientsHouseNumber}
                   onChange={(e) =>
                     handleInputChange('clientsHouseNumber', e.target.value)
@@ -432,17 +430,17 @@ export default function CreateInvoicePage() {
                   id='clientsRoadName'
                   label='Clients Road Name '
                   name='clientsRoadName'
-                  type='clientsRoadName'
+                  type='text'
                   value={formValues.clientsRoadName}
                   onChange={(e) =>
                     handleInputChange('clientsRoadName', e.target.value)
                   }
                 />
                 <Input
-                  id='lientsCity'
+                  id='clientsCity'
                   label='Clients City'
                   name='clientsCity'
-                  type='clientsCity'
+                  type='text'
                   value={formValues.clientsCity}
                   onChange={(e) =>
                     handleInputChange('clientsCity', e.target.value)
@@ -452,7 +450,7 @@ export default function CreateInvoicePage() {
                   id='clientsPostcode'
                   label='Clients Postcode'
                   name='clientsPostcode'
-                  type='clientsPostcode'
+                  type='text'
                   value={formValues.clientsPostcode}
                   onChange={(e) =>
                     handleInputChange('clientsPostcode', e.target.value)
@@ -462,7 +460,7 @@ export default function CreateInvoicePage() {
                   id='clientsCountry'
                   label='Clients Country'
                   name='clientsCountry'
-                  type='clientsCountry'
+                  type='text'
                   value={formValues.clientsCountry}
                   onChange={(e) =>
                     handleInputChange('clientsCountry', e.target.value)
@@ -483,7 +481,7 @@ export default function CreateInvoicePage() {
                     id='siteHouseNumber'
                     label='Site House Number'
                     name='siteHouseNumber'
-                    type='siteHouseNumber'
+                    type='text'
                     value={formValues.siteHouseNumber}
                     onChange={(e) =>
                       handleInputChange('siteHouseNumber', e.target.value)
@@ -493,7 +491,7 @@ export default function CreateInvoicePage() {
                     id='siteRoadName'
                     label='Site Road Name '
                     name='siteRoadName'
-                    type='siteRoadName'
+                    type='text'
                     value={formValues.siteRoadName}
                     onChange={(e) =>
                       handleInputChange('siteRoadName', e.target.value)
@@ -503,7 +501,7 @@ export default function CreateInvoicePage() {
                     id='siteCity'
                     label='Site City'
                     name='siteCity'
-                    type='siteCity'
+                    type='text'
                     value={formValues.siteCity}
                     onChange={(e) =>
                       handleInputChange('siteCity', e.target.value)
@@ -513,7 +511,7 @@ export default function CreateInvoicePage() {
                     id='sitePostcode'
                     label='Site Postcode'
                     name='sitePostcode'
-                    type='sitePostcode'
+                    type='text'
                     value={formValues.sitePostcode}
                     onChange={(e) =>
                       handleInputChange('sitePostcode', e.target.value)
@@ -523,7 +521,7 @@ export default function CreateInvoicePage() {
                     id='siteCountry'
                     label='Site Country'
                     name='siteCountry'
-                    type='siteCountry'
+                    type='text'
                     value={formValues.siteCountry}
                     onChange={(e) =>
                       handleInputChange('siteCountry', e.target.value)
@@ -706,7 +704,7 @@ export default function CreateInvoicePage() {
           open={true}
           message={toast.message}
           type={toast.type}
-          durationMs={2000}
+          durationMs={4000}
           onClose={() => setToast(null)}
         />
       )}

@@ -1,3 +1,4 @@
+import { formatInvoiceSlug } from '@/lib/utils';
 import Link from 'next/link';
 import React from 'react';
 
@@ -40,9 +41,15 @@ export default function AdminInvoice({ invoices }: { invoices: Invoice[] }) {
           className='backdrop-blur-sm text-blue-400 hover:text-blue-300  text-sm shadow-[0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_0_rgba(255,255,255,0.1)]  transition-all duration-200 border border-zinc-600/30 rounded-lg border-zinc-700 bg-zinc-800 p-6 flex flex-col'
         >
           <div className='flex-1'>
-            <h3 className='text-xl font-bold mb-2 text-white'>
+            <h3 className='text-xl text-center font-bold mb-2 text-white'>
               {invoice.name}
             </h3>
+            <div className='flex items-center justify-between'>
+              <p className=' text-zinc-400'>Invoice Number #</p>
+              <p className='text-md font-bold mb-2 text-lime-400'>
+                {formatInvoiceSlug(invoice.slug)}
+              </p>
+            </div>
             <p className='text-zinc-400 mb-4'>
               Price: ${invoice.price.toFixed(2)}
             </p>

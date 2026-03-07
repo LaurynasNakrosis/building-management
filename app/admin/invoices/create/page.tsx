@@ -12,10 +12,66 @@ import Modal from '@/app/components/UI/Modal';
 import ConfirmModal from '@/app/components/UI/ConfirmModal';
 import { createInvoice } from '@/lib/actions/invoice.actions';
 import Toast from '@/app/components/UI/Toast';
-import { success } from 'zod';
 
 export default function CreateInvoicePage() {
   const { auth } = useAdminAuth();
+
+  const FIELD_LABELS: Record<string, string> = {
+    clientsName: 'Client name',
+    clientsSurname: 'Client surname',
+    clientsEmail: 'Client email',
+    clientsPhone: 'Client phone',
+    clientsHouseNumber: 'Client house number',
+    clientsRoadName: 'Client road name',
+    clientsCity: 'Client city',
+    clientsPostcode: 'Client postcode',
+    clientsCountry: 'Client country',
+    siteHouseNumber: 'Site house number',
+    siteRoadName: 'Site road name',
+    siteCity: 'Site city',
+    sitePostcode: 'Site postcode',
+    siteCountry: 'Site country',
+    jobStartDate: 'Job start date',
+    jobFinishDate: 'Job finish date',
+  };
+
+  function getMissingRequiredFields(): string[] {
+    const missing: string[] = [];
+    if (
+      !formValues.clientsName?.trim() ||
+      formValues.clientsName.trim().length < 3
+    ) {
+      missing.push(FIELD_LABELS.clientsName);
+    }
+    if (!formValues.clientsSurname?.trim())
+      missing.push(FIELD_LABELS.clientsSurname);
+    if (!formValues.clientsEmail?.trim())
+      missing.push(FIELD_LABELS.clientsEmail);
+    if (!formValues.clientsPhone?.trim())
+      missing.push(FIELD_LABELS.clientsPhone);
+    if (!formValues.clientsHouseNumber?.trim())
+      missing.push(FIELD_LABELS.clientsHouseNumber);
+    if (!formValues.clientsRoadName?.trim())
+      missing.push(FIELD_LABELS.clientsRoadName);
+    if (!formValues.clientsCity?.trim()) missing.push(FIELD_LABELS.clientsCity);
+    if (!formValues.clientsPostcode?.trim())
+      missing.push(FIELD_LABELS.clientsPostcode);
+    if (!formValues.clientsCountry?.trim())
+      missing.push(FIELD_LABELS.clientsCountry);
+    if (!formValues.siteHouseNumber?.trim())
+      missing.push(FIELD_LABELS.siteHouseNumber);
+    if (!formValues.siteRoadName?.trim())
+      missing.push(FIELD_LABELS.siteRoadName);
+    if (!formValues.siteCity?.trim()) missing.push(FIELD_LABELS.siteCity);
+    if (!formValues.sitePostcode?.trim())
+      missing.push(FIELD_LABELS.sitePostcode);
+    if (!formValues.siteCountry?.trim()) missing.push(FIELD_LABELS.siteCountry);
+    if (!formValues.jobStartDate?.trim())
+      missing.push(FIELD_LABELS.jobStartDate);
+    if (!formValues.jobFinishDate?.trim())
+      missing.push(FIELD_LABELS.jobFinishDate);
+    return missing;
+  }
 
   type InvoiceFormValues = {
     clientsName: string;
@@ -197,6 +253,26 @@ export default function CreateInvoicePage() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (jobItems.length === 0) {
+      showToast(
+        'Please add at least one job item before creating the invoice.',
+        'error',
+      );
+      return;
+    }
+    const missingFields = getMissingRequiredFields();
+    if (missingFields.length > 0) {
+      const message =
+        missingFields.length === 1
+          ? `Please fill in: ${missingFields[0]}.`
+          : `Please fill in: ${missingFields.join(', ')}.`;
+      showToast(message, 'error');
+      const firstKey = Object.entries(FIELD_LABELS).find(([, label]) =>
+        missingFields.includes(label),
+      )?.[0];
+      if (firstKey && typeof document !== 'undefined') {
+        const el = document.getElementById(firstKey);
+        el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
       return;
     }
 

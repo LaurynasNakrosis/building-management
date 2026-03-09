@@ -7,16 +7,7 @@ const invoices: IInvoiceInput[] = [
     name: 'Complete Plumbing & Electrical Work',
     slug: toSlug('Complete Plumbing & Electrical Work'),
     price: 1250.00,
-    
-    // Business Address
-    businessAddress: {
-      houseNumber: '42',
-      roadName: 'Business Park Road',
-      city: 'London',
-      country: 'United Kingdom',
-      postCode: 'SW1A 1AA',
-    },
-    
+
     // Business Contact Information
     businessContactInformation: {
       firstName: 'John',
@@ -106,15 +97,7 @@ const invoices: IInvoiceInput[] = [
     name: 'Kitchen Renovation Project',
     slug: toSlug('Kitchen Renovation Project'),
     price: 3200.00,
-    
-    businessAddress: {
-      houseNumber: '42',
-      roadName: 'Business Park Road',
-      city: 'London',
-      country: 'United Kingdom',
-      postCode: 'SW1A 1AA',
-    },
-    
+
     businessContactInformation: {
       firstName: 'John',
       lastName: 'Smith',
@@ -188,15 +171,7 @@ const invoices: IInvoiceInput[] = [
     name: 'Bathroom Remodeling Service',
     slug: toSlug('Bathroom Remodeling Service'),
     price: 1850.00,
-    
-    businessAddress: {
-      houseNumber: '42',
-      roadName: 'Business Park Road',
-      city: 'London',
-      country: 'United Kingdom',
-      postCode: 'SW1A 1AA',
-    },
-    
+
     businessContactInformation: {
       firstName: 'John',
       lastName: 'Smith',
@@ -276,15 +251,7 @@ const invoices: IInvoiceInput[] = [
     name: 'Roof Repair and Maintenance',
     slug: toSlug('Roof Repair and Maintenance'),
     price: 2750.00,
-    
-    businessAddress: {
-      houseNumber: '42',
-      roadName: 'Business Park Road',
-      city: 'London',
-      country: 'United Kingdom',
-      postCode: 'SW1A 1AA',
-    },
-    
+
     businessContactInformation: {
       firstName: 'John',
       lastName: 'Smith',

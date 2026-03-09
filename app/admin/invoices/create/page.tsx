@@ -328,8 +328,6 @@ export default function CreateInvoicePage() {
     }
     const { businessContactInformation: _, ...payloadWithoutBusiness } =
       payload;
-
-    console.log('Invoice payload:', payload);
   }
 
   function handleInputChange(field: keyof InvoiceFormValues, value: string) {

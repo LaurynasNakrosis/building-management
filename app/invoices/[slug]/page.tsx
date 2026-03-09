@@ -52,7 +52,7 @@ export default function InvoiceDetailPage() {
           <div className='bg-zinc-800 border border-zinc-700 rounded-lg p-8  mt-10 text-center  bg-zinc-800/50 backdrop-blur-sm  text-sm  shadow-[0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_0_rgba(255,255,255,0.15)] transition-all duration-200 '>
             <div className='mb-8'>
               <h1 className='text-4xl font-bold mb-2'>{invoice.name}</h1>
-              <p className='text-zinc-400'>Invoice #{invoice.slug}</p>
+              <p className='text-zinc-400'>Invoice Number #{invoice.slug}</p>
               {invoice.invoiceDate && (
                 <p className='text-zinc-500 text-sm mt-2'>
                   Invoice Date: {formatDate(invoice.invoiceDate)}
@@ -68,7 +68,7 @@ export default function InvoiceDetailPage() {
             {/* Business Information */}
             <div className='  lg:flex gap-2 min-h-[320px] lg:min-h-[240px] xl:min-h-[280px] w-full'>
               <div className='flex-1 flex flex-col'>
-                {(invoice.businessAddress ||
+                {(invoice.businessContactInformation ||
                   invoice.businessContactInformation) && (
                   <div className='mb-2 p-4 bg-zinc-800 rounded border border-zinc-700 text-left'>
                     {invoice.businessContactInformation && (
@@ -84,15 +84,24 @@ export default function InvoiceDetailPage() {
                         />
                       </div>
                     )}
-                    {invoice.businessAddress && (
+                    {invoice.businessContactInformation?.address && (
                       <div>
                         <AddressBlock
                           title='Business Address:'
-                          roadName={invoice.businessAddress.roadName}
-                          houseNumber={invoice.businessAddress.houseNumber}
-                          city={invoice.businessAddress.city}
-                          postCode={invoice.businessAddress.postCode}
-                          country={invoice.businessAddress.country}
+                          houseNumber={
+                            invoice.businessContactInformation.address
+                              .houseNumber
+                          }
+                          roadName={
+                            invoice.businessContactInformation.address.roadName
+                          }
+                          city={invoice.businessContactInformation.address.city}
+                          postCode={
+                            invoice.businessContactInformation.address.postCode
+                          }
+                          country={
+                            invoice.businessContactInformation.address.country
+                          }
                           className=''
                         />
                       </div>
@@ -196,10 +205,10 @@ export default function InvoiceDetailPage() {
                           <td className='p-3'>{item.description}</td>
                           <td className='p-3 text-right'>{item.quantity}</td>
                           <td className='p-3 text-right'>
-                            £{formatCurrencyGBP(item.rate)}
+                            {formatCurrencyGBP(item.rate)}
                           </td>
                           <td className='p-3 text-right'>
-                            £{formatCurrencyGBP(item.total)}
+                            {formatCurrencyGBP(item.total)}
                           </td>
                         </tr>
                       ))}
@@ -213,7 +222,7 @@ export default function InvoiceDetailPage() {
                           Total:
                         </td>
                         <td className='p-3 text-right font-bold text-lg'>
-                          £{formatCurrencyGBP(totalItems)}
+                          {formatCurrencyGBP(totalItems)}
                         </td>
                       </tr>
                     </tfoot>

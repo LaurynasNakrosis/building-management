@@ -139,53 +139,50 @@ export default function AdminInvoice({
                   </p>
                 )}
               </div>
-
-              <Link
-                href={`/invoices/${invoice.slug}`}
-                className='rounded-full mt-4 text-center p-4 bg-gradient-to-br from-zinc-800/30 via-zinc-700/20 to-zinc-800/30 backdrop-blur-lg text-lime-400 hover:text-lime-300 hover:from-zinc-800/40 hover:via-zinc-700/30 hover:to-zinc-800/40 text-sm shadow-[0_8px_32px_rgba(0,0,0,0.5),0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.25),inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:shadow-[0_12px_48px_rgba(0,0,0,0.6),0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_2px_rgba(255,255,255,0.3),inset_0_-1px_1px_rgba(0,0,0,0.3)] transition-all duration-300 border border-white/20 hover:border-white/30'
-              >
-                View Details →
-              </Link>
-              <button
-                type='button'
-                disabled={busy}
-                onClick={() => {
-                  if (busy) return;
-                  openConfirm({
-                    title: 'Delete invoice?',
-                    description: (
-                      <>
-                        This will permanently delete:
-                        <br />
-                        <span className='font-medium text-zinc-200'>
-                          {invoice.name}
-                        </span>
-                        <br />
-                        <span className='text-zinc-400 text-sm'>
-                          Invoice{' '}
-                          <span className='text-green-500'>
-                            {formatInvoiceSlug(invoice.slug)}
-                          </span>{' '}
-                          £{invoice.price.toFixed(2)}
-                        </span>
-                      </>
-                    ),
-                    confirmLabel: 'Yes, delete',
-                    cancelLabel: 'Cancel',
-                    onConfirm: () => {
-                      closeConfirm();
-                      void onDelete(invoice.slug);
-                    },
-                  });
-                }}
-                className={`rounded-full text-center p-4 text-sm transition-all duration-200 border ${
-                  busy
-                    ? 'cursor-not-allowed bg-zinc-700 text-zinc-300 border-zinc-600'
-                    : 'bg-red-600 text-white border-red-500 hover:bg-red-700'
-                }`}
-              >
-                {busy ? 'Deleting…' : 'Delete'}
-              </button>
+              <div className='grid xl:gap-3 grid-cols-1 xl:grid-cols-2'>
+                <Link
+                  href={`/invoices/${invoice.slug}`}
+                  className='rounded-full mt-4 text-center p-4 bg-gradient-to-br from-zinc-800/30 via-zinc-700/20 to-zinc-800/30 backdrop-blur-lg text-lime-400 hover:text-lime-300 hover:from-zinc-800/40 hover:via-zinc-700/30 hover:to-zinc-800/40 text-sm shadow-[0_8px_32px_rgba(0,0,0,0.5),0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.25),inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:shadow-[0_12px_48px_rgba(0,0,0,0.6),0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_2px_rgba(255,255,255,0.3),inset_0_-1px_1px_rgba(0,0,0,0.3)] transition-all duration-300 border border-white/20 hover:border-white/30'
+                >
+                  View Details →
+                </Link>
+                <button
+                  type='button'
+                  disabled={busy}
+                  onClick={() => {
+                    if (busy) return;
+                    openConfirm({
+                      title: 'Delete invoice?',
+                      description: (
+                        <>
+                          This will permanently delete:
+                          <br />
+                          <span className='font-medium text-zinc-200'>
+                            {invoice.name}
+                          </span>
+                          <br />
+                          <span className='text-zinc-400 text-sm'>
+                            Invoice{' '}
+                            <span className='text-lime-400'>
+                              {formatInvoiceSlug(invoice.slug)}
+                            </span>{' '}
+                            £{invoice.price.toFixed(2)}
+                          </span>
+                        </>
+                      ),
+                      confirmLabel: 'Yes, delete',
+                      cancelLabel: 'Cancel',
+                      onConfirm: () => {
+                        closeConfirm();
+                        void onDelete(invoice.slug);
+                      },
+                    });
+                  }}
+                  className='rounded-full mt-4 text-center p-4 bg-red-600 bg-gradient-to-br from-zinc-800/30 via-zinc-700/20 to-zinc-800/30 backdrop-blur-lg text-lime-400 hover:text-lime-300 hover:from-zinc-800/40 hover:via-zinc-700/30 hover:to-zinc-800/40 text-sm shadow-[0_8px_32px_rgba(0,0,0,0.5),0_2px_8px_rgba(0,0,0,0.3),inset_0_1px_2px_rgba(255,255,255,0.25),inset_0_-1px_1px_rgba(0,0,0,0.2)] hover:shadow-[0_12px_48px_rgba(0,0,0,0.6),0_4px_12px_rgba(0,0,0,0.4),inset_0_1px_2px_rgba(255,255,255,0.3),inset_0_-1px_1px_rgba(0,0,0,0.3)] transition-all duration-300 border border-white/20 hover:border-white/30'
+                >
+                  {busy ? 'Deleting…' : 'Delete'}
+                </button>
+              </div>
             </div>
           );
         })}

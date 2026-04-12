@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 type Invoice = {
   _id: string;
@@ -32,6 +32,12 @@ export type InvoicesState =
 
 export function useAdminInvoices(enabled: boolean) {
   const [state, setState] = useState<InvoicesState>({ status: 'idle' });
+  const [deletingBySlug, setDeletingBySlug] = useState<Set<string>>(new Set());
+
+  const isDeleting = useMemo(
+    () => (slug: string) => deletingBySlug.has(slug),
+    [deletingBySlug],
+  );
 
   useEffect(() => {
     if (!enabled) return;

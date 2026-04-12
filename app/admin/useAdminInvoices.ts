@@ -85,7 +85,48 @@ export function useAdminInvoices(enabled: boolean) {
         data: prev.data.filter((inv) => inv.slug !== slug),
       };
     });
+    try {
+      const response = await fetch(`/api/invoices/${slug}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        const errorData = await response
+          .json()
+          .catch(() => ({ message: 'Failed to delete invoice' }));
+        throw new Error(errorData.message || 'Failed to delete invoice');
+      }
+    } catch (error) {
+      setState({ status: 'loading' });
+      try {
+        const response = await fetch('/api/invoices');
+        if (response.ok) {
+          const data = await response.json();
+          setState({ status: 'success', data: data || [] });
+        } else {
+          const errorData = await response
+            .json()
+            .catch(() => ({ message: 'Failed to fetch invoice' }));
+          setState({
+            status: 'error',
+            error: errorData.message || 'Failed to fetch invoices',
+          });
+        }
+      } catch (fetchErrror) {
+        console.error('Error fetching invoices:', fetchErrror);
+        setState({
+          status: 'error',
+          error:
+            'Failed to fetch invoices. Please check the console for details.',
+        });
+      }
+    } finally {
+      setDeletingBySlug((prev) => {
+        const next = new Set(prev);
+        next.delete(slug);
+        return next;
+      });
+    }
   };
 
-  return state;
+  return { state, deletingInvoice, isDeleting };
 }

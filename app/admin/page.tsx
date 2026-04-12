@@ -7,7 +7,9 @@ import { useAdminInvoices } from './useAdminInvoices';
 
 export default function AdminPage() {
   const { auth } = useAdminAuth();
-  const invoicesState = useAdminInvoices(auth.status === 'authenticated');
+  const { state, deletingInvoice, isDeleting } = useAdminInvoices(
+    auth.status === 'authenticated',
+  );
   // Show loading state while checking auth
   if (auth.status === 'loading') {
     return (
@@ -29,28 +31,26 @@ export default function AdminPage() {
           <h1 className='text-4xl font-bold mb-4'>Admin Dashboard</h1>
           <p className='mb-6 text-zinc-400'>Welcome, {auth.user}!</p>
         </div>
-        {invoicesState.status === 'loading' && (
+        {state.status === 'loading' && (
           <div className='text-center py-8'>
             <p className='text-zinc-400'>Loading invoices...</p>
           </div>
         )}
-        {invoicesState.status === 'error' && (
+        {state.status === 'error' && (
           <div className='text-center py-8'>
-            <p className='text-red-400'>Error: {invoicesState.error}</p>
+            <p className='text-red-400'>Error: {state.error}</p>
           </div>
         )}
-        {invoicesState.status === 'success' &&
-          invoicesState.data.length === 0 && (
-            <div className='text-center py-8'>
-              <p className='text-zinc-400'>
-                No invoices found. Make sure the database is seeded.
-              </p>
-            </div>
-          )}
-        {invoicesState.status === 'success' &&
-          invoicesState.data.length > 0 && (
-            <AdminInvoice invoices={invoicesState.data} />
-          )}
+        {state.status === 'success' && state.data.length === 0 && (
+          <div className='text-center py-8'>
+            <p className='text-zinc-400'>
+              No invoices found. Make sure the database is seeded.
+            </p>
+          </div>
+        )}
+        {state.status === 'success' && state.data.length > 0 && (
+          <AdminInvoice invoices={state.data} />
+        )}
       </div>
     </div>
   );

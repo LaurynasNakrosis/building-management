@@ -49,7 +49,11 @@ export default function AdminPage() {
           </div>
         )}
         {state.status === 'success' && state.data.length > 0 && (
-          <AdminInvoice invoices={state.data} />
+          <AdminInvoice
+            invoices={state.data}
+            onDelete={deletingInvoice}
+            isDeleting={isDeleting}
+          />
         )}
       </div>
     </div>

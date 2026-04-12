@@ -71,5 +71,21 @@ export function useAdminInvoices(enabled: boolean) {
     fetchInvoices();
   }, [enabled]);
 
+  const deletingInvoice = async (slug: string) => {
+    setDeletingBySlug((prev) => {
+      const next = new Set(prev);
+      next.add(slug);
+      return next;
+    });
+
+    setState((prev) => {
+      if (prev.status !== 'success') return prev;
+      return {
+        status: 'success',
+        data: prev.data.filter((inv) => inv.slug !== slug),
+      };
+    });
+  };
+
   return state;
 }

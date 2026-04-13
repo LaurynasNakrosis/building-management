@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { string, z, ZodString } from 'zod';
 import { formatNumberWithDecimal } from './utils';
 
 const Price = (field: string) =>
@@ -22,11 +22,9 @@ const contactInformationSchema = z.object({
   lastName: z.string().min(1, 'Last name is required'),
   address: addressSchema, // Reusing the shared schema
   phone: z.string().min(1, 'Phone number is required'),
-  email: z
-    .string()
-    .refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-      message: 'Valid email is required',
-    }),
+  email: z.string().refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
+    message: 'Valid email is required',
+  }),
 });
 
 const jobItemSchema = z.object({
@@ -57,4 +55,27 @@ export const InvoiceInputChema = z.object({
   }),
 
   jobItems: z.array(jobItemSchema).min(1, 'At least one job item is required'),
+});
+
+export const ProjectInputSchema = z.object({
+  slug: z.string().min(3, 'Slug must be at least 3 characters'),
+  title: z.string().min(3, 'Title must be atleast 3 haracters'),
+  description: z.string().min(3, 'Description must be atleast 10 characters'),
+  date: z.coerce.date().optional(),
+  location: z.string().optional(),
+  picture: z
+    .string()
+    .url('Picture must be valid URL')
+    .optional()
+    .or(z.literal('')),
+  url: z.string().url('URL must be valid').optional().or(z.literal('')),
+  repository: z
+    .string()
+    .url('Repository must be valid')
+    .optional()
+    .or(z.literal('')),
+  published: z.coerce.boolean(),
+  body: z.object({
+    code: string().min(1, 'Body code is required'),
+  }),
 });

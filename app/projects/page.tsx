@@ -42,7 +42,7 @@ function FeaturedProjectCard({ project }: { project: Project }) {
                 />
               ))}
           </div>
-          <div className='text-xs text-zinc-100 pt-4'>
+          <div className='text-md text-zinc-100 pt-4'>
             {project.date ? (
               <time dateTime={new Date(project.date).toISOString()}>
                 {formatDate(project.date)}
@@ -84,7 +84,7 @@ function TopProjectsRow({ top2, top3 }: { top2: Project; top3: Project }) {
                   className='rounded-lg object-cover w-full aspect-[3/1]'
                 />
               </div>
-              <div className='text-xs text-zinc-100 pt-4'>
+              <div className='text-md text-zinc-100 pt-4'>
                 {project.date ? (
                   <time dateTime={new Date(project.date).toISOString()}>
                     {formatDate(project.date)}
@@ -117,7 +117,7 @@ function ProjectCard({ project }: { project: Project }) {
         height={600}
         className='rounded-lg object-cover w-full aspect-[2/1]'
       />
-      <div className='text-xs text-zinc-100'>
+      <div className='text-md text-zinc-100 pt-2'>
         {project.date ? (
           <time dateTime={new Date(project.date).toISOString()}>
             {formatDate(project.date)}
@@ -169,15 +169,15 @@ function ProjectsGrid({ projects }: { projects: Project[] }) {
 
 export default async function ProjectsPage() {
   const featured = allProjects.find(
-    (project) => project.slug === 'haslemere-avenue-rear-extension'
+    (project) => project.slug === 'haslemere-avenue-rear-extension',
   )!;
 
   const top2 = allProjects.find(
-    (project) => project.slug === 'victorian-terrace-kitchen-renovation'
+    (project) => project.slug === 'victorian-terrace-kitchen-renovation',
   )!;
 
   const top3 = allProjects.find(
-    (project) => project.slug === 'luxury-bathroom-suite-installation'
+    (project) => project.slug === 'luxury-bathroom-suite-installation',
   )!;
 
   const sorted = allProjects
@@ -186,12 +186,12 @@ export default async function ProjectsPage() {
       (project) =>
         project.slug !== featured.slug &&
         project.slug !== top2.slug &&
-        project.slug !== top3.slug
+        project.slug !== top3.slug,
     )
     .sort(
       (a, b) =>
         new Date(b.date ?? Number.POSITIVE_INFINITY).getTime() -
-        new Date(a.date ?? Number.POSITIVE_INFINITY).getTime()
+        new Date(a.date ?? Number.POSITIVE_INFINITY).getTime(),
     );
 
   return (

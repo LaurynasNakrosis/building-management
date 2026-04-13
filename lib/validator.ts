@@ -79,3 +79,7 @@ export const ProjectInputSchema = z.object({
     code: string().min(1, 'Body code is required'),
   }),
 });
+
+export const ProjectUpdateSchema = ProjectInputSchema.partial().extend({
+  slug: z.string().min(3).optional(),
+});

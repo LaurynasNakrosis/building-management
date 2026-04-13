@@ -35,6 +35,15 @@ export async function getInvoiceBySlug(slug: string) {
   return JSON.parse(JSON.stringify(invoice));
 }
 
+export async function deleteInvoiceBySlug(slug: String) {
+  await connectToDatabase();
+  const deleted = await Invoice.findOneAndDelete({ slug });
+
+  if (!deleted) return null;
+
+  return JSON.parse(JSON.stringify(deleted));
+}
+
 export async function createInvoice(payload: CreateInvoicePayload) {
   const businessContactInformation = getBusinessContactInformation();
 

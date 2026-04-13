@@ -8,7 +8,7 @@
 # testing
 /coverage
 AdditionalFile.tsx
-
+app/admin/sign/page.tsx
 
 # next.js
 /.next/

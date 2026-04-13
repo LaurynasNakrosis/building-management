@@ -76,7 +76,13 @@ export default function SignIn() {
 
   return (
     <div>
-      <form className='h-screen     min-h-screen bg-gradient-to-br from-zinc-900 via-white/40 to-zinc-900 '>
+      <form
+        className='h-screen     min-h-screen bg-gradient-to-br from-zinc-900 via-white/40 to-zinc-900 '
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (!submitting) void handleSubmit();
+        }}
+      >
         <div className='md:px-20 p-6'>
           <Link
             href='/'
@@ -121,7 +127,7 @@ export default function SignIn() {
               </p>
             )}
             <div>
-              <Button onClick={() => handleSubmit()}>
+              <Button type='submit' disabled={submitting}>
                 {submitting ? 'Logging in...' : 'Log in'}
               </Button>
             </div>

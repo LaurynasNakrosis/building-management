@@ -1,30 +1,30 @@
-'use client'
-import { ArrowLeft, FileText, Plus } from 'lucide-react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
-import React, { useEffect, useRef, useState } from 'react'
+'use client';
+import { ArrowLeft, FileText, Plus } from 'lucide-react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
 
 export const AdminNav: React.FC = () => {
-  const ref = useRef<HTMLElement>(null)
-  const [isIntersecting, setIntersecting] = useState(true)
-  const router = useRouter()
+  const ref = useRef<HTMLElement>(null);
+  const [isIntersecting, setIntersecting] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    if (!ref.current) return
+    if (!ref.current) return;
     const observer = new IntersectionObserver(([entry]) =>
-      setIntersecting(entry.isIntersecting)
-    )
+      setIntersecting(entry.isIntersecting),
+    );
 
-    observer.observe(ref.current)
-    return () => observer.disconnect()
-  }, [])
+    observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('isAuthenticated')
-    localStorage.removeItem('adminUser')
-    localStorage.removeItem('loginTime')
-    router.push('/sign-in')
-  }
+    localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('adminUser');
+    localStorage.removeItem('loginTime');
+    router.push('/sign-in');
+  };
 
   return (
     <header ref={ref}>
@@ -37,6 +37,14 @@ export const AdminNav: React.FC = () => {
       >
         <div className='container flex flex-row-reverse items-center justify-between p-6 mx-auto'>
           <div className='flex justify-between gap-8'>
+            <Link
+              href='/admin/projects'
+              className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
+            >
+              {' '}
+              <FileText className='w-4 h-4' />
+              Projects
+            </Link>
             <Link
               href='/admin/invoices/create'
               className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
@@ -61,5 +69,5 @@ export const AdminNav: React.FC = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};

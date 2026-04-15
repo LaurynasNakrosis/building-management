@@ -1,7 +1,20 @@
+'use client';
 import { AdminNav } from '@/app/components/AdminNav';
 import Link from 'next/link';
+import { useState } from 'react';
 
 export default function CreateProjectPage() {
+  const [form, setForm] = useState({
+    title: '',
+    slug: '',
+    description: '',
+    date: '',
+    location: '',
+    picture: '',
+    published: false,
+    bodyCode: '',
+  });
+
   return (
     <div className=''>
       <AdminNav />

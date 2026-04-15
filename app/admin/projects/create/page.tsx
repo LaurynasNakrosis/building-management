@@ -29,9 +29,9 @@ export default function CreateProjectPage() {
       </div>
       <div className='max-w-5xl mx-auto lg:px-8'>
         <h1 className='text-2xl font-bold text-center mb-8'>Create Project</h1>
-        <form action=''>
+        <form action='' className='space-y-8'>
           <section className='rounded-xl border border-lime-400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4'>
-            <h2>Basics</h2>
+            <h2 className='text-lg font-semibold text-lime-300'>Basics</h2>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <Input id='title' label='Title' name='title' type='text' />
               <Input id='slug' label='Slug' name='slug' type='text' />
@@ -66,7 +66,7 @@ export default function CreateProjectPage() {
               <textarea className='block w-full rounded-md border border-[#758a8a] bg-stone-400 px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]' />
             </div>
           </section>
-          <div>
+          <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>
             <button className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 bg-lime-400 text-sm sm:text-[0.9rem] font-semibold text-zinc-900 hover:bg-lime-300 hover:border-lime-300 transition-colors disabled:opacity-60 disabled:cursor-not-allowed'>
               Create Project
             </button>

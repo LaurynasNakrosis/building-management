@@ -16,7 +16,7 @@ export default function CreateProjectPage() {
   });
 
   return (
-    <div className=''>
+    <div className='px-4 lg:px-0 min-h-screen text-white bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 pb-20'>
       <AdminNav />
       <div className='pl-6 pt-24 md:pl-24'>
         <Link
@@ -25,6 +25,9 @@ export default function CreateProjectPage() {
         >
           ← Back to Projects
         </Link>
+      </div>
+      <div className='max-w-5xl mx-auto lg:px-8'>
+        <h1 className='text-2xl font-bold text-center mb-8'>Create Project</h1>
       </div>
     </div>
   );

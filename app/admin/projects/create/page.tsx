@@ -60,7 +60,7 @@ export default function CreateProjectPage() {
               <textarea className='block w-full rounded-md border border-[#758a8a] bg-stone-400 px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]' />
             </div>
             <div className='w-full flex flex-col gap-1'>
-              <label className='block text-[0.75rem] mb-0.5 text-[#9bafaf] uppercase font-semibold tracking-wide'>
+              <label className='block text-[0.75rem] mb-0.5 text-stone-800 uppercase font-semibold tracking-wide'>
                 Body
               </label>
               <textarea className='block w-full rounded-md border border-[#758a8a] bg-stone-400 px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]' />

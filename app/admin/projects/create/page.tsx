@@ -38,7 +38,36 @@ export default function CreateProjectPage() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
-  const payload = useMemo(() => {}, [form]);
+  const payload = useMemo(() => {
+    return {
+      slug: form.slug.trim(),
+      title: form.title.trim(),
+      description: form.description.trim(),
+      date: form.date ? new Date(form.date) : undefined,
+      location: form.location.trim() || undefined,
+      picture: form.picture.trim() || '',
+      url: form.url.trim() || '',
+      repository: form.repository.trim() || '',
+      published: form.published,
+      body: { code: form.bodyCode },
+    };
+  }, [form]);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    const parsed = ProjectInputSchema.safeParse(payload);
+    if (!parsed.success) {
+      return;
+    }
+
+    try {
+      await createProject(parsed.data);
+      setForm(initialForm);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
   return (
     <div className='px-4 lg:px-0 min-h-screen text-white bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 pb-20'>

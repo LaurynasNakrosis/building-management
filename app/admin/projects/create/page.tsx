@@ -4,17 +4,21 @@ import Input from '@/app/components/input';
 import Link from 'next/link';
 import { useState } from 'react';
 
+type FormState = {
+  title: string;
+  slug: string;
+  description: string;
+  date: string;
+  location: string;
+  picture: string;
+  url: string;
+  repository: string;
+  published: boolean;
+  bodyCode: string;
+};
+
 export default function CreateProjectPage() {
-  const [form, setForm] = useState({
-    title: '',
-    slug: '',
-    description: '',
-    date: '',
-    location: '',
-    picture: '',
-    published: false,
-    bodyCode: '',
-  });
+  const [form, setForm] = useState();
 
   return (
     <div className='px-4 lg:px-0 min-h-screen text-white bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 pb-20'>
@@ -29,9 +33,11 @@ export default function CreateProjectPage() {
       </div>
       <div className='max-w-5xl mx-auto lg:px-8'>
         <h1 className='text-2xl font-bold text-center mb-8'>Create Project</h1>
+
         <form action='' className='space-y-8'>
           <section className='rounded-xl border border-lime-400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4'>
             <h2 className='text-lg font-semibold text-lime-300'>Basics</h2>
+
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <Input id='title' label='Title' name='title' type='text' />
               <Input id='slug' label='Slug' name='slug' type='text' />

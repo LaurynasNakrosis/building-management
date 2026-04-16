@@ -1,8 +1,10 @@
 'use client';
 import { AdminNav } from '@/app/components/AdminNav';
 import Input from '@/app/components/input';
+import { createProject } from '@/lib/actions/project.actions';
+import { ProjectInputSchema } from '@/lib/validator';
 import Link from 'next/link';
-import { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 type FormState = {
   title: string;
@@ -36,6 +38,8 @@ export default function CreateProjectPage() {
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
+  const payload = useMemo(() => {}, [form]);
+
   return (
     <div className='px-4 lg:px-0 min-h-screen text-white bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 pb-20'>
       <AdminNav />
@@ -50,7 +54,7 @@ export default function CreateProjectPage() {
       <div className='max-w-5xl mx-auto lg:px-8'>
         <h1 className='text-2xl font-bold text-center mb-8'>Create Project</h1>
 
-        <form action='' className='space-y-8'>
+        <form onSubmit={handleSubmit} className='space-y-8'>
           <section className='rounded-xl border border-lime-400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4'>
             <h2 className='text-lg font-semibold text-lime-300'>Basics</h2>
 

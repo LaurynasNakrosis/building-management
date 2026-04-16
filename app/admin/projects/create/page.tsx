@@ -72,6 +72,7 @@ export default function CreateProjectPage() {
                 name='slug'
                 type='text'
                 value={form.slug}
+                onChange={(e) => updateField('slug', e.target.value)}
               />
               <Input
                 id='date'
@@ -79,6 +80,7 @@ export default function CreateProjectPage() {
                 name='date'
                 type='date'
                 value={form.date}
+                onChange={(e) => updateField('date', e.target.value)}
               />
               <Input
                 id='location'
@@ -86,6 +88,7 @@ export default function CreateProjectPage() {
                 name='location'
                 type='text'
                 value={form.location}
+                onChange={(e) => updateField('location', e.target.value)}
               />
               <Input
                 id='picture'
@@ -93,6 +96,7 @@ export default function CreateProjectPage() {
                 name='picture'
                 type='text'
                 value={form.url}
+                onChange={(e) => updateField('picture', e.target.value)}
               />
               <Input
                 id='repository'
@@ -100,6 +104,7 @@ export default function CreateProjectPage() {
                 name='repository'
                 type='text'
                 value={form.repository}
+                onChange={(e) => updateField('repository', e.target.value)}
               />
             </div>
             <div className='flex items-center gap-3 pt-2'>
@@ -108,6 +113,7 @@ export default function CreateProjectPage() {
                 name='published'
                 type='checkbox'
                 checked={form.published}
+                onChange={(e) => updateField('published', e.target.checked)}
                 className='h-4 w-4 accent-lime-400'
               />
               <label htmlFor='published' className='text-sm text-zinc-200'>
@@ -125,6 +131,7 @@ export default function CreateProjectPage() {
                 id='description'
                 name='description'
                 value={form.description}
+                onChange={(e) => updateField('description', e.target.value)}
                 className='block w-full rounded-md border border-[#758a8a] bg-stone-400 px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
               />
             </div>
@@ -139,6 +146,7 @@ export default function CreateProjectPage() {
                 id='bodyCode'
                 name='bodyCode'
                 value={form.bodyCode}
+                onChange={(e) => updateField('bodyCode', e.target.value)}
                 className='block w-full rounded-md border border-[#758a8a] bg-stone-400 px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
               />
             </div>

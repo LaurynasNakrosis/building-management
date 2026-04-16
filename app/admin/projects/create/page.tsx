@@ -16,9 +16,21 @@ type FormState = {
   published: boolean;
   bodyCode: string;
 };
+const initialForm: FormState = {
+  title: '',
+  slug: '',
+  description: '',
+  date: '',
+  location: '',
+  picture: '',
+  url: '',
+  repository: '',
+  published: false,
+  bodyCode: '',
+};
 
 export default function CreateProjectPage() {
-  const [form, setForm] = useState();
+  const [form, setForm] = useState<FormState>(initialForm);
 
   return (
     <div className='px-4 lg:px-0 min-h-screen text-white bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 pb-20'>

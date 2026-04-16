@@ -1,8 +1,9 @@
 'use server';
 
-import { parse } from 'path';
 import { ProjectInputSchema } from '../validator';
 import { z } from 'zod';
+import { connectToDatabase } from '../db';
+import Project from '../db/models/project.model';
 
 type CreateProjectPayload = z.infer<typeof ProjectInputSchema>;
 
@@ -17,4 +18,7 @@ export async function createProject(payload: CreateProjectPayload) {
   if (!parsed.success) {
     throw new Error(formatZodError(parsed.error));
   }
+  await connectToDatabase();
+  const created = await Project.create(parsed.data);
+  return JSON.parse(JSON.stringify(created));
 }

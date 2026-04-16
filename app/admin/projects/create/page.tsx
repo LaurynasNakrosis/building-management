@@ -32,6 +32,10 @@ const initialForm: FormState = {
 export default function CreateProjectPage() {
   const [form, setForm] = useState<FormState>(initialForm);
 
+  function updateField<K extends keyof FormState>(key: K, value: FormState[K]) {
+    setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
   return (
     <div className='px-4 lg:px-0 min-h-screen text-white bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 pb-20'>
       <AdminNav />
@@ -57,6 +61,10 @@ export default function CreateProjectPage() {
                 name='title'
                 type='text'
                 value={form.title}
+                onChange={(e) => {
+                  const nextTitle = e.target.value;
+                  updateField('title', nextTitle);
+                }}
               />
               <Input
                 id='slug'

@@ -5,6 +5,11 @@ import { createProject } from '@/lib/actions/project.actions';
 import { ProjectInputSchema } from '@/lib/validator';
 import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
+import { z } from 'zod';
+import Toast from '@/app/components/UI/Toast';
+
+type ToastType = 'success' | 'error';
+type ToastState = { message: string; type: ToastType } | null;
 
 type FormState = {
   title: string;
@@ -33,6 +38,12 @@ const initialForm: FormState = {
 
 export default function CreateProjectPage() {
   const [form, setForm] = useState<FormState>(initialForm);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<ToastState>(null);
+
+  function showToast(message: string, type: ToastType) {
+    setToast({ message, type });
+  }
 
   function updateField<K extends keyof FormState>(key: K, value: FormState[K]) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -54,18 +65,56 @@ export default function CreateProjectPage() {
   }, [form]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    console.log('handleSubmit fired');
     e.preventDefault();
+    if (isSubmitting) return;
 
     const parsed = ProjectInputSchema.safeParse(payload);
     if (!parsed.success) {
+      const flat = z.flattenError(parsed.error);
+      const fieldMsgs = Object.values(flat.fieldErrors).flat().filter(Boolean);
+      showToast(
+        flat.formErrors[0] ||
+          fieldMsgs[0] ||
+          'Please fix the highlighted fields.',
+        'error',
+      );
+
+      const firstPath = parsed.error.issues[0]?.path?.join('.') ?? '';
+      const idByPath: Record<string, string> = {
+        slug: 'slug',
+        title: 'title',
+        description: 'description',
+        date: 'date',
+        location: 'location',
+        picture: 'picture',
+        url: 'url',
+        repository: 'repository',
+        published: 'published',
+        'body.code': 'bodyCode',
+      };
+      const targetId = idByPath[firstPath];
+      if (targetId && typeof document !== 'undefined') {
+        document.getElementById(targetId)?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+      }
+
       return;
     }
 
     try {
+      setIsSubmitting(true);
+      console.log('Createing project');
       await createProject(parsed.data);
       setForm(initialForm);
     } catch (err) {
+      console.log(err);
       console.error(err);
+    } finally {
+      setIsSubmitting(false);
+      console.log('Product created');
     }
   }
 
@@ -128,7 +177,7 @@ export default function CreateProjectPage() {
                 label='Picture URL'
                 name='picture'
                 type='text'
-                value={form.url}
+                value={form.picture}
                 onChange={(e) => updateField('picture', e.target.value)}
               />
               <Input
@@ -187,13 +236,21 @@ export default function CreateProjectPage() {
           <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>
             <button
               type='submit'
+              onClick={() => console.log('submitting')}
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 bg-lime-400 text-sm sm:text-[0.9rem] font-semibold text-zinc-900 hover:bg-lime-300 hover:border-lime-300 transition-colors disabled:opacity-60 disabled:cursor-not-allowed'
             >
-              Create Project
+              {isSubmitting ? 'Creating' : 'Create Project'}
             </button>
           </div>
         </form>
       </div>
+      <Toast
+        open={!!toast}
+        message={toast?.message ?? ''}
+        type={toast?.type ?? 'success'}
+        durationMs={1800}
+        onClose={() => setToast(null)}
+      />
     </div>
   );
 }

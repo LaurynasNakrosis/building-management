@@ -106,15 +106,12 @@ export default function CreateProjectPage() {
 
     try {
       setIsSubmitting(true);
-      console.log('Createing project');
       await createProject(parsed.data);
       setForm(initialForm);
     } catch (err) {
-      console.log(err);
       console.error(err);
     } finally {
       setIsSubmitting(false);
-      console.log('Product created');
     }
   }
 

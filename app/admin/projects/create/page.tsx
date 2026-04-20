@@ -7,6 +7,7 @@ import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
 import { z } from 'zod';
 import Toast from '@/app/components/UI/Toast';
+import { UploadButton } from '@/lib/uploadthing';
 
 type ToastType = 'success' | 'error';
 type ToastState = { message: string; type: ToastType } | null;
@@ -177,6 +178,32 @@ export default function CreateProjectPage() {
                 value={form.picture}
                 onChange={(e) => updateField('picture', e.target.value)}
               />
+              <div className='flex flex-col gap-2'>
+                <label className='block text-[0.75rem] mb-0.5 text-[#9bafaf] uppercase font-semibold tracking-wide'>
+                  Upload Picture
+                </label>
+
+                <UploadButton
+                  endpoint='projectImage'
+                  onClientUploadComplete={(res) => {
+                    const url = res?.[0]?.url;
+                    if (!url) return;
+                    updateField('picture', url);
+                    showToast('Image uploaded.', 'success');
+                  }}
+                  onUploadError={(error: Error) =>
+                    showToast(error.message || 'Upload failed.', 'error')
+                  }
+                />
+
+                {form.picture && (
+                  <img
+                    src={form.picture}
+                    alt='Uploaded preview'
+                    className='mt-2 max-h-40 rounded-md border border-zinc-700 object-cover'
+                  />
+                )}
+              </div>
               <Input
                 id='repository'
                 label='Repository URL (optional)'

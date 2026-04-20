@@ -1,6 +1,6 @@
 'use client';
 import { AdminNav } from '@/app/components/AdminNav';
-import Input from '@/app/components/input';
+import Input from '@/app/components/formComponents/Input';
 import { createProject } from '@/lib/actions/project.actions';
 import { ProjectInputSchema } from '@/lib/validator';
 import Link from 'next/link';
@@ -238,13 +238,13 @@ export default function CreateProjectPage() {
                 name='description'
                 value={form.description}
                 onChange={(e) => updateField('description', e.target.value)}
-                className='block w-full rounded-md border border-[#758a8a] bg-stone-400 px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
+                className='block w-full rounded-md border border-[#758a8a] bg-[#869999] px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
               />
             </div>
             <div className='w-full flex flex-col gap-1'>
               <label
                 htmlFor='bodyCode'
-                className='block text-[0.75rem] mb-0.5 text-stone-800 uppercase font-semibold tracking-wide'
+                className='block text-[0.75rem] mb-0.5 text-[#9bafaf] uppercase font-semibold tracking-wide'
               >
                 Body
               </label>
@@ -253,7 +253,7 @@ export default function CreateProjectPage() {
                 name='bodyCode'
                 value={form.bodyCode}
                 onChange={(e) => updateField('bodyCode', e.target.value)}
-                className='block w-full rounded-md border border-[#758a8a] bg-stone-400 px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
+                className='block w-full rounded-md border border-[#758a8a] bg-[#869999] px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
               />
             </div>
           </section>

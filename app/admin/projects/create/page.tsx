@@ -20,7 +20,6 @@ type FormState = {
   location: string;
   picture: string;
   url: string;
-  repository: string;
   published: boolean;
   bodyCode: string;
 };
@@ -32,7 +31,6 @@ const initialForm: FormState = {
   location: '',
   picture: '',
   url: '',
-  repository: '',
   published: false,
   bodyCode: '',
 };
@@ -59,7 +57,6 @@ export default function CreateProjectPage() {
       location: form.location.trim() || undefined,
       picture: form.picture.trim() || '',
       url: form.url.trim() || '',
-      repository: form.repository.trim() || '',
       published: form.published,
       body: { code: form.bodyCode },
     };
@@ -90,7 +87,6 @@ export default function CreateProjectPage() {
         location: 'location',
         picture: 'picture',
         url: 'url',
-        repository: 'repository',
         published: 'published',
         'body.code': 'bodyCode',
       };
@@ -109,7 +105,9 @@ export default function CreateProjectPage() {
       setIsSubmitting(true);
       await createProject(parsed.data);
       setForm(initialForm);
+      showToast('Project created successfully.', 'success');
     } catch (err) {
+      showToast('Failed to create project. Please try again.', 'error');
       console.error(err);
     } finally {
       setIsSubmitting(false);
@@ -178,41 +176,47 @@ export default function CreateProjectPage() {
                 value={form.picture}
                 onChange={(e) => updateField('picture', e.target.value)}
               />
-              <div className='flex flex-col gap-2'>
+              <div className='w-full flex flex-col gap-2'>
                 <label className='block text-[0.75rem] mb-0.5 text-[#9bafaf] uppercase font-semibold tracking-wide'>
                   Upload Picture
                 </label>
-
-                <UploadButton
-                  endpoint='projectImage'
-                  onClientUploadComplete={(res) => {
-                    const url = res?.[0]?.url;
-                    if (!url) return;
-                    updateField('picture', url);
-                    showToast('Image uploaded.', 'success');
-                  }}
-                  onUploadError={(error: Error) =>
-                    showToast(error.message || 'Upload failed.', 'error')
-                  }
-                />
-
-                {form.picture && (
-                  <img
-                    src={form.picture}
-                    alt='Uploaded preview'
-                    className='mt-2 max-h-40 rounded-md border border-zinc-700 object-cover'
+                <div className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
+                  <UploadButton
+                    endpoint='projectImage'
+                    appearance={{
+                      button:
+                        'ut-ready:bg-lime-400 ut-ready:text-zinc-900 ut-ready:font-semibold ut-ready:hover:bg-lime-300 ut-uploading:bg-lime-400/60 ut-uploading:text-zinc-900 rounded-lg px-4 py-2 text-sm transition-colors',
+                      allowedContent: 'text-zinc-400 text-xs',
+                    }}
+                    onClientUploadComplete={(res) => {
+                      const url = res?.[0]?.url;
+                      if (!url) return;
+                      updateField('picture', url);
+                      showToast('Image uploaded.', 'success');
+                    }}
+                    onUploadError={(error: Error) =>
+                      showToast(error.message || 'Upload failed.', 'error')
+                    }
                   />
-                )}
+                </div>
               </div>
-              <Input
-                id='repository'
-                label='Repository URL (optional)'
-                name='repository'
-                type='text'
-                value={form.repository}
-                onChange={(e) => updateField('repository', e.target.value)}
-              />
             </div>
+            {form.picture && (
+              <div className='border rounded-md p-2 flex flex-col gap-1'>
+                <img
+                  src={form.picture}
+                  alt='Uploaded preview'
+                  className='h-24 w-24 rounded-md border border-zinc-700 object-cover shadow-md'
+                />
+                <button
+                  type='button'
+                  onClick={() => updateField('picture', '')}
+                  className='text-sm text-zinc-400 hover:text-red-400 transition-colors text-left'
+                >
+                  Remove
+                </button>
+              </div>
+            )}
             <div className='flex items-center gap-3 pt-2'>
               <input
                 id='published'
@@ -260,6 +264,7 @@ export default function CreateProjectPage() {
           <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>
             <button
               type='submit'
+              disabled={isSubmitting}
               onClick={() => console.log('submitting')}
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 bg-lime-400 text-sm sm:text-[0.9rem] font-semibold text-zinc-900 hover:bg-lime-300 hover:border-lime-300 transition-colors disabled:opacity-60 disabled:cursor-not-allowed'
             >

@@ -1,5 +1,4 @@
 import { Document, Model, model, models, Schema, Types } from 'mongoose';
-import { required } from 'zod/v4/core/util.cjs';
 
 export type ProjectBody = {
   code: string;
@@ -13,7 +12,6 @@ export type ProjectInput = {
   location?: string;
   picture?: string;
   url?: string;
-  repository?: string;
   published: boolean;
   body: ProjectBody;
 };
@@ -34,7 +32,6 @@ const projectSchema = new Schema<IProject>(
     location: { type: String, require: false },
     picture: { type: String, require: false },
     url: { type: String, require: false },
-    repository: { type: String, require: false },
 
     published: { type: Boolean, required: true, default: false },
     body: {

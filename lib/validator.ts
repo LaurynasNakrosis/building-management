@@ -69,11 +69,6 @@ export const ProjectInputSchema = z.object({
     .optional()
     .or(z.literal('')),
   url: z.string().url('URL must be valid').optional().or(z.literal('')),
-  repository: z
-    .string()
-    .url('Repository must be valid')
-    .optional()
-    .or(z.literal('')),
   published: z.coerce.boolean(),
   body: z.object({
     code: string().min(1, 'Body code is required'),

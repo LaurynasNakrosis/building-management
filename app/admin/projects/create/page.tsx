@@ -172,33 +172,36 @@ export default function CreateProjectPage() {
                 <label className='block text-[0.75rem] mb-0.5 text-[#9bafaf] uppercase font-semibold tracking-wide'>
                   Upload Picture
                 </label>
-                <div className='flex flex-col sm:flex-row items-start sm:items-center gap-4'>
+                <div className='rounded-xl border border-dashed border-zinc-600 bg-zinc-800/50 px-6 py-5 flex flex-col items-center justify-center gap-3 hover:border-lime-400/60 transition-colors'>
                   <UploadButton
                     endpoint='projectImage'
                     appearance={{
                       container: 'flex flex-col items-center gap-2 w-full',
                       button:
-                        'w-full sm:w-auto px-6 py-2.5 rounded-lg bg-lime-400 text-zinc-900 text-sm font-semibold ' +
+                        'w-full px-6 py-2.5 rounded-lg bg-lime-400 text-zinc-900 text-sm font-semibold hover:bg-lime-300 transition-colors cursor-pointer' +
                         'hover:bg-lime-300 transition-colors ' +
                         'ut-uploading:bg-lime-400/50 ut-uploading:cursor-not-allowed ' +
-                        'ut-readying:bg-zinc-700 ut-readying:text-zinc-400',
-                      allowedContent: 'text-zinc-400 text-xs',
+                        'ut-readying:cursor-wait',
+                      allowedContent: 'hidden',
                     }}
                     onClientUploadComplete={(res) => {
-                      const url = res?.[0]?.ufsUrl;
-                      if (!url) return;
-                      updateField('pictures', [...form.pictures, url]);
-                      showToast('Image uploaded.', 'success');
+                      const urls = res?.map((f) => f.ufsUrl) ?? [];
+                      if (!urls.length) return;
+                      updateField('pictures', [...form.pictures, ...urls]);
+                      showToast(`${urls.length} image(s) uploaded.`, 'success');
                     }}
                     onUploadError={(error: Error) =>
                       showToast(error.message || 'Upload failed.', 'error')
                     }
                   />
+                  <p className='text-xs text-zinc-500'>
+                    PNG, JPG, WEBP up to 8MB · up to 10 images
+                  </p>
                 </div>
               </div>
             </div>
             {form.pictures.length > 0 && (
-              <div className='border border-lime-400/70 rounded-md p-2 flex flex-col gap-1'>
+              <div className='border border-lime-400/70 rounded-md p-2 flex md:flex-row gap-1'>
                 {form.pictures.map((url, i) => (
                   <div key={url} className='re;lative group'>
                     <img

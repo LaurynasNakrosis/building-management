@@ -202,7 +202,7 @@ export default function CreateProjectPage() {
               </div>
             </div>
             {form.pictures.length > 0 && (
-              <div className='border border-lime-400/70 rounded-md p-2 flex md:flex-row gap-1'>
+              <div className='border border-lime-400/70 rounded-md p-3 flex flex-wrap gap-3'>
                 {form.pictures.map((url, i) => (
                   <div key={url} className='relative group flex flex-col gap-1'>
                     <img

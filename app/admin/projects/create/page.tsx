@@ -8,6 +8,7 @@ import React, { useMemo, useState } from 'react';
 import { z } from 'zod';
 import Toast from '@/app/components/UI/Toast';
 import { UploadButton } from '@/lib/uploadthing';
+import { TrashIcon } from '@heroicons/react/24/outline';
 
 type ToastType = 'success' | 'error';
 type ToastState = { message: string; type: ToastType } | null;
@@ -178,10 +179,10 @@ export default function CreateProjectPage() {
                     appearance={{
                       container: 'flex flex-col items-center gap-2 w-full',
                       button:
-                        'w-full px-6 py-2.5 rounded-lg bg-lime-400 text-zinc-900 text-sm font-semibold hover:bg-lime-300 transition-colors cursor-pointer' +
-                        'hover:bg-lime-300 transition-colors ' +
-                        'ut-uploading:bg-lime-400/50 ut-uploading:cursor-not-allowed ' +
-                        'ut-readying:cursor-wait',
+                        '!w-full !px-6 !py-2.5 !rounded-lg !bg-lime-400 !text-zinc-900 !text-sm !font-semibold !hover:bg-lime-300 !transition-colors !cursor-pointer' +
+                        '!hover:bg-lime-300 !transition-colors ' +
+                        '!ut-uploading:bg-lime-400/50 !ut-uploading:cursor-not-allowed ' +
+                        '!ut-readying:cursor-wait',
                       allowedContent: 'hidden',
                     }}
                     onClientUploadComplete={(res) => {
@@ -203,7 +204,7 @@ export default function CreateProjectPage() {
             {form.pictures.length > 0 && (
               <div className='border border-lime-400/70 rounded-md p-2 flex md:flex-row gap-1'>
                 {form.pictures.map((url, i) => (
-                  <div key={url} className='re;lative group'>
+                  <div key={url} className='relative group flex flex-col gap-1'>
                     <img
                       src={url}
                       alt={`Picture ${i + 1}`}
@@ -217,9 +218,10 @@ export default function CreateProjectPage() {
                           form.pictures.filter((_, idx) => idx !== i),
                         )
                       }
-                      className='text-sm text-zinc-300 hover:text-red-400 transition-colors text-left'
+                      className='flex items-center justify-center gap-1 w-full px-2 py-1 rounded-md bg-red-900/40 hover:bg-red-800/70 border border-red-700/50 text-red-400 hover:text-red-300 text-xs transition-colors'
                     >
-                      X
+                      <TrashIcon className='w-3.5 h-3.5' />
+                      Remove
                     </button>
                   </div>
                 ))}

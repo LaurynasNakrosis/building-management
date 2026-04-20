@@ -10,7 +10,7 @@ export type ProjectInput = {
   description: string;
   date?: Date;
   location?: string;
-  picture?: string;
+  picture?: string[];
   url?: string;
   published: boolean;
   body: ProjectBody;
@@ -30,7 +30,7 @@ const projectSchema = new Schema<IProject>(
 
     date: { type: Date, require: false },
     location: { type: String, require: false },
-    picture: { type: String, require: false },
+    picture: [{ type: String }],
     url: { type: String, require: false },
 
     published: { type: Boolean, required: true, default: false },

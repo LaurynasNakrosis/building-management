@@ -18,7 +18,7 @@ type FormState = {
   description: string;
   date: string;
   location: string;
-  picture: string;
+  pictures: string[];
   url: string;
   published: boolean;
   bodyCode: string;
@@ -29,7 +29,7 @@ const initialForm: FormState = {
   description: '',
   date: '',
   location: '',
-  picture: '',
+  pictures: [],
   url: '',
   published: false,
   bodyCode: '',
@@ -55,7 +55,7 @@ export default function CreateProjectPage() {
       description: form.description.trim(),
       date: form.date ? new Date(form.date) : undefined,
       location: form.location.trim() || undefined,
-      picture: form.picture.trim() || '',
+      picture: form.pictures,
       url: form.url.trim() || '',
       published: form.published,
       body: { code: form.bodyCode },
@@ -85,7 +85,7 @@ export default function CreateProjectPage() {
         description: 'description',
         date: 'date',
         location: 'location',
-        picture: 'picture',
+        pictures: 'pictures',
         url: 'url',
         published: 'published',
         'body.code': 'bodyCode',
@@ -168,15 +168,7 @@ export default function CreateProjectPage() {
                 value={form.location}
                 onChange={(e) => updateField('location', e.target.value)}
               />
-              <Input
-                id='picture'
-                label='Picture URL'
-                name='picture'
-                type='text'
-                value={form.picture}
-                onChange={(e) => updateField('picture', e.target.value)}
-              />
-              <div className='w-full flex flex-col gap-2'>
+              <div className='w-full flex flex-col gap-2 '>
                 <label className='block text-[0.75rem] mb-0.5 text-[#9bafaf] uppercase font-semibold tracking-wide'>
                   Upload Picture
                 </label>
@@ -184,14 +176,18 @@ export default function CreateProjectPage() {
                   <UploadButton
                     endpoint='projectImage'
                     appearance={{
+                      container: 'flex flex-col items-center gap-2 w-full',
                       button:
-                        'ut-ready:bg-lime-400 ut-ready:text-zinc-900 ut-ready:font-semibold ut-ready:hover:bg-lime-300 ut-uploading:bg-lime-400/60 ut-uploading:text-zinc-900 rounded-lg px-4 py-2 text-sm transition-colors',
+                        'w-full sm:w-auto px-6 py-2.5 rounded-lg bg-lime-400 text-zinc-900 text-sm font-semibold ' +
+                        'hover:bg-lime-300 transition-colors ' +
+                        'ut-uploading:bg-lime-400/50 ut-uploading:cursor-not-allowed ' +
+                        'ut-readying:bg-zinc-700 ut-readying:text-zinc-400',
                       allowedContent: 'text-zinc-400 text-xs',
                     }}
                     onClientUploadComplete={(res) => {
-                      const url = res?.[0]?.url;
+                      const url = res?.[0]?.ufsUrl;
                       if (!url) return;
-                      updateField('picture', url);
+                      updateField('pictures', [...form.pictures, url]);
                       showToast('Image uploaded.', 'success');
                     }}
                     onUploadError={(error: Error) =>
@@ -201,20 +197,29 @@ export default function CreateProjectPage() {
                 </div>
               </div>
             </div>
-            {form.picture && (
-              <div className='border rounded-md p-2 flex flex-col gap-1'>
-                <img
-                  src={form.picture}
-                  alt='Uploaded preview'
-                  className='h-24 w-24 rounded-md border border-zinc-700 object-cover shadow-md'
-                />
-                <button
-                  type='button'
-                  onClick={() => updateField('picture', '')}
-                  className='text-sm text-zinc-400 hover:text-red-400 transition-colors text-left'
-                >
-                  Remove
-                </button>
+            {form.pictures.length > 0 && (
+              <div className='border border-lime-400/70 rounded-md p-2 flex flex-col gap-1'>
+                {form.pictures.map((url, i) => (
+                  <div key={url} className='re;lative group'>
+                    <img
+                      src={url}
+                      alt={`Picture ${i + 1}`}
+                      className='h-24 w-24 rounded-md border border-zinc-700 object-cover shadow-md'
+                    />
+                    <button
+                      type='button'
+                      onClick={() =>
+                        updateField(
+                          'pictures',
+                          form.pictures.filter((_, idx) => idx !== i),
+                        )
+                      }
+                      className='text-sm text-zinc-300 hover:text-red-400 transition-colors text-left'
+                    >
+                      X
+                    </button>
+                  </div>
+                ))}
               </div>
             )}
             <div className='flex items-center gap-3 pt-2'>

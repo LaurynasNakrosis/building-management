@@ -63,11 +63,9 @@ export const ProjectInputSchema = z.object({
   description: z.string().min(3, 'Description must be atleast 10 characters'),
   date: z.coerce.date().optional(),
   location: z.string().optional(),
-  picture: z
-    .string()
-    .url('Picture must be valid URL')
-    .optional()
-    .or(z.literal('')),
+  pictures: z
+    .array(z.string().url('Each picture must be a valid URL'))
+    .default([]),
   url: z.string().url('URL must be valid').optional().or(z.literal('')),
   published: z.coerce.boolean(),
   body: z.object({

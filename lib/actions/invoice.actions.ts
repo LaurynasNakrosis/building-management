@@ -35,7 +35,7 @@ export async function getInvoiceBySlug(slug: string) {
   return JSON.parse(JSON.stringify(invoice));
 }
 
-export async function deleteInvoiceBySlug(slug: String) {
+export async function deleteInvoiceBySlug(slug: string) {
   await connectToDatabase();
   const deleted = await Invoice.findOneAndDelete({ slug });
 

@@ -9,6 +9,7 @@ import { z } from 'zod';
 import Toast from '@/app/components/UI/Toast';
 import { UploadButton } from '@/lib/uploadthing';
 import { TrashIcon } from '@heroicons/react/24/outline';
+import { toSlug } from '@/lib/utils';
 
 type ToastType = 'success' | 'error';
 type ToastState = { message: string; type: ToastType } | null;
@@ -142,6 +143,7 @@ export default function CreateProjectPage() {
                 onChange={(e) => {
                   const nextTitle = e.target.value;
                   updateField('title', nextTitle);
+                  updateField('slug', toSlug(nextTitle));
                 }}
               />
               <Input

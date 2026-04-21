@@ -64,7 +64,6 @@ export default function CreateProjectPage() {
   }, [form]);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    console.log('handleSubmit fired');
     e.preventDefault();
     if (isSubmitting) return;
 
@@ -275,7 +274,6 @@ export default function CreateProjectPage() {
             <button
               type='submit'
               disabled={isSubmitting}
-              onClick={() => console.log('submitting')}
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 bg-lime-400 text-sm sm:text-[0.9rem] font-semibold text-zinc-900 hover:bg-lime-300 hover:border-lime-300 transition-colors disabled:opacity-60 disabled:cursor-not-allowed'
             >
               {isSubmitting ? 'Creating' : 'Create Project'}

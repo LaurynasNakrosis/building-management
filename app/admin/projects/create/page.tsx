@@ -10,6 +10,7 @@ import Toast from '@/app/components/UI/Toast';
 import { UploadButton } from '@/lib/uploadthing';
 import { TrashIcon } from '@heroicons/react/24/outline';
 import { toSlug } from '@/lib/utils';
+import { useAdminAuth } from '@/app/admin/useAdminAuth';
 
 type ToastType = 'success' | 'error';
 type ToastState = { message: string; type: ToastType } | null;
@@ -38,6 +39,7 @@ const initialForm: FormState = {
 };
 
 export default function CreateProjectPage() {
+  const { auth } = useAdminAuth();
   const [form, setForm] = useState<FormState>(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [toast, setToast] = useState<ToastState>(null);
@@ -114,6 +116,15 @@ export default function CreateProjectPage() {
       setIsSubmitting(false);
     }
   }
+
+  if (auth.status === 'loading') {
+    return (
+      <div className='min-h-screen flex items-center justify-center bg-zinc-900 text-white'>
+        <p>Checking admin access...</p>
+      </div>
+    );
+  }
+  if (auth.status === 'unauthenticated') return null;
 
   return (
     <div className='px-4 lg:px-0 min-h-screen text-white bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 pb-20'>

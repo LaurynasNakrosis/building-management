@@ -140,9 +140,13 @@ export default function AdminProjectsPage() {
       </div>
     );
   }
+
+  function handleDeleteClick(slug: string, title: string) {}
+
   if (auth.status === 'unauthenticated') return null;
   const isLoadingProjects =
     state.status === 'idle' || state.status === 'loading';
+
   const projectsList = state.status === 'success' ? state.data : [];
   const featuredProject = projectsList[0] ?? null;
   const topRowProjectOne = projectsList[1] ?? null;
@@ -188,7 +192,12 @@ export default function AdminProjectsPage() {
                     project={featuredProject}
                     imageClassName='aspect-[2/1]'
                     onEditClick={() => {}}
-                    onDeleteClick={() => {}}
+                    onDeleteClick={() =>
+                      handleDeleteClick(
+                        featuredProject.slug,
+                        featuredProject.title,
+                      )
+                    }
                     isDeleting={false}
                   />
                 ) : (
@@ -197,7 +206,7 @@ export default function AdminProjectsPage() {
                     imageClassName='aspect-[2/1]'
                   />
                 )}
-                <div>
+                <div className='flex flex-col w-full gap-8'>
                   {topRowProjectOne ? (
                     <AdminProjectCard
                       project={topRowProjectOne}
@@ -228,6 +237,9 @@ export default function AdminProjectsPage() {
                   )}
                 </div>
               </div>
+              {remainingProjects.length > 0 && (
+                <div className='hidden w-full h-px md:block bg-lime-300' />
+              )}
             </>
           )}
         </div>

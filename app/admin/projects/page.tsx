@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useAdminAuth } from '../useAdminAuth';
 import { useAdminProjects, type Project } from '@/app/admin/useAdminProjects';
 import { formatDate } from '@/lib/utils';
+import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import { TrashIcon } from 'lucide-react';
 
 function AdminProjectCard({
   project,
@@ -67,6 +69,7 @@ function AdminProjectCard({
             onClick={onEditClick}
             className='flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-zinc-600 text-xs text-zinc-200 hover:bg-zinc-800 transition-colors'
           >
+            <PencilSquareIcon className='w-3.5 h-3.5' />
             Edit
           </button>
           <button
@@ -75,6 +78,7 @@ function AdminProjectCard({
             disabled={isDeleting}
             className='flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-red-700/50 bg-red-900/30 hover:bg-red-800/60 text-red-400 hover:text-red-300 text-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
           >
+            <TrashIcon className='w-3.5 h-3.5' />
             Delete
           </button>
           <Link

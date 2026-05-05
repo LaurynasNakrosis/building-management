@@ -22,3 +22,9 @@ export async function createProject(payload: CreateProjectPayload) {
   const created = await Project.create(parsed.data);
   return JSON.parse(JSON.stringify(created));
 }
+
+export async function getProjects() {
+  await connectToDatabase();
+  const projects = await Project.find({}).sort({ createdAt: -1 });
+  return JSON.parse(JSON.stringify(projects));
+}

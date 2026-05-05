@@ -4,9 +4,62 @@ import { AdminNav } from '@/app/components/AdminNav';
 import Link from 'next/link';
 import { useAdminAuth } from '../useAdminAuth';
 import { useAdminProjects, type Project } from '@/app/admin/useAdminProjects';
+import { divide } from 'lodash';
+
+
+
+function AdminProjectCard({
+  project,
+  imageClassName, 
+  onEditClick, 
+  onDeleteClick,
+  isDeleting
+} : {
+  project: Project;
+  imageClassName: string;
+  onEditClick: () => void;
+  onDeleteClick: () => void;
+  isDeleting: boolean;
+}) {
+  return (
+    <div>
+      <article>
+        {project.picture && project.picture.length > 0 ? (
+          <img 
+          src={project.picture[0]} 
+          alt={project.title} 
+          className={`rounded-lg object-cover w-full ${imageClassName}`}/>
+        ) : (
+        <div>
+          <span className='text-zinc-600 text-xs'>No image</span>
+        </div>
+        )}
+      </article>
+    </div>
+  )
+}
 
 export default function AdminProjectsPage() {
   const { auth } = useAdminAuth();
+  const { state, deleteProjectBySlug, isDeleting } = useAdminProjects(
+    auth.status === 'authenticated',
+  );
+
+  if (auth.status === 'loading') {
+    return (
+      <div className='min-h-screen flex items-center justify-center bg-zinc-900 text-white'>
+        <p>Checking admin access...</p>
+      </div>
+    );
+  }
+  if (auth.status === 'unauthenticated') return null;
+  const isLoadingProjects =
+    state.status === 'idle' || state.status === 'loading';
+  const projectsList = state.status === 'success' ? state.data : [];
+  const featuredProject = projectsList[0] ?? null;
+  const topRowProjectOne = projectsList[1] ?? null;
+  const topRowProjectTwo = projectsList[2] ?? null;
+  const remainingProjects = projectsList.slice(3);
 
   return (
     <div className='px-6 lg:px-8 min-h-screen text-white bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 pb-20'>
@@ -32,7 +85,11 @@ export default function AdminProjectsPage() {
           </div>
           <div className='w-full h-px bg-lime-300' />
           <>
-            <div></div>
+            <div>
+              {featuredProject ? (
+                <AdminProjectCard/>
+              )}
+            </div>
           </>
         </div>
       </div>

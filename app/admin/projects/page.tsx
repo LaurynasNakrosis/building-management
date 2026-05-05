@@ -60,6 +60,15 @@ function AdminProjectCard({
           </span>
         </div>
         <p>{project.description}</p>
+
+        <div>
+          <button></button>
+          <button></button>
+          <Link
+            href={`/admin/projects/${project.slug}`}
+            className='ml-auto text-xs text-zinc-500 hover:text-zinc-300 transition-colors underline underline-offset-2'
+          ></Link>
+        </div>
       </article>
     </div>
   );

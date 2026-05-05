@@ -246,7 +246,9 @@ export default function AdminProjectsPage() {
                     imageClassName='aspect-[2/1]'
                   />
                 )}
+                {/* Top row — two stacked cards (right column) */}
                 <div className='flex flex-col w-full gap-8'>
+                  {/* Top row project ONE */}
                   {topRowProjectOne ? (
                     <AdminProjectCard
                       project={topRowProjectOne}
@@ -266,6 +268,8 @@ export default function AdminProjectsPage() {
                       imageClassName='aspect-[3/1]'
                     />
                   )}
+
+                  {/* Top row project TWO */}
                   {topRowProjectTwo ? (
                     <AdminProjectCard
                       project={topRowProjectTwo}
@@ -288,9 +292,12 @@ export default function AdminProjectsPage() {
                 </div>
               </div>
 
+              {/* Divider */}
               {remainingProjects.length > 0 && (
                 <div className='hidden w-full h-px md:block bg-lime-300' />
               )}
+
+              {/* Remaining projects — 3-column grid */}
             </>
           )}
         </div>

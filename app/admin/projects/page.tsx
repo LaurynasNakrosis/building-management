@@ -6,37 +6,30 @@ import { useAdminAuth } from '../useAdminAuth';
 import { useAdminProjects, type Project } from '@/app/admin/useAdminProjects';
 import { divide } from 'lodash';
 
-
-
 function AdminProjectCard({
   project,
-  imageClassName, 
-  onEditClick, 
-  onDeleteClick,
-  isDeleting
-} : {
+  imageClassName,
+}: {
   project: Project;
   imageClassName: string;
-  onEditClick: () => void;
-  onDeleteClick: () => void;
-  isDeleting: boolean;
 }) {
   return (
     <div>
       <article>
         {project.picture && project.picture.length > 0 ? (
-          <img 
-          src={project.picture[0]} 
-          alt={project.title} 
-          className={`rounded-lg object-cover w-full ${imageClassName}`}/>
+          <img
+            src={project.picture[0]}
+            alt={project.title}
+            className={`rounded-lg object-cover w-full ${imageClassName}`}
+          />
         ) : (
-        <div>
-          <span className='text-zinc-600 text-xs'>No image</span>
-        </div>
+          <div>
+            <span className='text-zinc-600 text-xs'>No image</span>
+          </div>
         )}
       </article>
     </div>
-  )
+  );
 }
 
 export default function AdminProjectsPage() {
@@ -87,7 +80,12 @@ export default function AdminProjectsPage() {
           <>
             <div>
               {featuredProject ? (
-                <AdminProjectCard/>
+                <AdminProjectCard
+                  project={featuredProject}
+                  imageClassName='aspect-[2/1]'
+                />
+              ) : (
+                <div> No Project </div>
               )}
             </div>
           </>

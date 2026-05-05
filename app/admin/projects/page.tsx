@@ -49,7 +49,15 @@ function AdminProjectCard({
           <h2 className='text-2xl font-bold text-zinc-100 group-hover:text-white sm:text-3xl font-display leading-tight'>
             {project.title}
           </h2>
-          <span>{project.published ? 'Published' : 'Draft'}</span>
+          <span
+            className={`shrink-0 mt-1 text-xs px-2 py-0.5 rounded-full font-medium ${
+              project.published
+                ? 'bg-lime-400/20 text-lime-300 border border-lime-400/40'
+                : 'bg-zinc-700 text-zinc-400 border border-zinc-600'
+            }`}
+          >
+            {project.published ? 'Published' : 'Draft'}
+          </span>
         </div>
       </article>
     </div>

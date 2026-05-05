@@ -298,6 +298,26 @@ export default function AdminProjectsPage() {
               )}
 
               {/* Remaining projects — 3-column grid */}
+              {remainingProjects.length > 0 && (
+                <div>
+                  <div>
+                    {remainingProjects
+                      .filter((_, index) => index % 3 === 0)
+                      .map((project) => (
+                        <AdminProjectCard
+                          key={project._id}
+                          project={project}
+                          imageClassName='aspect-[2/1]'
+                          onEditClick={() => {}}
+                          onDeleteClick={() =>
+                            handleDeleteClick(project.slug, project.title)
+                          }
+                          isDeleting={isDeleting(project.slug)}
+                        />
+                      ))}
+                  </div>
+                </div>
+              )}
             </>
           )}
         </div>

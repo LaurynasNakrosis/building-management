@@ -79,12 +79,14 @@ function AdminProjectCard({
             className='flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-red-700/50 bg-red-900/30 hover:bg-red-800/60 text-red-400 hover:text-red-300 text-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
           >
             <TrashIcon className='w-3.5 h-3.5' />
-            Delete
+            {isDeleting ? 'Deleting…' : 'Delete'}
           </button>
           <Link
             href={`/admin/projects/${project.slug}`}
             className='ml-auto text-xs text-zinc-500 hover:text-zinc-300 transition-colors underline underline-offset-2'
-          ></Link>
+          >
+            View details
+          </Link>
         </div>
       </article>
     </div>

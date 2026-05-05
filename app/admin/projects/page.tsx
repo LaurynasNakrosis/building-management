@@ -15,6 +15,8 @@ type ConfirmConfig = {
   confirmLabel?: string;
   onConfirm: () => void;
 };
+type ToastType = 'success' | 'error';
+type ToastState = { message: string; type: ToastType } | null;
 
 function AdminProjectCard({
   project,
@@ -143,6 +145,7 @@ export default function AdminProjectsPage() {
   const [confirmConfig, setConfirmConfig] = useState<ConfirmConfig | null>(
     null,
   );
+  const [toast, setToast] = useState<ToastState>(null);
 
   if (auth.status === 'loading') {
     return (
@@ -150,6 +153,10 @@ export default function AdminProjectsPage() {
         <p>Checking admin access...</p>
       </div>
     );
+  }
+
+  function showToast(message: string, type: ToastType) {
+    setToast({ message, type });
   }
 
   function handleDeleteClick(slug: string, title: string) {
@@ -162,7 +169,15 @@ export default function AdminProjectsPage() {
         </>
       ),
       confirmLabel: 'Yes delete',
-      onConfirm: async () => {},
+      onConfirm: async () => {
+        setConfirmConfig(null);
+        try {
+          await deleteProjectBySlug(slug);
+          showToast('Project deleted.', 'success');
+        } catch {
+          showToast('Failed to delete project.', 'error');
+        }
+      },
     });
   }
 
@@ -221,7 +236,7 @@ export default function AdminProjectsPage() {
                         featuredProject.title,
                       )
                     }
-                    isDeleting={false}
+                    isDeleting={isDeleting(featuredProject.slug)}
                   />
                 ) : (
                   <PlaceholderCard

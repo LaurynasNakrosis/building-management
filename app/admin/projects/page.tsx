@@ -172,24 +172,34 @@ export default function AdminProjectsPage() {
             </Link>
           </div>
           <div className='w-full h-px bg-lime-300' />
-          <>
-            <div>
-              {featuredProject ? (
-                <AdminProjectCard
-                  project={featuredProject}
-                  imageClassName='aspect-[2/1]'
-                  onEditClick={() => {}}
-                  onDeleteClick={() => {}}
-                  isDeleting={false}
-                />
-              ) : (
-                <PlaceholderCard
-                  label='Featured Project'
-                  imageClassName='aspect-[2/1]'
-                />
-              )}
+          {isLoadingProjects ? (
+            <div className='rounded-xl border border-lime-400/30 bg-zinc-900/60 p-10 text-zinc-400 text-sm text-center'>
+              Loading projects…
             </div>
-          </>
+          ) : state.status === 'error' ? (
+            <div className='rounded-xl border border-red-500/50 bg-zinc-900/60 p-10 text-red-400 text-sm text-center'>
+              {state.error}
+            </div>
+          ) : (
+            <>
+              <div className='grid grid-cols-1 gap-8 mx-auto lg:grid-cols-2'>
+                {featuredProject ? (
+                  <AdminProjectCard
+                    project={featuredProject}
+                    imageClassName='aspect-[2/1]'
+                    onEditClick={() => {}}
+                    onDeleteClick={() => {}}
+                    isDeleting={false}
+                  />
+                ) : (
+                  <PlaceholderCard
+                    label='Featured Project'
+                    imageClassName='aspect-[2/1]'
+                  />
+                )}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

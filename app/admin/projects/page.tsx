@@ -59,6 +59,7 @@ function AdminProjectCard({
             {project.published ? 'Published' : 'Draft'}
           </span>
         </div>
+        <p>{project.description}</p>
       </article>
     </div>
   );

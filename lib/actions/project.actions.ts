@@ -28,3 +28,10 @@ export async function getProjects() {
   const projects = await Project.find({}).sort({ createdAt: -1 });
   return JSON.parse(JSON.stringify(projects));
 }
+
+export async function getProjectBySlug(slug: string) {
+  await connectToDatabase();
+  const project = await Project.findOne({ slug }).lean();
+  if (!project) return null;
+  return JSON.parse(JSON.stringify(project));
+}

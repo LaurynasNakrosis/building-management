@@ -7,6 +7,7 @@ import { useAdminProjects, type Project } from '@/app/admin/useAdminProjects';
 import { formatDate } from '@/lib/utils';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { TrashIcon } from 'lucide-react';
+import { useState } from 'react';
 
 function AdminProjectCard({
   project,
@@ -132,6 +133,9 @@ export default function AdminProjectsPage() {
   const { state, deleteProjectBySlug, isDeleting } = useAdminProjects(
     auth.status === 'authenticated',
   );
+  const [confirmConfig, setConfirmConfig] = useState<ConfirmConfig | null>(
+    null,
+  );
 
   if (auth.status === 'loading') {
     return (
@@ -141,7 +145,9 @@ export default function AdminProjectsPage() {
     );
   }
 
-  function handleDeleteClick(slug: string, title: string) {}
+  function handleDeleteClick(slug: string, title: string) {
+    setConfirmConfig({});
+  }
 
   if (auth.status === 'unauthenticated') return null;
   const isLoadingProjects =

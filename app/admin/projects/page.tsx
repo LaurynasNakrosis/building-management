@@ -8,6 +8,8 @@ import { formatDate } from '@/lib/utils';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { TrashIcon } from 'lucide-react';
 import { useState } from 'react';
+import Toast from '@/app/components/UI/Toast';
+import ConfirmModal from '@/app/components/UI/ConfirmModal';
 
 type ConfirmConfig = {
   title: string;
@@ -164,7 +166,7 @@ export default function AdminProjectsPage() {
       title: 'Delete project?',
       description: (
         <>
-          this will permanently delete <span>{title}</span> <br /> This action
+          This will permanently delete <span>{title}</span> <br /> This action
           cannot be undone.
         </>
       ),
@@ -281,6 +283,24 @@ export default function AdminProjectsPage() {
             </>
           )}
         </div>
+        {confirmConfig && (
+          <ConfirmModal
+            open={true}
+            title={confirmConfig.title}
+            description={confirmConfig.description}
+            confirmLabel={confirmConfig.confirmLabel}
+            cancelLabel='Cancel'
+            onConfirm={confirmConfig.onConfirm}
+            onCancel={() => setConfirmConfig(null)}
+          />
+        )}
+        <Toast
+          open={!!toast}
+          message={toast?.message ?? ''}
+          type={toast?.type ?? 'success'}
+          durationMs={1800}
+          onClose={() => setToast(null)}
+        />
       </div>
     </div>
   );

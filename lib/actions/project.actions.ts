@@ -35,3 +35,10 @@ export async function getProjectBySlug(slug: string) {
   if (!project) return null;
   return JSON.parse(JSON.stringify(project));
 }
+
+export async function deleteProject(slug: string) {
+  await connectToDatabase();
+  const deleted = await Project.findOneAndDelete({ slug });
+  if (!deleted) throw new Error('Project not found');
+  return { success: true };
+}

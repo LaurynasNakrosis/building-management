@@ -197,6 +197,22 @@ export default function AdminProjectsPage() {
                     imageClassName='aspect-[2/1]'
                   />
                 )}
+                <div>
+                  {topRowProjectOne ? (
+                    <AdminProjectCard
+                      project={topRowProjectOne}
+                      imageClassName='aspect-[3/1]'
+                      onEditClick={() => {}}
+                      onDeleteClick={() => {}}
+                      isDeleting={false}
+                    />
+                  ) : (
+                    <PlaceholderCard
+                      label='Top Project 1'
+                      imageClassName='aspect-[3/1]'
+                    />
+                  )}
+                </div>
               </div>
             </>
           )}

@@ -271,8 +271,13 @@ export default function AdminProjectsPage() {
                       project={topRowProjectTwo}
                       imageClassName='aspect-[3/1]'
                       onEditClick={() => {}}
-                      onDeleteClick={() => {}}
-                      isDeleting={false}
+                      onDeleteClick={() =>
+                        handleDeleteClick(
+                          topRowProjectTwo.slug,
+                          topRowProjectTwo.title,
+                        )
+                      }
+                      isDeleting={isDeleting(topRowProjectTwo.slug)}
                     />
                   ) : (
                     <PlaceholderCard
@@ -282,6 +287,7 @@ export default function AdminProjectsPage() {
                   )}
                 </div>
               </div>
+
               {remainingProjects.length > 0 && (
                 <div className='hidden w-full h-px md:block bg-lime-300' />
               )}

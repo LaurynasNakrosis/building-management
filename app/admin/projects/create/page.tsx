@@ -89,7 +89,7 @@ export default function CreateProjectPage() {
         description: 'description',
         date: 'date',
         location: 'location',
-        pictures: 'pictures',
+        picture: 'picture',
         url: 'url',
         published: 'published',
         'body.code': 'bodyCode',

@@ -4,6 +4,7 @@ import { AdminNav } from '@/app/components/AdminNav';
 import Link from 'next/link';
 import { useAdminAuth } from '../useAdminAuth';
 import { useAdminProjects, type Project } from '@/app/admin/useAdminProjects';
+import { formatDate } from '@/lib/utils';
 
 function AdminProjectCard({
   project,
@@ -34,6 +35,16 @@ function AdminProjectCard({
             <span className='text-zinc-600 text-xs'>No image</span>
           </div>
         )}
+
+        <div className='text-sm text-zinc-100 pt-4'>
+          {project.date ? (
+            <time dateTime={new Date(project.date).toISOString()}>
+              {formatDate(new Date(project.date).toISOString())}
+            </time>
+          ) : (
+            <span className='text-zinc-500'>No date set</span>
+          )}
+        </div>
       </article>
     </div>
   );

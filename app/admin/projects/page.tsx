@@ -45,6 +45,12 @@ function AdminProjectCard({
             <span className='text-zinc-500'>No date set</span>
           )}
         </div>
+        <div className='flex items-start justify-between mt-4 gap-2'>
+          <h2 className='text-2xl font-bold text-zinc-100 group-hover:text-white sm:text-3xl font-display leading-tight'>
+            {project.title}
+          </h2>
+          <span>{project.published ? 'Published' : 'Draft'}</span>
+        </div>
       </article>
     </div>
   );

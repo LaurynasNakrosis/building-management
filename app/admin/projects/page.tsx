@@ -4,18 +4,23 @@ import { AdminNav } from '@/app/components/AdminNav';
 import Link from 'next/link';
 import { useAdminAuth } from '../useAdminAuth';
 import { useAdminProjects, type Project } from '@/app/admin/useAdminProjects';
-import { divide } from 'lodash';
 
 function AdminProjectCard({
   project,
   imageClassName,
+  onEditClick,
+  onDeleteClick,
+  isDeleting,
 }: {
   project: Project;
   imageClassName: string;
+  onEditClick: () => void;
+  onDeleteClick: () => void;
+  isDeleting: boolean;
 }) {
   return (
-    <div>
-      <article>
+    <div className='p-4 overflow-hidden relative duration-700 border rounded-xl hover:bg-zinc-800/10 group md:gap-8 hover:border-zinc-400/50 border-zinc-600'>
+      <article className='relative w-full h-full'>
         {project.picture && project.picture.length > 0 ? (
           <img
             src={project.picture[0]}
@@ -23,7 +28,9 @@ function AdminProjectCard({
             className={`rounded-lg object-cover w-full ${imageClassName}`}
           />
         ) : (
-          <div>
+          <div
+            className={`rounded-lg w-full ${imageClassName} bg-zinc-800 border border-dashed border-zinc-600 flex items-center justify-center`}
+          >
             <span className='text-zinc-600 text-xs'>No image</span>
           </div>
         )}
@@ -117,6 +124,9 @@ export default function AdminProjectsPage() {
                 <AdminProjectCard
                   project={featuredProject}
                   imageClassName='aspect-[2/1]'
+                  onEditClick={() => {}}
+                  onDeleteClick={() => {}}
+                  isDeleting={false}
                 />
               ) : (
                 <PlaceholderCard

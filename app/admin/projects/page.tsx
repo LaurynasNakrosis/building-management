@@ -299,10 +299,26 @@ export default function AdminProjectsPage() {
 
               {/* Remaining projects — 3-column grid */}
               {remainingProjects.length > 0 && (
-                <div>
-                  <div>
+                <div className='grid grid-cols-1 gap-4 mx-auto lg:mx-0 md:grid-cols-3'>
+                  <div className='grid grid-cols-1 gap-4'>
                     {remainingProjects
                       .filter((_, index) => index % 3 === 0)
+                      .map((project) => (
+                        <AdminProjectCard
+                          key={project._id}
+                          project={project}
+                          imageClassName='aspect-[2/1]'
+                          onEditClick={() => {}}
+                          onDeleteClick={() =>
+                            handleDeleteClick(project.slug, project.title)
+                          }
+                          isDeleting={isDeleting(project.slug)}
+                        />
+                      ))}
+                  </div>
+                  <div>
+                    {remainingProjects
+                      .filter((_, index) => index % 3 === 1)
                       .map((project) => (
                         <AdminProjectCard
                           key={project._id}

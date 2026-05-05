@@ -2,8 +2,12 @@
 
 import { AdminNav } from '@/app/components/AdminNav';
 import Link from 'next/link';
+import { useAdminAuth } from '../useAdminAuth';
+import { useAdminProjects, type Project } from '@/app/admin/useAdminProjects';
 
 export default function AdminProjectsPage() {
+  const { auth } = useAdminAuth();
+
   return (
     <div className='px-6 lg:px-8 min-h-screen text-white bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 pb-20'>
       <AdminNav />
@@ -27,6 +31,9 @@ export default function AdminProjectsPage() {
             </Link>
           </div>
           <div className='w-full h-px bg-lime-300' />
+          <>
+            <div></div>
+          </>
         </div>
       </div>
     </div>

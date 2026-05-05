@@ -61,9 +61,17 @@ function AdminProjectCard({
         </div>
         <p>{project.description}</p>
 
-        <div>
-          <button></button>
-          <button></button>
+        <div className='flex items-center gap-2 mt-5 pt-4 border-t border-zinc-700/60'>
+          <button
+            type='button'
+            onClick={onEditClick}
+            className='flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-zinc-600 text-xs text-zinc-200 hover:bg-zinc-800 transition-colors'
+          >
+            Edit
+          </button>
+          <button type='button' onClick={onDeleteClick}>
+            Delete
+          </button>
           <Link
             href={`/admin/projects/${project.slug}`}
             className='ml-auto text-xs text-zinc-500 hover:text-zinc-300 transition-colors underline underline-offset-2'

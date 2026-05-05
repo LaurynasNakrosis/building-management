@@ -69,7 +69,12 @@ function AdminProjectCard({
           >
             Edit
           </button>
-          <button type='button' onClick={onDeleteClick}>
+          <button
+            type='button'
+            onClick={onDeleteClick}
+            disabled={isDeleting}
+            className='flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-red-700/50 bg-red-900/30 hover:bg-red-800/60 text-red-400 hover:text-red-300 text-xs transition-colors disabled:opacity-50 disabled:cursor-not-allowed'
+          >
             Delete
           </button>
           <Link

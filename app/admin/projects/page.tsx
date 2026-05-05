@@ -252,8 +252,13 @@ export default function AdminProjectsPage() {
                       project={topRowProjectOne}
                       imageClassName='aspect-[3/1]'
                       onEditClick={() => {}}
-                      onDeleteClick={() => {}}
-                      isDeleting={false}
+                      onDeleteClick={() =>
+                        handleDeleteClick(
+                          topRowProjectOne.slug,
+                          topRowProjectOne.title,
+                        )
+                      }
+                      isDeleting={isDeleting(topRowProjectOne.slug)}
                     />
                   ) : (
                     <PlaceholderCard

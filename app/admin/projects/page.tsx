@@ -9,6 +9,13 @@ import { PencilSquareIcon } from '@heroicons/react/24/outline';
 import { TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 
+type ConfirmConfig = {
+  title: string;
+  description: React.ReactNode;
+  confirmLabel?: string;
+  onConfirm: () => void;
+};
+
 function AdminProjectCard({
   project,
   imageClassName,

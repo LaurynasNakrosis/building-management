@@ -153,7 +153,17 @@ export default function AdminProjectsPage() {
   }
 
   function handleDeleteClick(slug: string, title: string) {
-    setConfirmConfig({});
+    setConfirmConfig({
+      title: 'Delete project?',
+      description: (
+        <>
+          this will permanently delete <span>{title}</span> <br /> This action
+          cannot be undone.
+        </>
+      ),
+      confirmLabel: 'Yes delete',
+      onConfirm: async () => {},
+    });
   }
 
   if (auth.status === 'unauthenticated') return null;

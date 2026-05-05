@@ -33,20 +33,25 @@ function AdminProjectCard({
   onDeleteClick: () => void;
   isDeleting: boolean;
 }) {
+  const [imgError, setImgError] = useState(false);
+  const hasImage = !imgError && project.picture && project.picture.length > 0;
   return (
     <div className='p-4 overflow-hidden relative duration-700 border rounded-xl hover:bg-zinc-800/10 group md:gap-8 hover:border-zinc-400/50 border-zinc-600'>
       <article className='relative w-full h-full'>
-        {project.picture && project.picture.length > 0 ? (
+        {hasImage ? (
           <img
-            src={project.picture[0]}
+            src={project.picture![0]}
             alt={project.title}
+            onError={() => setImgError(true)}
             className={`rounded-lg object-cover w-full ${imageClassName}`}
           />
         ) : (
           <div
             className={`rounded-lg w-full ${imageClassName} bg-zinc-800 border border-dashed border-zinc-600 flex items-center justify-center`}
           >
-            <span className='text-zinc-600 text-xs'>No image</span>
+            <span className='text-zinc-600 text-xs'>
+              {imgError ? 'Image unavailable' : 'No image'}
+            </span>
           </div>
         )}
 
@@ -316,9 +321,25 @@ export default function AdminProjectsPage() {
                         />
                       ))}
                   </div>
-                  <div>
+                  <div className='grid grid-cols-1 gap-4'>
                     {remainingProjects
                       .filter((_, index) => index % 3 === 1)
+                      .map((project) => (
+                        <AdminProjectCard
+                          key={project._id}
+                          project={project}
+                          imageClassName='aspect-[2/1]'
+                          onEditClick={() => {}}
+                          onDeleteClick={() =>
+                            handleDeleteClick(project.slug, project.title)
+                          }
+                          isDeleting={isDeleting(project.slug)}
+                        />
+                      ))}
+                  </div>
+                  <div className='grid grid-cols-1 gap-4'>
+                    {remainingProjects
+                      .filter((_, index) => index % 3 === 2)
                       .map((project) => (
                         <AdminProjectCard
                           key={project._id}

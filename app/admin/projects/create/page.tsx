@@ -42,6 +42,7 @@ export default function CreateProjectPage() {
   const { auth } = useAdminAuth();
   const [form, setForm] = useState<FormState>(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [toast, setToast] = useState<ToastState>(null);
 
   function showToast(message: string, type: ToastType) {
@@ -197,15 +198,18 @@ export default function CreateProjectPage() {
                         '!ut-readying:cursor-wait',
                       allowedContent: 'hidden',
                     }}
+                    onUploadBegin={() => setIsUploading(true)}
                     onClientUploadComplete={(res) => {
+                      setIsUploading(false);
                       const urls = res?.map((f) => f.ufsUrl) ?? [];
                       if (!urls.length) return;
                       updateField('pictures', [...form.pictures, ...urls]);
                       showToast(`${urls.length} image(s) uploaded.`, 'success');
                     }}
-                    onUploadError={(error: Error) =>
-                      showToast(error.message || 'Upload failed.', 'error')
-                    }
+                    onUploadError={(error: Error) => {
+                      setIsUploading(false);
+                      showToast(error.message || 'Upload failed.', 'error');
+                    }}
                   />
                   <p className='text-xs text-zinc-500'>
                     PNG, JPG, WEBP up to 8MB · up to 10 images
@@ -286,10 +290,14 @@ export default function CreateProjectPage() {
           <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>
             <button
               type='submit'
-              disabled={isSubmitting}
+              disabled={isSubmitting || isUploading}
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 bg-lime-400 text-sm sm:text-[0.9rem] font-semibold text-zinc-900 hover:bg-lime-300 hover:border-lime-300 transition-colors disabled:opacity-60 disabled:cursor-not-allowed'
             >
-              {isSubmitting ? 'Creating' : 'Create Project'}
+              {isUploading
+                ? 'Uploading…'
+                : isSubmitting
+                  ? 'Creating…'
+                  : 'Create Project'}
             </button>
           </div>
         </form>

@@ -38,14 +38,17 @@ export const AdminNav: React.FC = () => {
       >
         <div className='container flex flex-row-reverse items-center justify-between p-6 mx-auto'>
           <div className='flex justify-between gap-8'>
-            <Link
-              href='/admin/projects'
-              className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
-            >
-              {' '}
-              <FileText className='w-8 h-8 hidden sm:block' />
-              <span className='text-lg'>Projects</span>
-            </Link>
+            {pathname !== '/admin/projects' && (
+              <Link
+                href='/admin/projects'
+                className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
+              >
+                {' '}
+                <FileText className='w-8 h-8 hidden sm:block' />
+                <span className='text-lg'>Projects</span>
+              </Link>
+            )}
+
             {/* <Link
               href='/admin/invoices/create'
               className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
@@ -67,8 +70,8 @@ export const AdminNav: React.FC = () => {
                 href='/'
                 className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
               >
-                <Home className='w-8 h-8 sm:w-6 sm:h-6 ' />
-                <span className='hidden sm:inline'>Main Site</span>
+                <Home className='w-8 h-8  ' />
+                <span className='hidden sm:inline text-lg'>Main Site</span>
               </Link>
             )}
             {pathname !== '/admin' && (
@@ -76,8 +79,8 @@ export const AdminNav: React.FC = () => {
                 href='/admin'
                 className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
               >
-                <LayoutDashboard className='w-8 h-8 sm:w-6 sm:h-6' />
-                <span className='hidden sm:inline'>Dashboard</span>
+                <LayoutDashboard className='w-8 h-8 ' />
+                <span className='hidden sm:inline text-lg'>Dashboard</span>
               </Link>
             )}
           </div>

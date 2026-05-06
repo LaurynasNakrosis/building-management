@@ -10,6 +10,7 @@ import { TrashIcon } from 'lucide-react';
 import { useState } from 'react';
 import Toast from '@/app/components/UI/Toast';
 import ConfirmModal from '@/app/components/UI/ConfirmModal';
+import ProjectPlaceholderCard from '@/app/components/UI/ProjectPlaceholderCard';
 
 type ConfirmConfig = {
   title: string;
@@ -106,40 +107,6 @@ function AdminProjectCard({
           </Link>
         </div>
       </article>
-    </div>
-  );
-}
-function PlaceholderCard({
-  label,
-  imageClassName,
-}: {
-  label: string;
-  imageClassName: string;
-}) {
-  return (
-    <div className='p-4 overflow-hidden relative duration-700 border border-dashed rounded-xl border-zinc-700 bg-zinc-900/40'>
-      <div
-        className={`rounded-lg w-full ${imageClassName} bg-zinc-800/50 border border-dashed border-zinc-700 flex items-center justify-center`}
-      >
-        <span className='text-zinc-600 text-xs'>No image yet</span>
-      </div>
-      <div className='mt-4 space-y-3'>
-        <div className='h-4 w-24 rounded bg-zinc-800' />
-        <div className='h-7 w-3/4 rounded bg-zinc-800' />
-        <div className='h-4 w-full rounded bg-zinc-800' />
-        <div className='h-4 w-5/6 rounded bg-zinc-800' />
-      </div>
-      <div className='mt-6 flex flex-col items-center justify-center gap-2 py-2'>
-        <p className='text-xs text-zinc-500 font-medium uppercase tracking-wide'>
-          {label} — empty slot
-        </p>
-        <Link
-          href='/admin/projects/create'
-          className='text-xs px-3 py-1.5 rounded-md border border-lime-400/50 text-lime-400 hover:bg-lime-400/10 transition-colors'
-        >
-          + Create a project for this slot
-        </Link>
-      </div>
     </div>
   );
 }
@@ -246,7 +213,7 @@ export default function AdminProjectsPage() {
                     isDeleting={isDeleting(featuredProject.slug)}
                   />
                 ) : (
-                  <PlaceholderCard
+                  <ProjectPlaceholderCard
                     label='Featured Project'
                     imageClassName='aspect-[2/1]'
                   />
@@ -268,7 +235,7 @@ export default function AdminProjectsPage() {
                       isDeleting={isDeleting(topRowProjectOne.slug)}
                     />
                   ) : (
-                    <PlaceholderCard
+                    <ProjectPlaceholderCard
                       label='Top Project 1'
                       imageClassName='aspect-[3/1]'
                     />
@@ -289,7 +256,7 @@ export default function AdminProjectsPage() {
                       isDeleting={isDeleting(topRowProjectTwo.slug)}
                     />
                   ) : (
-                    <PlaceholderCard
+                    <ProjectPlaceholderCard
                       label='Top Project 2'
                       imageClassName='aspect-[3/1]'
                     />

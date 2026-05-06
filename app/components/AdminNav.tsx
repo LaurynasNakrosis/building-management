@@ -43,8 +43,8 @@ export const AdminNav: React.FC = () => {
               className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
             >
               {' '}
-              <FileText className='w-4 h-4' />
-              Projects
+              <FileText className='w-8 h-8 hidden sm:block' />
+              <span className='text-lg'>Projects</span>
             </Link>
             {/* <Link
               href='/admin/invoices/create'
@@ -62,19 +62,21 @@ export const AdminNav: React.FC = () => {
           </div>
 
           <div className='flex items-center gap-6'>
-            <Link
-              href='/'
-              className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
-            >
-              <Home className='w-4 h-4 ' />
-              <span className='hidden sm:inline'>Main Site</span>
-            </Link>
+            {pathname === '/admin' && (
+              <Link
+                href='/'
+                className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
+              >
+                <Home className='w-8 h-8 sm:w-6 sm:h-6 ' />
+                <span className='hidden sm:inline'>Main Site</span>
+              </Link>
+            )}
             {pathname !== '/admin' && (
               <Link
                 href='/admin'
                 className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
               >
-                <LayoutDashboard className='w-4 h-4' />
+                <LayoutDashboard className='w-8 h-8 sm:w-6 sm:h-6' />
                 <span className='hidden sm:inline'>Dashboard</span>
               </Link>
             )}

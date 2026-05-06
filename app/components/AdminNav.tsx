@@ -1,5 +1,5 @@
 'use client';
-import { ArrowLeft, FileText, Plus } from 'lucide-react';
+import { ArrowLeft, FileText, Plus, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -45,13 +45,13 @@ export const AdminNav: React.FC = () => {
               <FileText className='w-4 h-4' />
               Projects
             </Link>
-            <Link
+            {/* <Link
               href='/admin/invoices/create'
               className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
             >
               <Plus className='w-4 h-4' />
               Create Invoice
-            </Link>
+            </Link> */}
             <button
               onClick={handleLogout}
               className='text-white px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition-colors duration-200'
@@ -60,12 +60,22 @@ export const AdminNav: React.FC = () => {
             </button>
           </div>
 
-          {/* <Link
-            href='/'
-            className='duration-200 text-zinc-300 hover:text-zinc-100'
-          >
-            <ArrowLeft className='w-6 h-6 text-lime-300 hover:border border-lime-200' />
-          </Link> */}
+          <div className='flex items-center gap-6'>
+            <Link
+              href='/'
+              className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
+            >
+              <ArrowLeft className='w-4 h-4 ' />
+              <span className='hidden sm:inline'>Main Site</span>
+            </Link>
+            <Link
+              href='/admin'
+              className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
+            >
+              <LayoutDashboard className='w-4 h-4' />
+              <span className='hidden sm:inline'>Dashboard</span>
+            </Link>
+          </div>
         </div>
       </div>
     </header>

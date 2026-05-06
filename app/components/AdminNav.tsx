@@ -1,5 +1,5 @@
 'use client';
-import { ArrowLeft, FileText, Plus, LayoutDashboard, Home } from 'lucide-react';
+import { FileText, LayoutDashboard, Home } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';

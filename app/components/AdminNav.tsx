@@ -1,13 +1,14 @@
 'use client';
-import { ArrowLeft, FileText, Plus, LayoutDashboard } from 'lucide-react';
+import { ArrowLeft, FileText, Plus, LayoutDashboard, Home } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
 export const AdminNav: React.FC = () => {
   const ref = useRef<HTMLElement>(null);
   const [isIntersecting, setIntersecting] = useState(true);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -65,16 +66,18 @@ export const AdminNav: React.FC = () => {
               href='/'
               className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
             >
-              <ArrowLeft className='w-4 h-4 ' />
+              <Home className='w-4 h-4 ' />
               <span className='hidden sm:inline'>Main Site</span>
             </Link>
-            <Link
-              href='/admin'
-              className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
-            >
-              <LayoutDashboard className='w-4 h-4' />
-              <span className='hidden sm:inline'>Dashboard</span>
-            </Link>
+            {pathname !== '/admin' && (
+              <Link
+                href='/admin'
+                className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
+              >
+                <LayoutDashboard className='w-4 h-4' />
+                <span className='hidden sm:inline'>Dashboard</span>
+              </Link>
+            )}
           </div>
         </div>
       </div>

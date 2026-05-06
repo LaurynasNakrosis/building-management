@@ -1,4 +1,3 @@
-'use client';
 import { formatInvoiceSlug } from '@/lib/utils';
 import Link from 'next/link';
 import React, { useState } from 'react';

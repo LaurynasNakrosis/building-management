@@ -49,13 +49,6 @@ export const AdminNav: React.FC = () => {
               </Link>
             )}
 
-            {/* <Link
-              href='/admin/invoices/create'
-              className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
-            >
-              <Plus className='w-4 h-4' />
-              Create Invoice
-            </Link> */}
             <button
               onClick={handleLogout}
               className='text-white px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition-colors duration-200'

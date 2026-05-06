@@ -4,6 +4,8 @@ import { AdminNav } from '../components/AdminNav';
 import AdminInvoice from '../components/AdminInvoice';
 import { useAdminAuth } from './useAdminAuth';
 import { useAdminInvoices } from './useAdminInvoices';
+import Link from 'next/link';
+import { Plus } from 'lucide-react';
 
 export default function AdminPage() {
   const { auth } = useAdminAuth();
@@ -27,9 +29,19 @@ export default function AdminPage() {
     <div className=' relative min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900'>
       <AdminNav />
       <div className='container mx-auto px-4 py-24  text-white'>
-        <div className='mb-8'>
-          <h1 className='text-4xl font-bold mb-4'>Admin Dashboard</h1>
-          <p className='mb-6 text-zinc-400'>Welcome, {auth.user}!</p>
+        <div className='flex items-start justify-between'>
+          <div className='max-w-2xl'>
+            <h1 className='text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl'>
+              Admin Dashboard
+            </h1>
+            <p className='mt-4 text-zinc-400'>Welcome, {auth.user}!</p>
+          </div>
+          <Link
+            href='/admin/invoices/create'
+            className='shrink-0 px-4 py-2.5 rounded-lg border border-lime-400 bg-lime-400 text-sm font-semibold text-zinc-900 hover:bg-lime-300 hover:border-lime-300 transition-colors'
+          >
+            + Create Invoice
+          </Link>
         </div>
         {state.status === 'loading' && (
           <div className='text-center py-8'>

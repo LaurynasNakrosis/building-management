@@ -353,15 +353,8 @@ export default function CreateInvoicePage() {
   return (
     <div className='px-4 lg:px-0 min-h-screen pb-20 bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white'>
       <AdminNav />
-      <div className=' pl-6 pt-24 md:pl-24'>
-        <Link
-          href='/admin'
-          className=' flex items-center justify-center text-zinc-400 hover:text-white text-sm mb-6  w-full max-w-[10rem]'
-        >
-          ← Back to Admin
-        </Link>
-      </div>
-      <div className=' max-w-5xl mx-auto lg:px-8'>
+
+      <div className='pt-24 max-w-5xl mx-auto lg:px-8'>
         <h1 className='text-2xl font-bold mb-8 text-center'>Create Invoice</h1>
         <form onSubmit={handleSubmit} className='space-y-8'>
           <section className='rounded-xl border border-lime-400/70 bg-zinc-900/60 p-6 shadow-sm space-y-4 '>

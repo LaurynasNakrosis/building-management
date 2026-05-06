@@ -22,9 +22,7 @@ type FormState = {
   date: string;
   location: string;
   pictures: string[];
-  url: string;
   published: boolean;
-  bodyCode: string;
 };
 const initialForm: FormState = {
   title: '',
@@ -33,9 +31,7 @@ const initialForm: FormState = {
   date: '',
   location: '',
   pictures: [],
-  url: '',
   published: false,
-  bodyCode: '',
 };
 
 export default function CreateProjectPage() {
@@ -61,9 +57,7 @@ export default function CreateProjectPage() {
       date: form.date ? new Date(form.date) : undefined,
       location: form.location.trim() || undefined,
       picture: form.pictures,
-      url: form.url.trim() || '',
       published: form.published,
-      body: { code: form.bodyCode },
     };
   }, [form]);
 
@@ -90,9 +84,7 @@ export default function CreateProjectPage() {
         date: 'date',
         location: 'location',
         picture: 'picture',
-        url: 'url',
         published: 'published',
-        'body.code': 'bodyCode',
       };
       const targetId = idByPath[firstPath];
       if (targetId && typeof document !== 'undefined') {
@@ -268,21 +260,6 @@ export default function CreateProjectPage() {
                 name='description'
                 value={form.description}
                 onChange={(e) => updateField('description', e.target.value)}
-                className='block w-full rounded-md border border-[#758a8a] bg-[#869999] px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
-              />
-            </div>
-            <div className='w-full flex flex-col gap-1'>
-              <label
-                htmlFor='bodyCode'
-                className='block text-[0.75rem] mb-0.5 text-[#9bafaf] uppercase font-semibold tracking-wide'
-              >
-                Body
-              </label>
-              <textarea
-                id='bodyCode'
-                name='bodyCode'
-                value={form.bodyCode}
-                onChange={(e) => updateField('bodyCode', e.target.value)}
                 className='block w-full rounded-md border border-[#758a8a] bg-[#869999] px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
               />
             </div>

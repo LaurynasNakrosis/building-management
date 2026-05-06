@@ -64,11 +64,7 @@ export const ProjectInputSchema = z.object({
   date: z.coerce.date().optional(),
   location: z.string().optional(),
   picture: z.array(z.url('Each picture must be a valid URL')).default([]),
-  url: z.url('URL must be valid').optional().or(z.literal('')),
   published: z.coerce.boolean(),
-  body: z.object({
-    code: string().min(1, 'Body code is required'),
-  }),
 });
 
 export const ProjectUpdateSchema = ProjectInputSchema.partial().extend({

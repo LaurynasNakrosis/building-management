@@ -34,10 +34,10 @@ export function useAdminInvoices(enabled: boolean) {
   const [state, setState] = useState<InvoicesState>({ status: 'idle' });
   const [deletingBySlug, setDeletingBySlug] = useState<Set<string>>(new Set());
 
-  const isDeleting = useMemo(
-    () => (slug: string) => deletingBySlug.has(slug),
-    [deletingBySlug],
-  );
+  // const isDeleting = useMemo(
+  //   () => (slug: string) => deletingBySlug.has(slug),
+  //   [deletingBySlug],
+  // );
 
   useEffect(() => {
     if (!enabled) return;
@@ -128,5 +128,5 @@ export function useAdminInvoices(enabled: boolean) {
     }
   };
 
-  return { state, deletingInvoice, isDeleting };
+  return { state, deletingInvoice, deletingBySlug };
 }

@@ -28,7 +28,7 @@ type Invoice = {
 type Props = {
   invoices: Invoice[];
   onDelete: (slug: string) => void | Promise<void>;
-  isDeleting: (slug: string) => boolean;
+  deletingBySlug: Set<string>;
 };
 type ConfirmConfig = {
   title: string;
@@ -41,7 +41,7 @@ type ConfirmConfig = {
 export default function AdminInvoice({
   invoices,
   onDelete,
-  isDeleting,
+  deletingBySlug,
 }: Props) {
   const [confirmConfig, setConfirmConfig] = useState<ConfirmConfig | null>(
     null,
@@ -67,7 +67,7 @@ export default function AdminInvoice({
     <>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 '>
         {invoices.map((invoice) => {
-          const busy = isDeleting(invoice.slug);
+          const busy = deletingBySlug.has(invoice.slug);
           return (
             <div
               key={invoice._id}

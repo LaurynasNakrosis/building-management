@@ -9,7 +9,7 @@ import { Plus } from 'lucide-react';
 
 export default function AdminPage() {
   const { auth } = useAdminAuth();
-  const { state, deletingInvoice, isDeleting } = useAdminInvoices(
+  const { state, deletingInvoice, deletingBySlug } = useAdminInvoices(
     auth.status === 'authenticated',
   );
   // Show loading state while checking auth
@@ -29,7 +29,7 @@ export default function AdminPage() {
     <div className=' relative min-h-screen bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900'>
       <AdminNav />
       <div className='container mx-auto px-4 py-24  text-white'>
-        <div className='flex items-start justify-between'>
+        <div className='flex items-start justify-between pb-5'>
           <div className='max-w-2xl'>
             <h1 className='text-3xl font-bold tracking-tight text-zinc-100 sm:text-4xl'>
               Admin Dashboard
@@ -64,7 +64,7 @@ export default function AdminPage() {
           <AdminInvoice
             invoices={state.data}
             onDelete={deletingInvoice}
-            isDeleting={isDeleting}
+            deletingBySlug={deletingBySlug}
           />
         )}
       </div>

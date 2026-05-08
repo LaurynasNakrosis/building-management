@@ -11,9 +11,7 @@ export type ProjectInput = {
   date?: Date;
   location?: string;
   picture?: string[];
-  url?: string;
   published: boolean;
-  body: ProjectBody;
 };
 
 export interface IProject extends Document, ProjectInput {
@@ -31,12 +29,7 @@ const projectSchema = new Schema<IProject>(
     date: { type: Date, require: false },
     location: { type: String, require: false },
     picture: [{ type: String }],
-    url: { type: String, require: false },
-
     published: { type: Boolean, required: true, default: false },
-    body: {
-      code: { type: String, required: true },
-    },
   },
   { timestamps: true },
 );

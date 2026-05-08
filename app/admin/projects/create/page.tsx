@@ -22,9 +22,7 @@ type FormState = {
   date: string;
   location: string;
   pictures: string[];
-  url: string;
   published: boolean;
-  bodyCode: string;
 };
 const initialForm: FormState = {
   title: '',
@@ -33,15 +31,14 @@ const initialForm: FormState = {
   date: '',
   location: '',
   pictures: [],
-  url: '',
   published: false,
-  bodyCode: '',
 };
 
 export default function CreateProjectPage() {
   const { auth } = useAdminAuth();
   const [form, setForm] = useState<FormState>(initialForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [toast, setToast] = useState<ToastState>(null);
 
   function showToast(message: string, type: ToastType) {
@@ -60,9 +57,7 @@ export default function CreateProjectPage() {
       date: form.date ? new Date(form.date) : undefined,
       location: form.location.trim() || undefined,
       picture: form.pictures,
-      url: form.url.trim() || '',
       published: form.published,
-      body: { code: form.bodyCode },
     };
   }, [form]);
 
@@ -88,10 +83,8 @@ export default function CreateProjectPage() {
         description: 'description',
         date: 'date',
         location: 'location',
-        pictures: 'pictures',
-        url: 'url',
+        picture: 'picture',
         published: 'published',
-        'body.code': 'bodyCode',
       };
       const targetId = idByPath[firstPath];
       if (targetId && typeof document !== 'undefined') {
@@ -197,15 +190,18 @@ export default function CreateProjectPage() {
                         '!ut-readying:cursor-wait',
                       allowedContent: 'hidden',
                     }}
+                    onUploadBegin={() => setIsUploading(true)}
                     onClientUploadComplete={(res) => {
+                      setIsUploading(false);
                       const urls = res?.map((f) => f.ufsUrl) ?? [];
                       if (!urls.length) return;
                       updateField('pictures', [...form.pictures, ...urls]);
                       showToast(`${urls.length} image(s) uploaded.`, 'success');
                     }}
-                    onUploadError={(error: Error) =>
-                      showToast(error.message || 'Upload failed.', 'error')
-                    }
+                    onUploadError={(error: Error) => {
+                      setIsUploading(false);
+                      showToast(error.message || 'Upload failed.', 'error');
+                    }}
                   />
                   <p className='text-xs text-zinc-500'>
                     PNG, JPG, WEBP up to 8MB · up to 10 images
@@ -267,29 +263,18 @@ export default function CreateProjectPage() {
                 className='block w-full rounded-md border border-[#758a8a] bg-[#869999] px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
               />
             </div>
-            <div className='w-full flex flex-col gap-1'>
-              <label
-                htmlFor='bodyCode'
-                className='block text-[0.75rem] mb-0.5 text-[#9bafaf] uppercase font-semibold tracking-wide'
-              >
-                Body
-              </label>
-              <textarea
-                id='bodyCode'
-                name='bodyCode'
-                value={form.bodyCode}
-                onChange={(e) => updateField('bodyCode', e.target.value)}
-                className='block w-full rounded-md border border-[#758a8a] bg-[#869999] px-3 py-3 md:py-2.5 text-sm md:text-[0.9rem] text-[#142020] placeholder:text-[#5c7373] focus:outline-none focus:ring-2 focus:ring-lime-400 focus:border-lime-400 transition-shadow min-h-[120px]'
-              />
-            </div>
           </section>
           <div className='flex flex-col sm:flex-row sm:justify-end gap-3 pt-2 w-full'>
             <button
               type='submit'
-              disabled={isSubmitting}
+              disabled={isSubmitting || isUploading}
               className='w-full sm:w-auto px-4 py-3 sm:py-2.5 rounded-lg border border-lime-400 bg-lime-400 text-sm sm:text-[0.9rem] font-semibold text-zinc-900 hover:bg-lime-300 hover:border-lime-300 transition-colors disabled:opacity-60 disabled:cursor-not-allowed'
             >
-              {isSubmitting ? 'Creating' : 'Create Project'}
+              {isUploading
+                ? 'Uploading…'
+                : isSubmitting
+                  ? 'Creating…'
+                  : 'Create Project'}
             </button>
           </div>
         </form>

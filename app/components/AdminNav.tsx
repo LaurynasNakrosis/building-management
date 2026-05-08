@@ -1,13 +1,14 @@
 'use client';
-import { ArrowLeft, FileText, Plus } from 'lucide-react';
+import { FileText, LayoutDashboard, Home } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 
 export const AdminNav: React.FC = () => {
   const ref = useRef<HTMLElement>(null);
   const [isIntersecting, setIntersecting] = useState(true);
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (!ref.current) return;
@@ -37,21 +38,17 @@ export const AdminNav: React.FC = () => {
       >
         <div className='container flex flex-row-reverse items-center justify-between p-6 mx-auto'>
           <div className='flex justify-between gap-8'>
-            <Link
-              href='/admin/projects'
-              className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
-            >
-              {' '}
-              <FileText className='w-4 h-4' />
-              Projects
-            </Link>
-            <Link
-              href='/admin/invoices/create'
-              className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
-            >
-              <Plus className='w-4 h-4' />
-              Create Invoice
-            </Link>
+            {pathname !== '/admin/projects' && (
+              <Link
+                href='/admin/projects'
+                className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-2'
+              >
+                {' '}
+                <FileText className='w-8 h-8 hidden sm:block' />
+                <span className='text-lg'>Projects</span>
+              </Link>
+            )}
+
             <button
               onClick={handleLogout}
               className='text-white px-4 py-2 bg-red-600 rounded hover:bg-red-700 transition-colors duration-200'
@@ -60,12 +57,26 @@ export const AdminNav: React.FC = () => {
             </button>
           </div>
 
-          {/* <Link
-            href='/'
-            className='duration-200 text-zinc-300 hover:text-zinc-100'
-          >
-            <ArrowLeft className='w-6 h-6 text-lime-300 hover:border border-lime-200' />
-          </Link> */}
+          <div className='flex items-center gap-6'>
+            {pathname === '/admin' && (
+              <Link
+                href='/'
+                className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
+              >
+                <Home className='w-8 h-8  ' />
+                <span className='hidden sm:inline text-lg'>Main Site</span>
+              </Link>
+            )}
+            {pathname !== '/admin' && (
+              <Link
+                href='/admin'
+                className='duration-200 text-zinc-400 hover:text-zinc-100 flex items-center gap-1.5 text-sm'
+              >
+                <LayoutDashboard className='w-8 h-8 ' />
+                <span className='hidden sm:inline text-lg'>Dashboard</span>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </header>

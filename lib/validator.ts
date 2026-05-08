@@ -63,14 +63,8 @@ export const ProjectInputSchema = z.object({
   description: z.string().min(3, 'Description must be atleast 10 characters'),
   date: z.coerce.date().optional(),
   location: z.string().optional(),
-  pictures: z
-    .array(z.string().url('Each picture must be a valid URL'))
-    .default([]),
-  url: z.string().url('URL must be valid').optional().or(z.literal('')),
+  picture: z.array(z.url('Each picture must be a valid URL')).default([]),
   published: z.coerce.boolean(),
-  body: z.object({
-    code: string().min(1, 'Body code is required'),
-  }),
 });
 
 export const ProjectUpdateSchema = ProjectInputSchema.partial().extend({
